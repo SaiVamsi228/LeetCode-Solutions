@@ -4,25 +4,24 @@ class Solution:
         Do not return anything, modify nums in-place instead.
         """
 
-        n = len(nums)
+        n= len(nums)
+
+        non_zero_arr = [0] * n
+
+        k=0
 
         for i in range(n):
 
-            if nums[i] == 0:
+            if nums[i] != 0:
 
-                j = i + 1
+                non_zero_arr[k] = nums[i]
 
-                while j < n and nums[j] == 0:
-
-                    j+=1
-                
-                if j < n:
-                    
-                    nums[i],nums[j] = nums[j],nums[i]
-                
-                else:
-
-                    break
+                k += 1
+        
+        nums[:] = non_zero_arr
 
         return nums
+        
+
+
 
