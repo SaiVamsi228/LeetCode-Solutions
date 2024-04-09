@@ -3,18 +3,14 @@ class Solution:
         
         n = len(nums)
 
-        bucket = [0 for i in range(n)]
+        result = 0
 
-        for num in nums:
-
-            if num < n:
-                
-                bucket[num] = 1
-        
         for i in range(n):
 
-            if bucket[i] == 0:
+            result ^= i
 
-                return i
+            result ^= nums[i]
+
+        result ^= n
         
-        return i+1
+        return result
