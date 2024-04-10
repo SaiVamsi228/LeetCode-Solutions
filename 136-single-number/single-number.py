@@ -3,22 +3,10 @@ class Solution:
         
         n = len(nums)
 
-        hash_map = {}
+        result= 0
 
-        for i in range(n):
+        for num in nums:
 
-            if nums[i] not in hash_map:
-
-                hash_map[nums[i]] = 1
-            
-            else:
-
-                hash_map[nums[i]]+=1
+            result^= num
         
-
-        for num, cnt in hash_map.items():
-
-            if cnt == 1:
-
-                return num
-            
+        return result
