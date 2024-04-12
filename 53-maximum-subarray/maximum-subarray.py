@@ -1,6 +1,8 @@
 class Solution:
     def maxSubArray(self, nums: List[int]) -> int:
         
+        # Kadane's Algorithm
+        
         n = len(nums)
 
         sum_ = 0
