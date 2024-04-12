@@ -3,20 +3,24 @@ class Solution:
         
         n = len(nums)
 
-        hm = {}
+        ele_cnt = 0
 
-        for i in range(n):
+        for num in nums:
 
-            if nums[i] not in hm:
+            if not ele_cnt :
 
-                hm[nums[i]] = 1
+                ele = num
+
+                ele_cnt = 1
+
+            elif num == ele:
+
+                ele_cnt += 1
             
             else:
 
-                hm[nums[i]] += 1
-            
-            if hm[nums[i]] > n//2:
+                ele_cnt -= 1
 
-                return nums[i]
+        return ele
         
 
