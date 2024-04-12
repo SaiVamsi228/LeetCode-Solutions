@@ -3,25 +3,14 @@ class Solution:
         
         n = len(prices)
 
-        mini_arr = [prices[0] for i in range(n)]
+        min_price = prices[0]
 
-        maxi_arr = [prices[n-1] for j in range(n)]
+        max_pro = 0
 
-        for i in range(1,n):
+        for i in range(n):
 
-            mini_arr[i]= min(prices[i],mini_arr[i-1])
+            min_price = min(prices[i],min_price)
 
+            max_pro = max(max_pro, prices[i] - min_price)
         
-        for j in reversed(range(n-1)):
-
-            maxi_arr[j] = max(prices[j],maxi_arr[j+1])
-
-        maxi_diff = 0
-
-        for ind in range(n):
-
-            diff = maxi_arr[ind] - mini_arr[ind]
-
-            maxi_diff = max(maxi_diff,diff)
-
-        return maxi_diff
+        return max_pro
