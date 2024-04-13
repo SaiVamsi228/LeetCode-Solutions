@@ -3,40 +3,27 @@ class Solution:
         
         n = len(nums)
 
-        post = []
-        negt = []
+        postInd, negInd = 0, 1
 
-        for num in nums:
+        ans = [0 for i in range(n)]
 
-            if num>0:
-                post.append(num)
-            
-            else:
-                negt.append(num)
+        for i in range(n):
 
-        new_arr = []
+            if nums[i] > 0:
 
-        flag = True
+                ans[postInd] = nums[i]
 
-        i = 0
-        flag = True
-
-        while i<n//2:
-
-            if flag:
-
-                new_arr.append(post[i])
-
-                flag = False
+                postInd += 2
             
             else:
 
-                new_arr.append(negt[i])
+                ans[negInd] = nums[i]
 
-                flag = True
-
-                i+=1
+                negInd += 2
+            
+        return ans
         
-        nums[:] = new_arr
 
-        return nums
+                    
+
+
