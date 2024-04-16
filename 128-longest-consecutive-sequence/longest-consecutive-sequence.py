@@ -1,38 +1,32 @@
 class Solution:
     def longestConsecutive(self, nums: List[int]) -> int:
-        
+
         if not nums:
-
             return 0
-            
-        nums.sort()
-
-        lastSmaller = nums[0]
-
-        n = len(nums)
+        
+        st = {x for x in nums}
 
         longest = 1
 
-        cnt = 1
+        for num in st:
 
-        for i in range(1,n):
+            if num - 1 not in st:
 
-            if nums[i] - 1 == lastSmaller:
+                cnt = 0
 
-                cnt+=1
+                while num in st:
 
-                lastSmaller = nums[i]
-            
-            elif nums[i]!=lastSmaller:
+                    cnt+=1
 
-                cnt = 1
+                    num+=1
+                
+                longest = max(longest,cnt)
 
-                lastSmaller = nums[i]
-            
-            longest = max(longest,cnt)
         
-
         return longest
 
 
-                
+
+
+
+
