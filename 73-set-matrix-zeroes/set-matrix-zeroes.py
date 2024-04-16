@@ -6,25 +6,58 @@ class Solution:
 
         m , n = len(matrix), len(matrix[0])
 
-        row_st = set()
-        col_st = set()
+        first_row_zeroes = False
 
+        first_col_zeroes = False
+
+        for col in range(n):
+
+            if matrix[0][col] == 0:
+
+                first_row_zeroes = True
+
+                break
+        
         for row in range(m):
 
-            for col in range(n):
+            if matrix[row][0] == 0:
+
+                first_col_zeroes = True
+
+                break
+        
+        for row in range(1,m):
+
+            for col in range(1,n):
 
                 if matrix[row][col] == 0:
 
-                    row_st.add(row)
+                    matrix[row][0] = 0
+                    matrix[0][col] = 0
+        
+        for row in range(1,m):
 
-                    col_st.add(col)
-    
+            for col in range(1,n):
 
-        for row in range(m):
+                if matrix[0][col] == 0 or matrix[row][0] == 0:
+
+                    matrix[row][col] = 0
+
+
+        if first_row_zeroes :
 
             for col in range(n):
 
-                if (row in row_st) or (col in col_st) :
+                matrix[0][col] = 0
 
-                    matrix[row][col] = 0
-        return matrix 
+        if first_col_zeroes:
+
+            for row in range(m):
+
+                matrix[row][0] = 0
+        
+        return matrix
+
+
+
+
