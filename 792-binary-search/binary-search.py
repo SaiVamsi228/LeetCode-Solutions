@@ -1,28 +1,22 @@
 class Solution:
-    def search(self, nums: List[int], target: int) -> int:
-        
-        n = len(nums)
 
-        low = 0
+    def binSearch(self,low,high,target,nums):
 
-        high = n-1
+        if low > high:
+
+            return -1
 
         mid = (low+high)//2
 
-        while low <= high:
+        if nums[mid] == target:
 
-            mid = (low+high)//2
+            return mid
 
-            if nums[mid] == target:
+        elif nums[mid] > target:
 
-                return mid
-            
-            elif nums[mid] > target:
-
-                high = mid - 1
-
-            else:
-
-                low = mid + 1
-
-        return -1 
+            return self.binSearch(low,mid-1,target,nums) 
+        
+        return self.binSearch(mid+1,high,target,nums)
+    def search(self, nums: List[int], target: int) -> int:
+        
+        return self.binSearch(0,len(nums)-1,target,nums) 
