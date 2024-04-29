@@ -3,31 +3,14 @@ class Solution:
         
         n = len(nums)
 
-        low, high = 0, n - 1
+        insertPos = n
 
-        ans = n
+        for i in range(n):
 
-        while low <= high :
+            if nums[i] >= target:
 
-            mid = (low + high)//2
+                insertPos = i
 
-            if nums[mid] >= target:
-
-                ans = mid
-
-                if nums[mid] == target:
-
-                    break
-                
-                high = mid - 1
-                
-            
-            else:
-
-                low = mid + 1
+                break
         
-        return ans
-
-
-
-                
+        return insertPos
