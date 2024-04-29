@@ -1,6 +1,6 @@
 class Solution:
 
-    def getLeft(self,nums,target):
+    def getFirstOccurence(self,nums,target):
 
         n = len(nums)
 
@@ -33,7 +33,7 @@ class Solution:
         
         return left
 
-    def getRight(self,nums,target):
+    def getLastOccurence(self,nums,target):
 
         n = len(nums)
 
@@ -69,8 +69,8 @@ class Solution:
     def searchRange(self, nums: List[int], target: int) -> List[int]:
         
 
-        left = self.getLeft(nums,target)
+        first = self.getFirstOccurence(nums,target)
 
-        right = self.getRight(nums,target)
+        last = self.getLastOccurence(nums,target)
 
-        return [left,right]
+        return [first,last]
