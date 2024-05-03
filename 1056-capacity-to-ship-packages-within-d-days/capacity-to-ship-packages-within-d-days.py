@@ -34,7 +34,7 @@ class Solution:
 
         leastCapacity = sum(weights)
 
-        low = 1
+        low = max(weights)
 
         high = leastCapacity
 
