@@ -22,7 +22,7 @@ class Solution:
 
             if self.divSum(curDivisor,nums) <= threshold :
 
-                miniDivisor = min(miniDivisor,curDivisor)
+                miniDivisor = curDivisor
 
                 high = curDivisor - 1
             
