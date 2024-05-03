@@ -43,7 +43,7 @@ class Solution:
             
             return -1
         
-        low = 1
+        low = min(bloomDay)
 
         high = max(bloomDay)
 
