@@ -3,21 +3,32 @@ class Solution:
         
         n = len(arr)
 
-        for i in range(n):
+        low = 0
 
-            curInd = i
+        high = n-1
 
-            actInd = arr[i] - 1
+        while low <= high :
 
-            mNuptoi = actInd - curInd 
+            curInd = (low + high)//2
 
-            if  k <= mNuptoi:
-                
+            actInd = arr[curInd] - 1
 
-                mN = arr[i] - (mNuptoi - k) - 1
+            mNuptocurInd = actInd - curInd 
 
-                return mN
+            if  k <= mNuptocurInd:
+
+                high = curInd - 1                
+
+            else: 
+
+                low = curInd + 1
         
-        # when kth mN is beyond the arr = 0
-        return arr[n-1] - (mNuptoi - k )
-        
+
+        # If it lies to left of cur Ind
+        if k <= mNuptocurInd :
+            
+            return arr[curInd] - (mNuptocurInd - k ) - 1
+
+
+        # If it lies to right of cur Ind
+        return arr[curInd] - (mNuptocurInd - k )
