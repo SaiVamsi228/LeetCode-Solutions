@@ -7,6 +7,7 @@ class Solution:
 
         high = n-1
 
+        # Reaching the index as close as possible to our missing number
         while low <= high :
 
             curInd = (low + high)//2
