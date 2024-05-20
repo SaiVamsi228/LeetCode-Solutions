@@ -19,6 +19,9 @@ class Solution:
 
         return low  # if the required partitions < maximum partitions possible 
         # see in case [2,3,1,1,1,1,1] k=5
+        # returning when polarity is getting changed
+        # RETURN LOW IF MIN IS ASKED 
+        # RETURN HIGH IF MAX IS ASKED 
 
     def countSubarrays(self, nums, maxSum):
 
