@@ -9,28 +9,24 @@ class Solution:
         if not head or not head.next:
 
             return head
-        
-        prev2 = None
 
-        prev = head
+        prev = None
 
-        cur = head.next
+        cur = head
 
-        while prev:
+        upcoming = head.next
 
-            prev.next = prev2
+        while cur:
 
-            prev2 = prev 
+            upcoming  = cur.next
+
+            cur.next = prev
 
             prev = cur
 
-            if not cur:
-
-                break
-
-            cur = cur.next
+            cur = upcoming
         
-        return prev2
+        return prev
         
 
 
