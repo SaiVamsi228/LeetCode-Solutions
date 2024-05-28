@@ -10,15 +10,11 @@ class Solution:
 
         hare = head
 
-        while hare.next and hare.next.next:
+        while hare and hare.next :
 
             tortoise = tortoise.next
 
             hare = hare.next.next
-        
-        if hare.next:
-
-            return tortoise.next
         
         return tortoise
 
