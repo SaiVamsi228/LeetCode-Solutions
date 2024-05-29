@@ -10,43 +10,46 @@ class Solution:
 
             return head
         
-        cur = head.next
+        newHead = head.next
 
-        prev = head
+        even = False
 
-        queue = []
+        cur = head
 
-        even = True
+        while cur.next:
 
-        while cur:
+            if even:
 
-            if even :
-                
                 upcoming = cur.next
 
-                queue.append(cur)
-
-                cur.next = None
-
-                prev.next = upcoming
+                cur.next = cur.next.next
 
                 cur = upcoming
 
                 even = False
-            
+
+
             else:
+
+                upcoming = cur.next
+
+                cur.next = cur.next.next
 
                 prev = cur
 
-                cur = cur.next 
+                cur = upcoming
 
                 even = True
+
         
-        while queue:
+        if even == False : 
 
-            prev.next = queue.pop(0)
+            cur.next = newHead
+        
+        else:
 
-            prev = prev.next
+            prev.next = newHead
+
         
         return head
-
+    
