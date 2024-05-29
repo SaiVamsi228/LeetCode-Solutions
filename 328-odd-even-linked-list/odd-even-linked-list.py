@@ -10,44 +10,24 @@ class Solution:
 
             return head
 
-        arr = []
+        odd = head
 
-        temp = head
+        even = head.next
 
-        n = 0
+        newHead = even
 
-        while temp:
+        while even and even.next:
 
-            arr.append(temp.val)
+            odd.next = odd.next.next
 
-            n += 1
+            even.next = even.next.next
 
-            temp = temp.next
+            even = even.next
+
+            odd = odd.next
+
         
-        oddPt = 0
-
-        evenPt = 1
-
-        odd = True
-
-        temp = head
-
-
-        while temp:
-
-            if oddPt < n: #odd
-
-                temp.val = arr[oddPt]
-
-                oddPt += 2
-            
-            else:
-
-                temp.val = arr[evenPt]
-
-                evenPt +=2
-            
-            temp = temp.next
+        odd.next = newHead
 
         return head
 
