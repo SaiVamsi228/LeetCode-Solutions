@@ -3,44 +3,68 @@
 #     def __init__(self, val=0, next=None):
 #         self.val = val
 #         self.next = next
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
 class Solution:
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        
+        if not head or not head.next:
+
+            return head
+
+        prev = None
+
+        cur = head
+
+        upcoming = head.next
+
+        while cur:
+
+            upcoming  = cur.next
+
+            cur.next = prev
+
+            prev = cur
+
+            cur = upcoming
+        
+        return prev
+
     def isPalindrome(self, head: Optional[ListNode]) -> bool:
         
         slow = head
 
         fast = head
 
-        firstHalf = []
-
-        n = 0
-
         while fast and fast.next:
-
-            firstHalf.append(str(slow.val))
-
-            n += 1
 
             slow = slow.next 
 
             fast = fast.next.next
 
-        secondHalf = []
+        newHead = self.reverseList(slow)
 
-        while slow :
+        firstHalfPt = head
 
-            secondHalf.append(str(slow.val))
+        secondHalfPt = newHead
 
-            n += 1
+        while firstHalfPt and secondHalfPt:
 
-            slow = slow.next
+            if firstHalfPt.val != secondHalfPt.val:
+
+                self.reverseList(newHead)
+
+                return False
+
+            firstHalfPt = firstHalfPt.next
+
+            secondHalfPt = secondHalfPt.next
         
-        firstHalf = "".join(firstHalf)
+        self.reverseList(newHead)
 
-        secondHalf = "".join(secondHalf)
-
-        if n%2 == 0:
-
-            return firstHalf == secondHalf[::-1]
+        return True
         
-        return firstHalf == (secondHalf[::-1])[:-1]
         
