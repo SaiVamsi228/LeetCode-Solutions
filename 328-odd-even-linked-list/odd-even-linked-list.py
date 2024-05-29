@@ -9,47 +9,48 @@ class Solution:
         if not head or not head.next:
 
             return head
+
+        arr = []
+
+        temp = head
+
+        n = 0
+
+        while temp:
+
+            arr.append(temp.val)
+
+            n += 1
+
+            temp = temp.next
         
-        newHead = head.next
+        oddPt = 0
 
-        even = False
+        evenPt = 1
 
-        cur = head
+        odd = True
 
-        while cur.next:
-
-            if even:
-
-                upcoming = cur.next
-
-                cur.next = cur.next.next
-
-                cur = upcoming
-
-                even = False
+        temp = head
 
 
+        while temp:
+
+            if oddPt < n: #odd
+
+                temp.val = arr[oddPt]
+
+                oddPt += 2
+            
             else:
 
-                upcoming = cur.next
+                temp.val = arr[evenPt]
 
-                cur.next = cur.next.next
+                evenPt +=2
+            
+            temp = temp.next
 
-                prev = cur
-
-                cur = upcoming
-
-                even = True
-
-        
-        if even == False : 
-
-            cur.next = newHead
-        
-        else:
-
-            prev.next = newHead
-
-        
         return head
-    
+
+        
+
+            
