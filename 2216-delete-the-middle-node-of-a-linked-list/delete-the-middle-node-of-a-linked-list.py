@@ -1,3 +1,4 @@
+import math
 # Definition for singly-linked list.
 # class ListNode:
 #     def __init__(self, val=0, next=None):
@@ -6,27 +7,33 @@
 class Solution:
     def deleteMiddle(self, head: Optional[ListNode]) -> Optional[ListNode]:
         
-
         if not head or not head.next:
 
             return None
 
-        slow = head
+        n = -1
 
-        fast = head
+        temp = head
 
-        while fast and fast.next and fast.next.next and fast.next.next.next:
+        while temp:
 
-            slow = slow.next
+            n += 1
 
-            fast = fast.next.next
+            temp = temp.next
+            
+        middleNode = math.ceil(n/2)
+
+        temp = head
+
+        currPos = 0
+
+        while currPos < middleNode - 1:
+
+            temp = temp.next
+
+            currPos += 1
 
         
-        slow.next = slow.next.next
+        temp.next = temp.next.next
 
         return head
-
-        
-
-
-
