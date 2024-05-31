@@ -10,35 +10,42 @@ class Solution:
 
         temp2 = list2
 
+        arr = []
+
+        n = 0
+
+        while temp1:
+
+            arr.append(temp1.val)
+
+            n += 1
+
+            temp1 = temp1.next
+            
+        
+        while temp2:
+
+            arr.append(temp2.val)
+
+            n += 1
+
+            temp2 = temp2.next
+        
+
+        arr.sort()
+
         dummyNode = ListNode(-1)
 
         temp = dummyNode
 
-        while temp1 and temp2:
+        i = 0
 
-            if temp1.val < temp2.val:
+        while i<n:
 
-                temp.next = temp1
+            temp.next = ListNode(arr[i])
 
-                temp1 = temp1.next
-            
-            else:
-                temp.next = temp2
+            i += 1
 
-                temp2 = temp2.next
-            
             temp = temp.next
         
-        if temp1 is not None:
-
-            temp.next = temp1
-        
-        if temp2 is not None:
-
-            temp.next = temp2
-        
-        newHead = dummyNode.next
-
-        return newHead
-
-        
+        return dummyNode.next
