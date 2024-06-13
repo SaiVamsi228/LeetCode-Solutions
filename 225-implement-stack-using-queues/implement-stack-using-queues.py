@@ -1,48 +1,72 @@
-from queue import Queue
+from collections import deque
 class MyStack:
 
     def __init__(self):
-        
-        self.queue = Queue()
+
+        self.queue1 = deque()
+        self.queue2 = deque()
 
         self.size = 0
 
-    def push(self, x: int) -> None:
-
-        s = self.size
         
-        self.queue.put(x)
 
-        for i in range(s):
-
-            self.queue.put(self.queue.get())
-
+    def push(self, x: int) -> None:
+        
+        self.queue1.append(x)
+        
         self.size += 1
 
     def pop(self) -> int:
 
-        poppedEle = self.queue.get()
+        if self.size > 0:
 
-        self.size -= 1
+            while self.size > 0 and self.size != 1 :
 
-        return poppedEle
-        
+                self.queue2.append(self.queue1.popleft())
 
-    def top(self) -> int:
+                self.size -= 1
 
-        if self.size:
-            
-            topEle = self.queue.get()
+            poppedEle = self.queue1.popleft()
 
             self.size -= 1
 
-            self.push(topEle)
+            while self.queue2 :
 
+                self.queue1.append(self.queue2.popleft())
+
+                self.size += 1
+
+            return poppedEle
+
+    def top(self) -> int:
+
+        if self.size > 0:
+
+            while self.size > 0 and self.size != 1 :
+
+                self.queue2.append(self.queue1.popleft())
+
+                self.size -= 1
+
+            topEle = self.queue1.popleft()
+
+            self.queue2.append(topEle)
+
+            self.size -= 1
+
+
+            while self.queue2 :
+
+                self.queue1.append(self.queue2.popleft())
+
+                self.size += 1
+            
             return topEle
+        
 
     def empty(self) -> bool:
 
-        return self.size == 0
+        return  self.size == 0
         
 
 
