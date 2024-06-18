@@ -5,51 +5,21 @@ class Solution:
 
         n = len(newNums)
 
-        stack = []
+        nge = [0 for i in range(n//2)]
 
-        nge = [-1 for i in range(n//2)]
+        for i in range(n//2):
 
-        for i in reversed(range(n)):
+            for j in range(i+1,n):
 
-            curEle = newNums[i]
+                if newNums[j] > newNums[i]:
 
-            if not stack:
+                    nge[i] = newNums[j]
 
-                if i < n//2:
-                    
-                    nge[i] = -1
-
-            elif stack[-1] > curEle:
-
-                if i < n//2:
-                    
-                    nge[i] = stack[-1]
-
+                    break
+            
             else:
 
-                while stack and stack[-1] <= curEle:
-
-                    stack.pop()
-
-                if stack:
-                    
-                    if i < n//2:
-                        
-                        nge[i] = stack[-1]
-
-                else:
-                    
-                    if i < n//2:
-
-                        nge[i] = -1
-            
-            stack.append(curEle)
+                nge[i] = -1
 
         return nge
 
-
-
-
-            
-
-            
