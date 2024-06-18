@@ -1,9 +1,10 @@
+from collections import defaultdict
 class Solution:
 
     def getIndex(self,ele,nums2,n):
 
         for i in range(n):
-
+ 
             if nums2[i] == ele:
 
                 return i
@@ -14,21 +15,52 @@ class Solution:
 
         n2 = len(nums2)
 
-        ngeArr = [-1 for i in range(n1)]
+        hashMap = defaultdict(int)
 
-        for i in range(n1):
+        stack = []
 
-            index = self.getIndex(nums1[i],nums2,n2)
+        for i in reversed(range(n2)):
 
-            for j in range(index+1, n2):
+            curEle = nums2[i]
 
-                if nums2[j] > nums2[index]:
+            if not stack:
 
-                    ngeArr[i] = nums2[j]
+                hashMap[curEle] = -1 
 
-                    break
+                stack.append(curEle)
+            
+            elif stack[-1] > curEle:
 
-        return ngeArr
+                hashMap[curEle] = stack[-1]
+            
+            else:
+
+                while stack and stack[-1] <= curEle:
+
+                    stack.pop()
+
+                if stack:
+
+                    hashMap[curEle] = stack[-1]
+
+                else:
+
+                    hashMap[curEle] = -1
+
+            stack.append(curEle)
+
+        nge = [hashMap[x] for x in nums1]
+
+        return nge
+        
+
+
+        
+
+                
+                    
+                
+
 
 
 
