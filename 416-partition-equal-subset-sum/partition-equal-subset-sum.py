@@ -1,25 +1,35 @@
 class Solution:
     
-    def memoIsSubsetSum(self,N,arr,sum,dp):
+    def isSubsetSum (self, N, arr, sum):
+        # code here 
         
-        if N==0 or sum == 0:
-            
-            if sum==0: return 1
-            
-            if N==0: return 0
-            
-        if dp[N][sum] != -1:
-            
-            return dp[N][sum]
-            
+        dp = [[-1 for _ in range(sum+1)] for _ in range(N+1)]
         
-        if arr[N-1] <= sum:
             
-            dp[N][sum] = self.memoIsSubsetSum(N-1,arr,sum-arr[N-1],dp) or self.memoIsSubsetSum(N-1,arr,sum,dp)
+        for i in range(N + 1):
+            
+            for j in range(sum+1):
+                
+                if i==0:
+                    
+                    dp[i][j] = 0
+                    
+                if j == 0:
+                    
+                    dp[i][j] = 1 # IMP for 00 it should be Trur first dry run and write
+                
+            
+        for i in range(1,N+1):
+            
+            for j in range(1,sum+1):
+                
+                if arr[i-1] <= j:
+            
+                    dp[i][j] = dp[i-1][j-arr[i-1]] or dp[i-1][j]
 
-        else:
+                else:
             
-            dp[N][sum] = self.memoIsSubsetSum(N-1,arr,sum,dp)
+                    dp[i][j] = dp[i-1][j]
             
         return dp[N][sum]
 
@@ -35,9 +45,7 @@ class Solution:
 
         halfSum = Sum // 2
 
-        dp = [[-1 for i in range(halfSum+1)] for j in range(n+1)]
-        
-        return self.memoIsSubsetSum(n, nums, halfSum,dp)
+        return self.isSubsetSum(n, nums, halfSum)
                 
 
 
