@@ -34,5 +34,8 @@ class Solution:
 
         n = len(s)
 
-        return n - self.LPS(s, n)
+        insertions = n - self.LPS(s, n) #or deletions
+
+        return insertions
+        
        
