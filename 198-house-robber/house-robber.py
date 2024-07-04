@@ -7,16 +7,13 @@ class Solution:
 
         dp[1] = nums[0]
 
-        for i in range(2,n+1):
+        if n == 1:
 
-            rob = nums[i-1]
+            return dp[1]
+        dp[2] = max(nums[0], nums[1])
 
-            if i-2 > 0:
+        for i in range(3,n+1):
 
-                rob = nums[i-1] + dp[i-2]
-            
-            notRob = 0 + dp[i-1]
-            
-            dp[i] = max(rob, notRob)
+            dp[i] = max(nums[i-1] + dp[i-2], dp[i-1])
         
         return dp[n]
