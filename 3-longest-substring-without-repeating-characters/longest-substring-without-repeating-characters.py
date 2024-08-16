@@ -17,7 +17,7 @@ class Solution:
             
             if uniqueCnt < j-i+1 :
                 
-                while uniqueCnt < j-i+1 :
+                while uniqueCnt < j-i+1 : #trying to move i to make window size == uniqueCnt
                     
                     Dict[s[i]] -= 1
                     
