@@ -2,47 +2,37 @@ class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
         
         i = j = 0
-
-        hashSet = set()
-
-        mx = 0
-
+        Dict = defaultdict(int)
         n = len(s)
-
-        uniqueCnt = 0
-
-        k = 0 #IMP as no repeating char
-
         mx = 0
+        uniqueCnt = 0
+        
         while j < n:
+            
+            Dict[s[j]] += 1
 
-            if s[j] not in hashSet :
-
+            if Dict[s[j]] == 1:
+                
                 uniqueCnt += 1
             
-            hashSet.add(s[j])
-
-
-            if j-i+1 - uniqueCnt == k:
-
-                mx = max(mx, j-i+1)
-
-                j += 1
-
-            elif j-i+1 - uniqueCnt > k : #there exists repeating char
-
-                repeatedEle = s[j]
-
-                while s[i] != repeatedEle:
+            if uniqueCnt < j-i+1 :
+                
+                while uniqueCnt < j-i+1 :
                     
-                    hashSet.remove(s[i])
-
-                    uniqueCnt -= 1
-
+                    Dict[s[i]] -= 1
+                    
+                    if Dict[s[i]] == 0 :
+                        
+                        uniqueCnt -= 1
+                    
                     i += 1
                 
-                i+=1
-                
                 j += 1
-        
-        return mx
+            
+            elif uniqueCnt == j-i+1 :
+                
+                mx = max(j-i+1, mx)
+                
+                j += 1              
+                
+        return mx 
