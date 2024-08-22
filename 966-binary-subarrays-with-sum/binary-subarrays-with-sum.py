@@ -11,7 +11,7 @@ class Solution:
             
             if curSum > goal:
 
-                while curSum > goal and i < n and i <= j :
+                while curSum > goal and i < n and i <= j : #checking curSum and i is within limits(in case if last ele > goal it may go out of bounds) and i<= j as the window needs to be valid
 
                     curSum -= nums[i]
 
