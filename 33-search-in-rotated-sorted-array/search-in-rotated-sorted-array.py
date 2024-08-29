@@ -3,10 +3,34 @@ class Solution:
         
         n = len(nums)
 
-        for i in range(n):
+        low, high = 0, n-1
 
-            if nums[i] == target:
+        while low <= high:
+
+            mid = (low + high)//2
+
+            if nums[mid] == target:
+
+                return mid
+
+            if nums[low] <= nums[mid]:
+
+                if nums[low] <= target <= nums[mid]:
+
+                    high = mid - 1
                 
-                return i
+                else:
+
+                    low = mid + 1
+
+            else:
+
+                if nums[mid] <= target <= nums[high]:
+
+                    low = mid + 1
+                
+                else:
+
+                    high = mid - 1
         
         return -1
