@@ -1,14 +1,10 @@
 class Solution:
     def singleNumber(self, nums: List[int]) -> int:
         
-        nums.sort()
+        res = 0
 
-        n  = len(nums)
+        for num in nums:
 
-        for i in range(0,n-1,2):
-
-            if nums[i] != nums[i+1]:
-
-                return nums[i]
+            res ^= num
         
-        return nums[n-1]
+        return res
