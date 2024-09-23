@@ -1,14 +1,36 @@
 class Solution:
     def intersection(self, nums1: List[int], nums2: List[int]) -> List[int]:
         
-        res = []
+        st = set()
 
-        for num in nums1:
+        a = sorted(nums1)
 
-            if num in nums2:
+        b = sorted(nums2)
 
-                res.append(num)
+        m = len(a)
+
+        n = len(b)
+
+        i = j = 0
+
+        while i < m and j < n :
+
+            if a[i] < b[j]:
+
+                i += 1
+            
+            elif a[i] > b[j]:
+
+                j += 1
+            
+            else:
+
+                st.add(a[i])
+
+                i += 1
+
+                j += 1
         
-        ans = list(set(res))
-
-        return ans
+        res = list(st)
+        
+        return res
