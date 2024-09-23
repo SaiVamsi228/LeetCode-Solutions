@@ -1,26 +1,27 @@
 class Solution:
     def maxSubArray(self, nums: List[int]) -> int:
         
-        # Kadane's Algorithm
-        
+        mx = nums[0]
+
+        cS = nums[0]
+
+
         n = len(nums)
 
-        sum_ = 0
+        for i in range(1,n):
 
-        maxi = nums[0]
+            num = nums[i]
 
-        for i in range(n):
+            if cS < 0:
 
-            if sum_ < 0 :
-
-                sum_ = 0
-
-                sum_ += nums[i]
+                cS = num
             
             else:
 
-                sum_ += nums[i]
-            
-            maxi = max(sum_,maxi)
+                cS += num
+
+            mx = max(cS, mx)
         
-        return maxi
+        return mx
+
+
