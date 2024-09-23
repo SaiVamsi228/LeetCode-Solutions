@@ -1,27 +1,22 @@
+from sys import maxsize
 class Solution:
     def maxSubArray(self, nums: List[int]) -> int:
         
-        mx = nums[0]
+        max_so_far = -maxsize
 
-        cS = nums[0]
+        max_ending_here = 0
 
+        for num in nums:
 
-        n = len(nums)
+            max_ending_here += num
 
-        for i in range(1,n):
+            if max_ending_here > max_so_far:
 
-            num = nums[i]
-
-            if cS < 0:
-
-                cS = num
+                max_so_far = max_ending_here
             
-            else:
+            if max_ending_here < 0:
 
-                cS += num
-
-            mx = max(cS, mx)
+                max_ending_here = 0 #No point in carrying neg sum start new subarray from next ele
         
-        return mx
-
-
+        return max_so_far
+        
