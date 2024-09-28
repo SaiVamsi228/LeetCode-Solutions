@@ -9,6 +9,20 @@ class Solution:
     
     def dfs(self,row,col,m,n,image,color,srcCol):
 
+        if not self.isValid(row,col,m,n) :
+
+            return
+        
+        if image[row][col] == color:
+
+            return 
+        
+        if image[row][col] != srcCol : 
+            
+            return 
+        
+        image[row][col] = color
+
         drow = [1,-1,0,0]
         dcol = [0,0,1,-1]
 
@@ -16,11 +30,7 @@ class Solution:
 
             nRow , nCol = row + drow[i] , col + dcol[i]
 
-            if self.isValid(nRow,nCol,m,n) and image[nRow][nCol] == srcCol and image[nRow][nCol] != color:
-
-                image[nRow][nCol] = color
-
-                self.dfs(nRow,nCol,m,n,image,color,srcCol)
+            self.dfs(nRow,nCol,m,n,image,color,srcCol)
         
         return 
 
@@ -31,8 +41,6 @@ class Solution:
         m,n = len(image), len(image[0])
 
         srcCol = image[sr][sc]
-
-        image[sr][sc] = color
 
         self.dfs(row,col,m,n,image,color,srcCol)
 
