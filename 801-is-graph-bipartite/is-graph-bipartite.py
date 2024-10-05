@@ -1,43 +1,23 @@
 class Solution:
-    def getIsBipartite(self,v, graph, visited):
-        
-        q = deque()
-        
-        q.append(v)
-        
-        color = 0
-        
-        visited[v] = color
-        
-        while q:
-            
-            n = len(q)
-            
-            for _ in range(n):
-                
-                curNode = q.popleft()
-                
-                color = visited[curNode]
-                
-                for neighbour in graph[curNode]:
-                    
-                    if neighbour in visited :
-                        
-                        if visited[neighbour] == color:
+    def getIsBipartite(self,v, graph, visited,actColor):
+
+        if v in visited:
+
+            if visited[v] != actColor:
                             
-                            return False
-                        
-                        else:
-                            
-                            continue
-                    
-                    else:
-                        
-                        visited[neighbour] = color ^ 1
-                        
-                        q.append(neighbour)
+                return False
+            
+            return True
         
-        return True
+        visited[v] = actColor
+                
+        isBipartite = True
+
+        for neighbour in graph[v]:
+
+            isBipartite = isBipartite and self.getIsBipartite(neighbour, graph, visited,actColor ^ 1)
+
+        return isBipartite
         
                         
     def isBipartite(self, graph: List[List[int]]) -> bool:
@@ -50,7 +30,7 @@ class Solution:
             
             if v not in visited :
                 
-                if not self.getIsBipartite(v, graph, visited):
+                if not self.getIsBipartite(v, graph, visited,0):
                     
                     return False
         
