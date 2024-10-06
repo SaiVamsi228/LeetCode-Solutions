@@ -1,26 +1,37 @@
 class Solution:
     def areSentencesSimilar(self, sentence1: str, sentence2: str) -> bool:
         
-        s = list(sentence1.split())
+        a = list(sentence1.split()) 
 
-        l = list(sentence2.split())
+        b = list(sentence2.split())
 
-        q1 = deque(s)
+        s = a if len(a) <= len(b) else b
 
-        q2 = deque(l)
+        l = a if len(a) > len(b) else b
 
-        while q1 and q2 and (q1[0] == q2[0] or q1[-1] == q2[-1]) :
+        m = len(s)
 
-            if q1[0] == q2[0]:
+        n = len(l)
 
-                q1.popleft()
 
-                q2.popleft()
-            
+        i1, j1 = 0 , m - 1
+
+        i2, j2 = 0 , n - 1
+
+        while i1 <= j1 and i2 <= j2 and (s[i1] == l[i2] or s[j1] == l[j2]):
+
+            if s[i1] == l[i2]: 
+
+                i1 += 1
+
+                i2 += 1
+
             else:
 
-                q1.pop()
+                j1 -= 1
 
-                q2.pop()
-        
-        return len(q1) == 0 or len(q2) == 0
+                j2 -= 1
+
+        if i1 > j1 : return True
+
+        return False 
