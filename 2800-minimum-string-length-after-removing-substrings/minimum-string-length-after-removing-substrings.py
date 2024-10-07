@@ -2,14 +2,26 @@ from sys import maxsize
 class Solution:
     def minLength(self, s: str) -> int:
 
-        while "AB" in s or "CD" in s:
+        stack = []
 
-            if "AB" in s:
+        for i in range(len(s)):
 
-                s = s.replace("AB","")
+            char = s[i]
 
+            if not stack:
+
+                stack.append(char)
+            
+            elif char == "D" and stack[-1] == "C" :
+
+                stack.pop()
+            
+            elif char == "B" and stack[-1] == "A":
+
+                stack.pop()
+            
             else:
 
-                s = s.replace("CD","")
-
-        return len(s) 
+                stack.append(char)
+        
+        return len(stack)
