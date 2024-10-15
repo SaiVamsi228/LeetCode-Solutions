@@ -1,21 +1,21 @@
 class Solution:
     def minimumSteps(self, s: str) -> int:
-        
+
+        i = 0
+
         n = len(s)
 
-        zeroes = ans = 0
+        swaps = 0
 
+        for j in range(n):
 
-        for i in reversed(range(n)):
+            if s[j] == "0":
 
-            if s[i] == "0":
+                swaps += j - i
 
-                zeroes += 1 
-            
-            else:
-
-                if zeroes :
-
-                    ans += zeroes
+                i += 1
         
-        return ans
+        return swaps
+            
+            
+
