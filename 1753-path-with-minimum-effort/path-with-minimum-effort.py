@@ -18,9 +18,9 @@ class Solution:
 
         heapify(hp)
 
-        maxHeight = [[float('inf') for i in range(n)] for j in range(m)]
+        costs = [[float('inf') for i in range(n)] for j in range(m)]
 
-        maxHeight[0][0] = 0
+        costs[0][0] = 0
 
         heappush(hp,(0, 0, 0))
 
@@ -30,7 +30,9 @@ class Solution:
 
         while hp:
 
-            mxHt, row,col = heappop(hp)
+            curCost, row,col = heappop(hp)
+
+            curHeight = heights[row][col]
 
             for k in range(4):
 
@@ -38,19 +40,18 @@ class Solution:
 
                 if self.isValid(nrow,ncol,m, n):
 
+                    neighbourHeight = heights[nrow][ncol]
 
-                    diff = abs(heights[nrow][ncol] - heights[row][col] )
+                    neighbourCost = abs(neighbourHeight - curHeight)
                     
-                    newMx = max(diff , mxHt)
+                    newCost = max(curCost , neighbourCost)
 
-                    if  newMx < maxHeight[nrow][ncol] :
+                    if  newCost < costs[nrow][ncol] :
 
-                        maxHeight[nrow][ncol] = newMx
+                        costs[nrow][ncol] = newCost
                         
-                        heappush(hp,(newMx, nrow , ncol))
+                        heappush(hp,(newCost, nrow , ncol))
             
-        print(maxHeight)
-            
-        return maxHeight[m-1][n-1]
+        return costs[m-1][n-1]
 
 
