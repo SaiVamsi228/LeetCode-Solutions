@@ -18,8 +18,6 @@ class Solution:
             heappush(hp, (-c, "c" ))
         
         s = []
-
-        consec = {"a": 0 , "b": 0 ,"c": 0}
             
         while hp:
 
@@ -27,77 +25,76 @@ class Solution:
 
             cnt *= -1
 
-            if consec[curEle] == 0:
+            if len(s) >= 2  :
 
-                if cnt >= 2:
+                firstPrev = s[-1]
+
+                secondPrev = s[-2]
+
+                if firstPrev == secondPrev == curEle:
+
+                    if not hp:
+
+                        break
+
+                    tempCnt, tempEle = heappop(hp)
+
+                    tempCnt *= -1
+
+                    tempCnt -= 1
+
+                    s.append(tempEle)
+
+                    if tempCnt:
+                        
+                        heappush(hp,(-tempCnt, tempEle))
+
+
+                elif curEle == firstPrev :
+
+                    s.append(curEle)
+
+                    cnt -= 1
+
+                else:
+
+                    if cnt >= 2 :
+
+                        cnt -= 2
+
+                        s.append(curEle)
+
+                        s.append(curEle)
+                    
+                    elif cnt == 1:
+
+                        cnt -= 1
+
+                        s.append(curEle)
+
+                if cnt :
+
+                    heappush(hp, (-cnt, curEle ))
+
+            else:
+
+                if cnt >= 2 :
 
                     cnt -= 2
 
                     s.append(curEle)
 
                     s.append(curEle)
-
-                    consec = {"a": 0 , "b": 0 ,"c": 0}
-
-                    consec[curEle] = 2
-
-                    
                 
-                elif cnt >= 1 :
+                elif cnt == 1:
 
                     cnt -= 1
 
                     s.append(curEle)
-
-                    consec = {"a": 0 , "b": 0 ,"c": 0}
-
-                    consec[curEle] = 1
-                
-                if cnt:
-                        
-                    heappush(hp, (-cnt, curEle))
-            
-            elif consec[curEle] == 1:
-
-                if cnt > 0 :
-
-                    cnt -= 1
-
-                    s.append(curEle)
-
-                    consec = {"a": 0 , "b": 0 ,"c": 0}
-
-                    consec[curEle] = 2
 
                 if cnt :
 
-                    heappush(hp,(-cnt, curEle))
-            
-            elif consec[curEle] == 2:
+                    heappush(hp, (-cnt, curEle ))
 
-                if not hp:
-
-                    break
-
-                newCnt, newEle = heappop(hp)
-                
-                newCnt *= -1
-
-                heappush(hp, (-cnt, curEle))
-
-                consec[curEle] = 0
-
-                newCnt -= 1
-
-                s.append(newEle)
-
-                consec = {"a": 0 , "b": 0 ,"c": 0}
-
-                consec[newEle] = 1
-
-                if newCnt:
-
-                    heappush(hp, (-newCnt, newEle))
-        
         return "".join(s)
 
