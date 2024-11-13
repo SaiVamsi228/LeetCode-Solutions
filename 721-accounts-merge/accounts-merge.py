@@ -94,26 +94,28 @@ class Solution:
         
         ans = [[] for i in range(n)]
 
-        accNames = ["" for i in range(n)]
-
         for mail, ind in uniqMails.items():
 
             up_ind = ds.findUPar(ind)
 
-            if len(ans[up_ind]) == 0:
-
-                accNames[up_ind] = accounts[ind][0]
-
             ans[up_ind].append(mail)
 
-        temp = []
+        mergedAccnts = []
         
         for ind,acc in enumerate(ans):
+
+            temp = []
 
             if acc :
 
                 acc.sort()
 
-                temp.append([accNames[ind]]  + acc)
+                temp.append(accounts[ind][0])
+
+                for email in acc:
+
+                    temp.append(email)
                 
-        return temp
+                mergedAccnts.append(temp)
+
+        return mergedAccnts
