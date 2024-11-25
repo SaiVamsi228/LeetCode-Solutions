@@ -12,13 +12,9 @@ class Solution:
         
         return False
     
-    def isValid(self,row,col, m , n, visited):
+    def isValid(self, grid, row,col, m , n):
 
-        if (row,col) in visited:
-
-            return False
-        
-        if 0 <= row < m and 0 <= col < n:
+        if 0 <= row < m and 0 <= col < n and grid[row][col] != 0 and grid[row][col] != 2:
 
             return True
 
@@ -32,9 +28,7 @@ class Solution:
 
         isFresh = False
 
-        visited = set()
-
-        for i in range(m):
+        for i in range(m): # m*n
 
             for j in range(n):
 
@@ -45,8 +39,6 @@ class Solution:
                 if grid[i][j] == 2:
 
                     rotten.append((i,j))
-
-                    visited.add((i,j))
         
         time = 0
 
@@ -59,7 +51,7 @@ class Solution:
 
         # print("HI",self.isValid(0,1, m , n, visited))
  
-        while rotten :
+        while rotten : # m*n
 
             n_ = len(rotten)
 
@@ -67,15 +59,13 @@ class Solution:
 
                 i,j = rotten.popleft()
 
-                for k in range(4):
+                for k in range(4): # 4
 
                     newRow, newCol = i+drow[k], j + dcol[k]
 
-                    if self.isValid(newRow,newCol, m , n, visited):
+                    if self.isValid(grid, newRow,newCol, m , n):
 
                         if grid[newRow][newCol] == 1:
-
-                            visited.add((newRow,newCol))
 
                             grid[newRow][newCol] = 2
 
@@ -84,6 +74,7 @@ class Solution:
             if len(rotten) == 0:
 
                 break
+                
             time += 1
         
         if self.hasFresh(grid,m,n):
