@@ -1,26 +1,29 @@
 class Solution:
     def climbStairs(self, n: int) -> int:
-
-        if n==1:
-
-            currentStepWays = 1
         
-        if n==2 : 
+        def solve(n):
 
-            currentStepWays = 2
+            if n == 1 :
 
-        firstStepWays = 1
-
-        if n>=2:
+                return 1
             
-            secondStepWays = 2
+            if n == 2:
 
-        for i in range(3,n+1):
+                return 2
+            
+            if dp[n] != - 1:
 
-            currentStepWays = secondStepWays + firstStepWays
+                return dp[n]
 
-            firstStepWays = secondStepWays
+            one_step_ways = solve(n-1) 
+            
+            two_step_ways = solve(n-2)
 
-            secondStepWays = currentStepWays
+            dp[n] = one_step_ways + two_step_ways
+
+            return dp[n]
         
-        return currentStepWays
+        dp = [-1 for i in range(n+1)]
+
+        return solve(n)
+        
