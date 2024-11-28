@@ -1,35 +1,38 @@
 class Solution:
 
-    def change(self, amt: int, coins: list[int]) -> int:
+    def change(self, amount: int, coins: List[int]) -> int:
+        
+        def getWaysCoins(n, amt):
 
+            if amt == 0:
+
+                return 1
+            
+            if n == 0:
+
+                return 0
+            
+            if dp[n][amt] != -1:
+
+                return dp[n][amt]
+
+            if coins[n-1] <= amt :
+
+                take = getWaysCoins(n, amt - coins[n-1])
+
+                notTake = getWaysCoins(n-1, amt)
+
+                dp[n][amt] = take + notTake
+            
+            else:
+
+                dp[n][amt] =  getWaysCoins(n-1, amt)
+            
+            return dp[n][amt]
+        
         n = len(coins)
 
-        dp = [ [-1 for i in range(amt+1)] for j in range(n+1)]
+        dp = [ [-1 for i in range(amount+1)] for j in range(n+1)]
 
+        return getWaysCoins(n,amount)
         
-        for i in range(n+1):
-            
-            for j in range(amt+1):
-                    
-                if i == 0:
-
-                    dp[i][j] = 0
-            
-                if j == 0:
-
-                    dp[i][j] = 1
-                
-        
-        for i in range(1, n+1):
-
-            for j in range(1,amt+1):
-
-                if coins[i-1] <= j:
-
-                    dp[i][j] = dp[i][j - coins[i-1]] + dp[i-1][j] 
-            
-                else:
-
-                    dp[i][j] = dp[i-1][j]
-        
-        return dp[n][amt]
