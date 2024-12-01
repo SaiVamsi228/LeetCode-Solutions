@@ -5,10 +5,10 @@ class Solution:
         n = len(edges1) + 1 
         
         m = len(edges2) + 1 
-        
-        def getAdjList(edges):
+
+        def getAdjList(edges, n):
             
-            adj = [ [] for i in range(len(edges)+1)]
+            adj = [ [] for i in range(n)]
             
             for u,v in edges:
                 
@@ -17,75 +17,52 @@ class Solution:
                 adj[v].append(u)
             
             return adj
-        
-        adj1 = getAdjList(edges1)
-        
-        adj2 = getAdjList(edges2)
 
-
-
-        steps = 0
-
-        dist_arr_2 = [0 for src in range(m)]
-
-        for src in range(m):
+        def getNeighboursAtDistK(adj, n, k):
+            
+            dist = [ 0 for i in range(n)]
 
             q = deque()
 
-            q.append((src,0, -1))
-            
+            steps = 0
+
+            parent = -1
+
+            for src in range(n):
+
+                q.append((src, steps, parent, src))
+
             while q :
 
-                node, steps, parent = q.popleft()
-
-                if steps <= k - 1 :
-
-                    dist_arr_2[src] += 1
-
-                for neighbour in adj2[node] :
-
-                    if neighbour == parent:
-
-                        continue
-
-                    if steps + 1 <= k - 1:
-
-                        q.append((neighbour, steps + 1, node))
-
-        dist_arr_1 = [0 for i in range(n)]
-
-        for src in range(n):
-
-            q = deque()
-
-            q.append((src,0, -1))
-            
-            while q :
-
-                node, steps, parent = q.popleft()
+                node, steps , parent , src = q.popleft()
 
                 if steps <= k :
 
-                    dist_arr_1[src] += 1
-
-                for neighbour in adj1[node] :
+                    dist[src] += 1
+                
+                for neighbour in adj[node]:
 
                     if neighbour == parent :
 
                         continue
 
                     if steps + 1 <= k :
-                        
-                        q.append((neighbour, steps + 1, node))
+
+                        q.append((neighbour, steps + 1 , node, src))
+            
+            return dist
         
-        ans = dist_arr_1
+        adj1 = getAdjList(edges1, n)
+        
+        adj2 = getAdjList(edges2, m)
+
+        dist_arr_1 = getNeighboursAtDistK(adj1,n,k )
+        dist_arr_2 = getNeighboursAtDistK(adj2,m, k-1)
 
         mx = max(dist_arr_2)
-        
-        # print(dist_arr_1,mx)
 
-        for i,a in enumerate(ans):
+        for i,a in enumerate(dist_arr_1):
 
-            ans[i] += mx
+            dist_arr_1[i] += mx
 
-        return ans
+        return dist_arr_1
