@@ -3,45 +3,23 @@ class Solution:
 
         rows = len(triangle)
         
-        def isValid(row,col):
+        dp = [[float('inf') for j in range(i+1)] for i in range(rows)]
 
-            return 0 <= row < rows and 0 <= col < row + 1
-        
-        def getMinTotal(m,n):
+        for j in range(rows):
 
-            if m == rows - 1 :
+            dp[rows - 1][j] = triangle[rows-1][j]
 
-                return triangle[m][n]
+        for i in range(rows-1 -1,-1,-1):
 
-            mini = float('inf')
+            for j in range(i+1):
 
-            if dp[m][n] != -1 :
+                crossRightSum = triangle[i][j] + dp[i+1][j+1]
 
-                return dp[m][n]
-
-            # go Up
-
-            if isValid(m+1,n):
-
-                aboveSum = triangle[m][n] + getMinTotal(m+1,n)
-
-                mini = min(mini, aboveSum)
-
-            # go Cross Left 
-
-            if isValid(m+1,n+1):
-
-                crossLeftSum = triangle[m][n] + getMinTotal(m+1,n+1)
-
-                mini = min(mini, crossLeftSum)
+                bottomSum = triangle[i][j] + dp[i+1][j]
             
-            dp[m][n] = mini
-
-            return dp[m][n]
+                dp[i][j] = min(crossRightSum, bottomSum)
         
-        dp = [[-1 for j in range(i+1)] for i in range(rows)]
-
-        return getMinTotal(0,0)
+        return dp[0][0]
         
 
 
