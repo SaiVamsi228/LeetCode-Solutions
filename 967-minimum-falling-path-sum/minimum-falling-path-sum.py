@@ -5,30 +5,32 @@ class Solution:
 
         cols = len(matrix[0])
 
-        dp = [ [float('inf') for i in range(cols)] for j in range(rows)]
-
-        dp[0] = matrix[0]
+        dp = matrix[0].copy()
 
         for i in range(1,rows):
+
+            new_dp = [float('inf') for i in range(cols)]
 
             for j in range(cols):
                 
                 if j - 1 >= 0:
                     
-                    crossLeftSum = matrix[i][j] + dp[i-1][j-1]
+                    crossLeftSum = matrix[i][j] + dp[j-1]
 
-                    dp[i][j] = min(dp[i][j], crossLeftSum)
+                    new_dp[j] = min(new_dp[j], crossLeftSum)
 
-                aboveSum = matrix[i][j] + dp[i-1][j]
+                aboveSum = matrix[i][j] + dp[j]
 
-                dp[i][j] = min(dp[i][j], aboveSum)
+                new_dp[j] = min(new_dp[j], aboveSum)
 
                 if j + 1 < cols:
 
-                    crossRightSum = matrix[i][j] + dp[i-1][j+1]
+                    crossRightSum = matrix[i][j] + dp[j+1]
 
-                    dp[i][j] = min(dp[i][j], crossRightSum)
+                    new_dp[j] = min(new_dp[j], crossRightSum)
 
-        return min(dp[rows-1])
+            dp = new_dp
+
+        return min(dp)
 
 
