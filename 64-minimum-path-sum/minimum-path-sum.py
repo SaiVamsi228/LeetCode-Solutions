@@ -5,43 +5,24 @@ class Solution:
 
         cols = len(grid[0])
         
-        def isValid(row, col):
+        dp = [ [float('inf') for i in range(cols)] for j in range(rows)]
 
-            return 0 <= row < rows and 0 <= col < cols
-        
-        def getMinPathSum(m,n):
+        dp[0][0] = grid[0][0]
 
-            if m == 0 and n == 0:
+        for i in range(rows):
 
-                return grid[m][n]
-            
-            if dp[m][n] != -1 :
+            for j in range(cols):
+                
+                if i == 0 and j == 0:
 
-                return dp[m][n]
-            
-            mini = float('inf')
+                    continue
+                
+                leftSum = grid[i][j] + dp[i][j-1]
 
-            # go left
+                aboveSum = grid[i][j] + dp[i-1][j]
 
-            if isValid(m, n-1):
+                dp[i][j] = min(leftSum, aboveSum)
 
-                leftSum = grid[m][n] + getMinPathSum(m,n-1)
-
-                mini = min(mini, leftSum)
-            
-            # go Up
-            if isValid(m-1,n):
-
-                upSum = grid[m][n] + getMinPathSum(m-1,n)
-
-                mini = min(mini, upSum)
-            
-            dp[m][n] = mini
-
-            return dp[m][n]
-        
-        dp = [ [-1 for i in range(cols)] for j in range(rows)]
-
-        return getMinPathSum(rows-1,cols-1)
+        return dp[rows-1][cols-1]
 
 
