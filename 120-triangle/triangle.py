@@ -39,17 +39,7 @@ class Solution:
 
             return dp[m][n]
         
-        dp = []
-
-        for i in range(rows):
-
-            curRow = []
-
-            for j in range(i+1):
-
-                curRow.append(-1)
-
-            dp.append(curRow)
+        dp = [[-1 for j in range(i+1)] for i in range(rows)]
 
         return getMinTotal(0,0)
         
