@@ -1,44 +1,32 @@
 class Solution:
     def minCost(self, n: int, cuts: List[int]) -> int:
 
-        def getMinCost(i,j):
+        c = len(cuts)
 
-            if i >= j :
-
-                return 0
-            
-            if (i,j) in hMap :
-
-                return hMap[(i,j)]
-            
-            miniCost = float('inf')
-            
-            cutHappened = False
-
-            for k in cuts:
-
-                if i + 1 <= k  <= j - 1:
-
-                    if not cutHappened :
-
-                        cutHappened = True
-
-                    curCost = j - i 
-
-                    costIncurred = curCost + getMinCost(i,k) + getMinCost(k,j)
-
-                    miniCost = min(miniCost, costIncurred)
-            
-            if cutHappened == False:
-
-                return 0 # if no cuts are required
-
-            hMap[(i,j)] = miniCost
-
-            return hMap[(i,j)]
+        cuts = [0] + cuts + [n]
         
-        cuts = set(cuts)
+        cuts.sort()
+        
+        # Create a 2D DP table initialized with zeros
+        dp = [[0] * (c + 2) for _ in range(c + 2)]
 
-        hMap = {}
+        # Calculate the minimum cost using dynamic programming
+        for i in range(c, 0, -1):
+            for j in range(1, c + 1):
+                if i > j:
+                    continue
+                
+                mini = float('inf')
+                
+                for ind in range(i, j + 1):
+                    ans = cuts[j + 1] - cuts[i - 1] + dp[i][ind - 1] + dp[ind + 1][j]
+                    mini = min(mini, ans)
+                
+                dp[i][j] = mini
+        
+        return dp[1][c]
 
-        return getMinCost(0,n)
+                    
+            
+
+            
