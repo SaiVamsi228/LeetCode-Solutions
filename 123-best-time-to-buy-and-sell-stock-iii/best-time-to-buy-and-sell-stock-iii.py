@@ -5,7 +5,7 @@ class Solution:
 
         def getMaxProfit(ind, buy, trans):
 
-            if trans == -1:
+            if trans == 3:
 
                 return 0
 
@@ -19,9 +19,9 @@ class Solution:
         
             if buy == 0: # buy or skip
 
-                if trans >= 1:
+                if trans < 2:
 
-                    profit = max(-prices[ind] + getMaxProfit(ind + 1, 1, trans - 1 ) , 0 + getMaxProfit(ind+1, 0, trans))
+                    profit = max(-prices[ind] + getMaxProfit(ind + 1, 1, trans + 1 ) , 0 + getMaxProfit(ind+1, 0, trans))
 
                 else:
 
@@ -38,7 +38,7 @@ class Solution:
         
         dp = [[ [-1 for ind in range(n+1)] for buy in range(2)] for trans in range(2+1)]
 
-        return getMaxProfit(0,0,2)
+        return getMaxProfit(0,0,0)
 
                 
 
