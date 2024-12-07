@@ -6,6 +6,12 @@ class Solution:
         if n == 1 :
 
             return 0
+
+        # to compute [6,1,3,2,4,7] it automatically calculates profit on the ending day
+
+        prices = prices + [0] 
+
+        n = len(prices)
         
         max_profit = 0
 
@@ -26,12 +32,6 @@ class Solution:
                 maxi = max(maxi,prices[i])
 
             cur_profit = maxi - mini
-        
-        # if the stock price is increasing only
-
-        if cur_profit > 0:
-
-            max_profit += cur_profit
         
         return max_profit
 
