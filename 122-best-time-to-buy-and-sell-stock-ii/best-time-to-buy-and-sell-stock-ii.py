@@ -2,21 +2,20 @@ class Solution:
     def maxProfit(self, prices: List[int]) -> int:
         
         n = len(prices)
-        
-        ahead = [ -1 for j in range(2)]
 
-        cur = [-1 for i in range(2)]
+        aheadNotBuy, aheadBuy = -1, -1
 
-        ahead[0] = ahead[1] = 0
+        curNotBuy, curBuy = -1, -1
+
+        aheadNotBuy = aheadBuy = 0
         
         for ind in reversed(range(n)): 
 
-            cur[0] = max(-prices[ind] + ahead[1] , 0 + ahead[0]) # buy or dont do any
+            curNotBuy = max(-prices[ind] + aheadBuy , 0 + aheadNotBuy) # buy or dont do any
             
-            cur[1] = max(prices[ind] + ahead[0] , 0 + ahead[1]) # sell or dont do any
+            curBuy = max(prices[ind] + aheadNotBuy, 0 + aheadBuy) # sell or dont do any
             
-            ahead[0], ahead[1] = cur[0] , cur[1]
+            aheadNotBuy, aheadBuy = curNotBuy , curBuy
 
-
-        return cur[0]
+        return curNotBuy
 
