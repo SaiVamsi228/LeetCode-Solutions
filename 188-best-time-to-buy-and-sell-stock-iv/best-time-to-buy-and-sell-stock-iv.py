@@ -1,23 +1,11 @@
 class Solution:
-    def maxProfit(self, k: int, prices: List[int]) -> int:
+    def maxProfit(self,k, prices: list[int]) -> int:
         
         n = len(prices)
 
-        dp = [[ [-1 for ind in range(n+1)] for buy in range(2)] for trans in range(k+1+1)]
+        ahead = [[0 for buy in range(2)] for trans in range(k+1+1)]
 
-        for ind in range(n+1):
-
-            for trans in range(k+1+1):
-
-                for buy in range(2):
-
-                    if ind == n :
-
-                        dp[trans][buy][ind] = 0
-                    
-                    if trans == 3 :
-
-                        dp[trans][buy][ind] = 0
+        cur = [[0 for buy in range(2)] for trans in range(k+1+1)]
 
         for ind in reversed(range(n)):
 
@@ -27,14 +15,19 @@ class Solution:
 
                     if buy == 0: # buy or skip
                     
-                        profit = max(-prices[ind] + dp[trans+1][1][ind + 1] , 0 + dp[trans][0][ind+1])
+                        profit = max(-prices[ind] + ahead[trans+1][1] , 0 + ahead[trans][0])
                     
                     elif buy == 1: # sell or skip
 
-                        profit = max( prices[ind] + dp[trans][0][ind + 1] , 0 + dp[trans][1][ind + 1])
+                        profit = max( prices[ind] + ahead[trans][0] , 0 + ahead[trans][1])
 
                     
-                    dp[trans][buy][ind] = profit
+                    cur[trans][buy] = profit
+            
+            ahead = cur.copy()
 
 
-        return dp[0][0][0]
+        return ahead[0][0]
+
+                
+
