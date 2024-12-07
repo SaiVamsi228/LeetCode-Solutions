@@ -1,39 +1,31 @@
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
-
-        n = len(prices)
-
-        if n == 1 :
-
-            return 0
-
-        # to compute [6,1,3,2,4,7] it automatically calculates profit on the ending day
-
-        prices = prices + [0] 
-
-        n = len(prices)
         
-        max_profit = 0
+        n = len(prices)
 
-        maxi, mini = prices[0], prices[0]
+        def getMaxProfit(ind,buy):
 
-        cur_profit = maxi - mini
+            if ind == n:
 
-        for i in range(1,n):
-
-            if prices[i] < maxi :
-
-                max_profit += cur_profit
-
-                mini = maxi = prices[i]
+                return 0
             
-            elif prices[i] >= maxi :
+            if dp[buy][ind] != -1 :
 
-                maxi = max(maxi,prices[i])
+                return dp[buy][ind]
+            
+            if buy == 0 :
 
-            cur_profit = maxi - mini
+                ans = max(-prices[ind] + getMaxProfit(ind+1,1) , 0 + getMaxProfit(ind+1,0)) # buy or dont do any
+            
+            if buy == 1:
+
+                ans = max(prices[ind] + getMaxProfit(ind+1,0) , 0 + getMaxProfit(ind+1,1)) # sell or dont do any
+
+            dp[buy][ind] = ans
+
+            return ans
         
-        return max_profit
+        dp = [ [-1 for _ in range(n)] for j in range(2)]
 
-
+        return getMaxProfit(0,0)
 
