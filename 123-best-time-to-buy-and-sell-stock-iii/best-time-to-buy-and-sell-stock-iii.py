@@ -3,42 +3,41 @@ class Solution:
         
         n = len(prices)
 
-        def getMaxProfit(ind, buy, trans):
+        dp = [[ [-1 for ind in range(n+1)] for buy in range(2)] for trans in range(3+1)]
 
-            if trans == 3:
+        for ind in range(n+1):
 
-                return 0
+            for trans in range(3+1):
 
-            if ind == n :
+                for buy in range(2):
 
-                return 0
-            
-            if dp[trans][buy][ind] != -1:
+                    if ind == n :
 
-                return dp[trans][buy][ind]
-        
-            if buy == 0: # buy or skip
+                        dp[trans][buy][ind] = 0
+                    
+                    if trans == 3 :
 
-                if trans < 2:
+                        dp[trans][buy][ind] = 0
 
-                    profit = max(-prices[ind] + getMaxProfit(ind + 1, 1, trans + 1 ) , 0 + getMaxProfit(ind+1, 0, trans))
+        for ind in reversed(range(n)):
 
-                else:
+            for trans in reversed(range(3)):
 
-                    profit = 0 
-            
-            elif buy == 1: # sell or skip
+                for buy in range(2):
 
-                profit = max( prices[ind] + getMaxProfit(ind + 1 , 0, trans) , 0 + getMaxProfit(ind + 1, 1 , trans))
+                    if buy == 0: # buy or skip
+                    
+                        profit = max(-prices[ind] + dp[trans+1][1][ind + 1] , 0 + dp[trans][0][ind+1])
+                    
+                    elif buy == 1: # sell or skip
 
-            
-            dp[trans][buy][ind] = profit
+                        profit = max( prices[ind] + dp[trans][0][ind + 1] , 0 + dp[trans][1][ind + 1])
 
-            return profit
-        
-        dp = [[ [-1 for ind in range(n+1)] for buy in range(2)] for trans in range(2+1)]
+                    
+                    dp[trans][buy][ind] = profit
 
-        return getMaxProfit(0,0,0)
+
+        return dp[0][0][0]
 
                 
 
