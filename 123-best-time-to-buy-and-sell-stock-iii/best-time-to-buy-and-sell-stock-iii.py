@@ -3,23 +3,11 @@ class Solution:
         
         n = len(prices)
 
-        dp = [[ [-1 for ind in range(n+1)] for buy in range(2)] for trans in range(3+1)]
-
-        for ind in range(n+1):
-
-            for trans in range(3+1):
-
-                for buy in range(2):
-
-                    if ind == n :
-
-                        dp[trans][buy][ind] = 0
-                    
-                    if trans == 3 :
-
-                        dp[trans][buy][ind] = 0
+        dp = [[0 for buy in range(2)] for trans in range(3+1)]
 
         for ind in reversed(range(n)):
+
+            new_dp = [[-1 for buy in range(2)] for trans in range(3+1)]
 
             for trans in reversed(range(3)):
 
@@ -27,17 +15,19 @@ class Solution:
 
                     if buy == 0: # buy or skip
                     
-                        profit = max(-prices[ind] + dp[trans+1][1][ind + 1] , 0 + dp[trans][0][ind+1])
+                        profit = max(-prices[ind] + dp[trans+1][1] , 0 + dp[trans][0])
                     
                     elif buy == 1: # sell or skip
 
-                        profit = max( prices[ind] + dp[trans][0][ind + 1] , 0 + dp[trans][1][ind + 1])
+                        profit = max( prices[ind] + dp[trans][0] , 0 + dp[trans][1])
 
                     
-                    dp[trans][buy][ind] = profit
+                    new_dp[trans][buy] = profit
+            
+            dp = new_dp
 
 
-        return dp[0][0][0]
+        return dp[0][0]
 
                 
 
