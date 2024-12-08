@@ -3,24 +3,21 @@ class Solution:
         
         n = len(prices)
         
-        dp = [ [-1 for _ in range(n+1)] for j in range(2)]
+        ahead = [ -1 for j in range(2)]
 
-        dp[0][n] = dp[1][n] = 0
+        cur = [-1 for i in range(2)]
 
+        ahead[0] = ahead[1] = 0
         
-        for ind in reversed(range(n)): # ind went from 0 to n-1 but ofc initialization is taken place for ind == n
-            for buy in range(2):
+        for ind in reversed(range(n)): 
 
-                if buy == 0 :
-
-                    ans = max(-prices[ind] - fee + dp[1][ind+1] , 0 + dp[0][ind+1]) # buy or dont do any
-                
-                if buy == 1:
-
-                    ans = max(prices[ind] + dp[0][ind+1] , 0 + dp[1][ind+1]) # sell or dont do any
-
-                dp[buy][ind] = ans
+            cur[0] = max(-prices[ind] - fee + ahead[1] , 0 + ahead[0]) # buy or dont do any
             
+            cur[1] = max(prices[ind] + ahead[0] , 0 + ahead[1]) # sell or dont do any
+            
+            ahead[0], ahead[1] = cur[0] , cur[1]
 
-        return dp[0][0]
+
+        return cur[0]
+
 
