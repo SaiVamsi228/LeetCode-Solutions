@@ -5,15 +5,9 @@ class Solution:
         
         ahead = [ [ 0 for buy in range(2)] for coolTime in range(2)]
 
-        for buy in range(2):
-
-            for coolTime in range(2) :
-
-                ahead[coolTime][buy] = 0
+        cur_day = [ [ -1 for buy in range(2)] for coolTime in range(2)]
         
         for day in reversed(range(n)):
-
-            cur_day = [ [ -1 for buy in range(2)] for coolTime in range(2)]
 
             for buy in reversed(range(2)):
 
@@ -39,6 +33,5 @@ class Solution:
             
             ahead = cur_day[:]
 
-    
         return ahead[0][0]
             
