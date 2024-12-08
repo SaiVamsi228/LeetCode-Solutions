@@ -3,37 +3,38 @@ class Solution:
 
         n = len(prices)
         
-        def getMaxProfit(day,buy,coolingTime):
-
-            if day == n :
-
-                return 0
-            
-            if dp[coolingTime][buy][day] != -1:
-
-                return dp[coolingTime][buy][day]
-            
-            if buy == 0: # buy or leave
-                
-                # before buying check cooling time
-
-                if coolingTime == 0:
-
-                    profit = max( -prices[day] + getMaxProfit(day + 1, 1, 0), 0 + getMaxProfit(day + 1, 0, 0 ))
-                
-                else:
-
-                    profit = 0 + getMaxProfit(day +1 , 0, coolingTime - 1)
-
-            if buy == 1: #sell or leave
-                
-                profit = max(prices[day] + getMaxProfit(day + 1, 0, 1 ) , 0 + getMaxProfit(day+1, 1, 0))
-            
-            dp[coolingTime][buy][day] = profit
-
-            return profit
-        
         dp = [ [ [ -1 for day in range(n+1)] for buy in range(2)] for coolTime in range(2)]
+
+        for buy in range(2):
+
+            for coolTime in range(2) :
+
+                dp[coolTime][buy][n] = 0
+        
+        for day in reversed(range(n)):
+
+            for buy in reversed(range(2)):
+
+                for coolTime in reversed(range(2)) :
+
+                    if buy == 0: # buy or leave
+                
+                        # before buying check cooling time
+
+                        if coolTime == 0:
+
+                            profit = max( -prices[day] + dp[0][1][day+1] , 0 + dp[0][0][day+1])
+                        
+                        else:
+
+                            profit = 0 + dp[coolTime - 1][0][day+1]
+
+                    if buy == 1: #sell or leave
+                        
+                        profit = max(prices[day] + dp[1][0][day+1] , 0 + dp[0][1][day+1])
+
+                    dp[coolTime][buy][day] = profit
+
     
-        return getMaxProfit(0,0,0)
+        return dp[0][0][0]
             
