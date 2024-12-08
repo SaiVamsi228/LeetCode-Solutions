@@ -3,15 +3,17 @@ class Solution:
 
         n = len(prices)
         
-        dp = [ [ [ -1 for day in range(n+1)] for buy in range(2)] for coolTime in range(2)]
+        ahead = [ [ 0 for buy in range(2)] for coolTime in range(2)]
 
         for buy in range(2):
 
             for coolTime in range(2) :
 
-                dp[coolTime][buy][n] = 0
+                ahead[coolTime][buy] = 0
         
         for day in reversed(range(n)):
+
+            cur_day = [ [ -1 for buy in range(2)] for coolTime in range(2)]
 
             for buy in reversed(range(2)):
 
@@ -23,18 +25,20 @@ class Solution:
 
                         if coolTime == 0:
 
-                            profit = max( -prices[day] + dp[0][1][day+1] , 0 + dp[0][0][day+1])
+                            profit = max( -prices[day] + ahead[0][1] , 0 + ahead[0][0])
                         
                         else:
 
-                            profit = 0 + dp[coolTime - 1][0][day+1]
+                            profit = 0 + ahead[coolTime - 1][0]
 
                     if buy == 1: #sell or leave
                         
-                        profit = max(prices[day] + dp[1][0][day+1] , 0 + dp[0][1][day+1])
+                        profit = max(prices[day] + ahead[1][0] , 0 + ahead[0][1])
 
-                    dp[coolTime][buy][day] = profit
+                    cur_day[coolTime][buy] = profit
+            
+            ahead = cur_day[:]
 
     
-        return dp[0][0][0]
+        return ahead[0][0]
             
