@@ -33,7 +33,7 @@ class Solution:
 
             return profit
         
-        dp = [ [ [ -1 for day in range(n+1)] for buy in range(2+1)] for coolTime in range(2)]
+        dp = [ [ [ -1 for day in range(n+1)] for buy in range(2)] for coolTime in range(2)]
     
         return getMaxProfit(0,0,0)
             
