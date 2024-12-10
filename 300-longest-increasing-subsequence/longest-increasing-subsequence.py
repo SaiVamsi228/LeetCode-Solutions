@@ -1,25 +1,6 @@
+from bisect import bisect_left
 class Solution:
     def lengthOfLIS(self, nums: List[int]) -> int:
-        
-        def bin_search(arr,num):
-        
-            left = 0
-            
-            right = len(arr) - 1
-            
-            while left <= right :
-                
-                mid = (left + right)// 2
-                
-                if num <= arr[mid]:
-                    
-                    right = mid - 1
-                
-                else:
-                    
-                    left = mid + 1
-            
-            return left
         
         res = [nums[0]]
         
@@ -35,7 +16,7 @@ class Solution:
             
             else:
                 
-                getPos = bin_search(res,num)
+                getPos = bisect_left(res,num)
         
                 res[getPos] = num
         
