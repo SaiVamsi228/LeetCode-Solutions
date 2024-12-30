@@ -1,44 +1,95 @@
-class HelperMethod:
-    # Find the next smaller element
-    def nextSmaller(self, arr):
-        n = len(arr)
-        nse = [n] * n
-        stk = []
-        for i in range(n - 1, -1, -1):
-            while stk and arr[stk[-1]] > arr[i]:
-                stk.pop()
-            nse[i] = stk[-1] if stk else n
-            stk.append(i)
-        return nse
-
-    # Find the previous smaller element
-    def previousSmaller(self, arr):
-        n = len(arr)
-        pse = [-1] * n
-        stk = []
-        for i in range(n):
-            while stk and arr[stk[-1]] >= arr[i]:
-                stk.pop()
-            pse[i] = stk[-1] if stk else -1
-            stk.append(i)
-        return pse
-
-
 class Solution:
-    def sumSubarrayMins(self, arr):
-        helper = HelperMethod()  # Create an object to access helper methods
-        nextSE = helper.nextSmaller(arr)
-        prevSE = helper.previousSmaller(arr)
-        total = 0
-        mod = int(1e9 + 7)
+    def sumSubarrayMins(self, arr: List[int]) -> int:
+        
+        n = len(arr)
 
-        for i in range(len(arr)):
-            left = i - prevSE[i]
-            right = nextSE[i] - i
-            total = (total + left * right * arr[i]) % mod
+        nsl = [-1 for i in range(n)]
 
-        return total
+        nsr = [n for i in range(n)]
 
-# Usage example:
-# solution = Solution()
-# print(solution.sumSubarrayMins([3,1,2,4]))  # Example input
+        st = []
+
+        for i in range(n):
+
+            if not st:
+
+                nsl[i] = -1
+            
+            elif st and st[-1][0] < arr[i]:
+
+                nsl[i] = st[-1][1]
+            
+            elif st and st[-1][0] >= arr[i]:
+
+                while st and st[-1][0] >= arr[i]:
+
+                    st.pop()
+                
+                if st :
+
+                    nsl[i] = st[-1][1]
+                
+                else:
+
+                    nsl[i] = -1
+                
+            st.append((arr[i],i))
+        
+        st = []
+
+        for i in reversed(range(n)):
+
+            if not st:
+
+                nsr[i] = n
+            
+            elif st and st[-1][0] < arr[i]:
+
+                nsr[i] = st[-1][1]
+            
+            elif st and st[-1][0] >= arr[i]:
+                
+                # IMP: WE ARE NOT GOING BEYOND DUPLI
+                # STOP BEFORE DUPLI WHILE GOING BACK
+                while st and st[-1][0] > arr[i]: 
+
+                    st.pop()
+                
+                if st :
+
+                    nsr[i] = st[-1][1]
+                
+                else:
+
+                    nsr[i] = n
+                
+            st.append((arr[i],i))
+        
+        freq = [0 for i in range(n)]
+
+        for i in range(n):
+
+            cur_ind = i
+
+            r_ind = nsr[i]
+
+            l_ind = nsl[i]
+
+            left = cur_ind - l_ind
+
+            right = r_ind - cur_ind
+
+            freq[i] = left * right
+        
+        ans = 0
+
+        for i in range(n):
+
+            ans = (ans + freq[i] * arr[i]) % (10**9 + 7)
+
+        return ans
+        
+
+        
+
+            
