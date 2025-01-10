@@ -51,20 +51,21 @@ class Solution:
 
                             stack.pop()
                         
+                        # if left one is moving right and same size => both must explode
                         if stack and stack[-1] > 0 and abs(stack[-1]) == abs(asteroid):
 
                             stack.pop()
 
-                        
+                        # if left is moving right and left is bigger => my current one explodes
                         elif stack and stack[-1] > 0 and abs(stack[-1]) > abs(asteroid):
 
                             continue
                         
+                        # if left is moving left 
                         else:
                             
                             stack.append(asteroid)
                 
-
         return stack 
 
 
