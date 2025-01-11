@@ -31,16 +31,17 @@ class Solution:
                 
                 st.append(num[i])
         
+        while k and st : # if it doesnt satisfy our cond and still k > 0
+            st.pop()
+
+            k -= 1
+            
         ans = "".join(st)
         
         ans = ans.lstrip("0")
 
-        if k :
+        if ans == "":
 
-            ans = ans[:-k]
+            return "0"
 
-            print(ans)
-
-        return ans if ans != "" else "0"
-
-            
+        return ans 
