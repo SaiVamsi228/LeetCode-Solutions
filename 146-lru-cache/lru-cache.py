@@ -64,7 +64,11 @@ class LRUCache:
 
             self.remove(node)
 
-            node.val = value
+            node = Node(key,value)
+
+            self.add(node)
+
+            self.cache[key] = node
 
         else:
 
@@ -76,11 +80,11 @@ class LRUCache:
 
                 self.remove(node)
 
-        node = Node(key,value)
+            node = Node(key,value)
 
-        self.add(node)
+            self.add(node)
 
-        self.cache[key] = node
+            self.cache[key] = node
 
 # Your LRUCache object will be instantiated and called as such:
 # obj = LRUCache(capacity)
