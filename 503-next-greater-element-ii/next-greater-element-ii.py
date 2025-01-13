@@ -1,25 +1,46 @@
 class Solution:
+    def getNGR(self, nums, n) :
+        
+        ngr = [-1 for i in range(n)]
+        
+        stack = []
+        
+        for i in reversed(range(n)):
+            
+            if not stack:
+                
+                ngr[i] = -1
+            
+            elif stack and stack[-1] > nums[i]:
+                
+                ngr[i] = stack[-1]
+                
+            elif stack and stack[-1] <= nums[i]:
+                
+                while stack and stack[-1] <= nums[i]:
+                    
+                    stack.pop()
+                
+                if not stack:
+                    
+                    ngr[i] = -1
+                
+                else:
+                    
+                    ngr[i] = stack[-1]
+                
+            stack.append(nums[i])
+        
+        return ngr
+
     def nextGreaterElements(self, nums: List[int]) -> List[int]:
         
-        newNums = nums + nums
+        circArr = nums + nums
 
-        n = len(newNums)
+        n = 2 * len(nums)
 
-        nge = [0 for i in range(n//2)]
+        ngrCircArr = self.getNGR(circArr,n)
 
-        for i in range(n//2):
-
-            for j in range(i+1,n):
-
-                if newNums[j] > newNums[i]:
-
-                    nge[i] = newNums[j]
-
-                    break
-            
-            else:
-
-                nge[i] = -1
-
-        return nge
-
+        res = ngrCircArr[:n//2]
+        
+        return res
