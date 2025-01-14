@@ -1,18 +1,17 @@
 class Solution:
     def rotateString(self, s: str, goal: str) -> bool:
         
-        n = len(s)
+        if len(s) != len(goal):
 
-        goal = [x for x in goal]
+            return False
+            
+        circString = s + s
 
-        arr = [ x for x in s]
+        isRotated = circString.find(goal) 
 
-        for i in range(n):
+        if isRotated == -1 :
 
-            arr.append(arr.pop(0))
-
-            if arr == goal:
-
-                return True
+            return False
         
-        return False
+        return True
+        
