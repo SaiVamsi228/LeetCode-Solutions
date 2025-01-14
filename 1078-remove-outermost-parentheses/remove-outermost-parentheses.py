@@ -1,27 +1,36 @@
 class Solution:
     def removeOuterParentheses(self, s: str) -> str:
         
-        cnt = 0
-
+        st = []
         res = []
 
-        for char in s:
+        for char in s :
 
+            # if open br
             if char == "(":
 
-                cnt += 1
+                if st:
 
-                if cnt > 1 :
+                    st.append("(")
 
                     res.append("(")
+                
+                else:
+
+                    st.append("(")
             
-            if char == ")":
+            # if closed br
+            else:
 
-                cnt -= 1
-
-                if cnt > 0:
+                if len(st) > 1 :
 
                     res.append(")")
+
+                    st.pop()
+                
+                elif len(st) == 1 :
+
+                    st.pop()
         
         return "".join(res)
-
+            
