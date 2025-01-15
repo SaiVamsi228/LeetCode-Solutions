@@ -1,24 +1,36 @@
-from collections import defaultdict
+from collections import Counter
 class Solution:
     def frequencySort(self, s: str) -> str:
+        
+        letter_count = Counter(s)
 
-        hash_map = defaultdict(int)
+        hp = []
 
-        for char in s:
+        heapify(hp)
 
-            hash_map[char] += 1
-            
-        hash_map = dict(reversed(sorted(hash_map.items(), key = lambda item: item[1])))
+        for char,freq in letter_count.items():
 
-        ans = []
+            heappush(hp,(-freq,char))
+        
+        res = []
 
-        for char, freq in hash_map.items():
+        print(hp)
+
+        while hp:
+
+            freq, char = heappop(hp)
+
+            freq = -1 * freq
 
             for _ in range(freq):
 
-                ans.append(char)
+                res.append(char)
+        
+        return "".join(res)
 
 
-        return "".join(ans)
 
 
+
+
+        
