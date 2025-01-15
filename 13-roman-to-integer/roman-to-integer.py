@@ -3,28 +3,22 @@ class Solution:
 
         integer_value = {"I": 1, "V": 5, "X": 10, "L": 50, "C": 100, "D": 500, "M": 1000}
 
-        st = []
+        ans = 0
 
         n = len(s)
 
-        for i in reversed(range(n)):
+        for i in range(n):
 
             char = s[i]
 
-            if not st:
+            if i == n-1 or integer_value[char] >= integer_value[s[i+1]]:
 
-                st.append(integer_value[char])
-            
-            elif st and integer_value[char] < st[-1]:
+                ans += integer_value[char]
 
-                big = st.pop()
+            elif integer_value[char] < integer_value[s[i + 1]]:
 
-                new = big - integer_value[char]
+                ans -= integer_value[char]
 
-                st.append(new)
-            
-            elif st and integer_value[char] >= st[-1]:
-
-                st.append(integer_value[char])
         
-        return sum(st)
+        return ans
+            
