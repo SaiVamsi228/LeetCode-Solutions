@@ -1,32 +1,28 @@
 class Solution:
     def minAddToMakeValid(self, s: str) -> int:
+        cnt = 0
+
+        mn = 0
         
-        o = 0
-
-        c = 0
-
-        moves = 0
-
         for char in s:
 
             if char == "(":
 
-                o += 1
+                cnt += 1
             
             else:
 
-                if o :
+                cnt -= 1
 
-                    o -= 1
-                
-                else:
+            if cnt < 0:
 
-                    moves += 1
-        
-        if o :
+                cnt = 0 
 
-            moves += o
-        
-        return moves
+                mn += 1
             
         
+        if cnt > 0:
+
+            mn += cnt
+        
+        return mn
