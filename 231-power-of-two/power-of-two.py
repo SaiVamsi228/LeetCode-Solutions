@@ -1,13 +1,10 @@
 class Solution:
     def isPowerOfTwo(self, n: int) -> bool:
         
-        for i in range(31):
+        if n <= 0:
 
-            ans  = 2 ** i
-
-            if ans == n:
-
-                return True
+            return False
+        
+        else:
             
-        return False
-
+            return (n & (n-1)) == 0 # this means no. of set bits = 1 bcz after that the number becomes zero
