@@ -1,22 +1,13 @@
 class Solution:
     def isPowerOfTwo(self, n: int) -> bool:
         
-        if n == 0:
+        for i in range(31):
 
-            return False
-        
-        if n > 0 :
+            ans  = 2 ** i
 
-            no_of_set_bits = 1
+            if ans == n:
 
-            while n & (n-1) :
+                return True
+            
+        return False
 
-                no_of_set_bits += 1
-                
-                n &= n - 1
-
-            return no_of_set_bits == 1
-        
-        else:
-
-            return False
