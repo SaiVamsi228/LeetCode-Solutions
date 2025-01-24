@@ -1,22 +1,25 @@
 class Solution:
-    def generate(self, numRows: int) -> list[list[int]]:
+    def generate(self, numRows: int) -> List[List[int]]:
+        ans = [[0 for j in range(i+1)] for i in range(numRows)]
 
-        res = []
+        for i in range(numRows):
 
-        for length in range(1,numRows+1):
+            row = ans[i]
 
-            arr = [0 for i in range(length)]
+            for j in range(i+1):
 
-            arr[0] = arr[-1] = 1
+                if j == 0 or j == i :
 
-            for j in range(length):
-
-                if j == 0 or j == length - 1 :
+                    row[j] = 1
 
                     continue
                 
-                arr[j] = res[-1][j] + res[-1][j-1]
-            
-            res.append(arr)
-            
-        return res
+                row[j] = ans[i-1][j] + ans[i-1][j-1]
+        
+        return ans
+
+
+
+
+
+
