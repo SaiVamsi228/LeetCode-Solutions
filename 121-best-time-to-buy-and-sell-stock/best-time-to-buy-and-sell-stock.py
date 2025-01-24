@@ -1,37 +1,34 @@
+# tabulation approach
 class Solution:
-    def maxProfit(self, prices: List[int]) -> int:
-        
-        
-        def getMaxProfit(day,buy):
+    def maxProfit(self, prices: list[int]) -> int:
 
-            if day == n:
-
-                return 0
-            
-            if dp[day][buy] != - float('inf'):
-
-                return dp[day][buy]
-
-            if buy == 0:
-
-                buy_profit = -prices[day] + getMaxProfit(day+1, 1)
-
-                buy_on_other = getMaxProfit(day+1,buy)  
-
-                dp[day][buy] = max(buy_profit, buy_on_other)
-            
-            elif buy == 1:
-
-                sell_profit = prices[day] 
-
-                sell_on_other = getMaxProfit(day+1, buy)
-
-                dp[day][buy] = max(sell_profit, sell_on_other)
-            
-            return dp[day][buy]
-        
         n = len(prices)
+        
+        dp = [[-float('inf') for buy in range(2)] for day in range(n+1)]
 
-        dp = [[-float('inf') for buy in range(2)]for day in range(n)]
+        dp[n][0] = dp[n][1] = 0
 
-        return getMaxProfit(0,0)
+        for day in reversed(range(n)):
+
+            for buy in range(2):
+
+                if buy == 0:
+
+                    buy_profit = -prices[day] + dp[day+1][1]
+
+                    buy_on_other = dp[day+1][buy]  
+
+                    dp[day][buy] = max(buy_profit, buy_on_other)
+                
+                elif buy == 1:
+
+                    sell_profit = prices[day] 
+
+                    sell_on_other = dp[day+1][buy]
+
+                    dp[day][buy] = max(sell_profit, sell_on_other)
+
+        return dp[0][0]
+
+
+
