@@ -4,11 +4,13 @@ class Solution:
         
         n = len(nums)
 
-        dp = [[-float('inf') for start in range(2)] for ind in range(n+1)]
+        dp = [-float('inf') for start in range(2)] 
         
-        dp[1][0] = nums[0]
+        dp[0] = nums[0]
 
-        dp[1][1] = max(0,nums[0])
+        dp[1] = max(0,nums[0])
+
+        cur_dp = [-float('inf') for i in range(2)]
 
         for ind in range(2,n+1):
 
@@ -16,19 +18,22 @@ class Solution:
 
                 if start == 0:
 
-                    start_new_sub_arr = nums[ind-1] + dp[ind-1][1]
+                    start_new_sub_arr = nums[ind-1] + dp[1]
 
-                    start_at_other = dp[ind-1][start]
+                    start_at_other = dp[start]
 
-                    dp[ind][start] = max(start_new_sub_arr, start_at_other)
+                    cur_dp[start] = max(start_new_sub_arr, start_at_other)
                 
                 elif start == 1:
 
                     end_cur_sub_arr = 0
                     
-                    end_at_other = nums[ind-1] + dp[ind-1][start]
+                    end_at_other = nums[ind-1] + dp[start]
 
-                    dp[ind][start] = max(end_cur_sub_arr, end_at_other)
+                    cur_dp[start] = max(end_cur_sub_arr, end_at_other)
+                
+            
+            dp = cur_dp
         
-        return dp[n][0]
+        return dp[0]
                 
