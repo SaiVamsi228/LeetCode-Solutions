@@ -3,42 +3,28 @@ class Solution:
         """
         Do not return anything, modify nums in-place instead.
         """
-
-        red_cnt = 0
-
-        white_cnt = 0
-
-        blue_cnt = 0
-
-        for num in nums:
-
-            if num == 0: red_cnt += 1
-
-            elif num == 1 : white_cnt += 1
-
-            else: blue_cnt += 1
-        
         n = len(nums)
 
-        for i in range(n):
+        low, mid, high = 0, 0, n-1
 
-            if red_cnt :
+        while mid <= high:
 
-                nums[i] = 0
+            if nums[mid] == 0:
 
-                red_cnt -= 1
-            
-            elif white_cnt :
+                nums[low], nums[mid] = nums[mid], nums[low]
 
-                nums[i] = 1
+                low += 1
 
-                white_cnt -= 1
-            
-            else:
+                mid += 1
 
-                nums[i] = 2
+            elif nums[mid] == 1:
 
-                blue_cnt -= 1
-        
-        return nums
-        
+                mid += 1
+
+            elif nums[mid] == 2 :
+
+                nums[mid], nums[high] = nums[high], nums[mid]
+
+                high -= 1
+
+        return nums 
