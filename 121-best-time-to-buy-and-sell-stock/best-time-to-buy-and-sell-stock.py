@@ -1,20 +1,37 @@
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
         
-        mini = prices[0]
-
-        max_profit = 0
-
         n = len(prices)
 
-        for i in range(1,n):
+        buy_price = [0 for i in range(n)]
 
-            cur_stock_price = prices[i]
+        sell_price = [0 for i in range(n)]
 
-            cur_profit = cur_stock_price - mini
+        best_buy_price = float('inf')
 
-            max_profit = max(cur_profit,max_profit)
+        best_sell_price = -float('inf')
 
-            mini = min(mini,prices[i])
+        for i in range(n):
+
+            best_buy_price = min(best_buy_price, prices[i])
+
+            buy_price[i] = best_buy_price
         
-        return max_profit
+        for i in reversed(range(n)):
+
+            best_sell_price = max(best_sell_price, prices[i])
+
+            sell_price[i] = best_sell_price
+        
+        
+        mx_profit = 0
+
+        for day in range(n):
+
+            profit = sell_price[day] - buy_price[day]
+
+            mx_profit = max(mx_profit,profit)
+        
+        return mx_profit
+
+            
