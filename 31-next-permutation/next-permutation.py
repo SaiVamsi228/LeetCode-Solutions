@@ -1,47 +1,51 @@
-from itertools import permutations
 class Solution:
-    def nextPermutation(self, nums: list[int]) -> None:
+    def nextPermutation(self, nums: List[int]) -> None:
         """
         Do not return anything, modify nums in-place instead.
         """
-
         n = len(nums)
 
-        ind = -1
+        pos = -1
 
-        for i in range(n-2,-1,-1):
+        # finding breaking point 
 
-            if nums[i] < nums[i+1] :
+        for i in reversed(range(1,n)):
 
-                ind = i
+            if nums[i-1] < nums[i] :
 
-                break
-        
-        if ind == -1:
-
-            nums.sort()
-
-            return nums
-
-        for i in range(n-1,ind,-1):
-
-            if nums[i] > nums[ind]:
-
-                nums[ind],nums[i] = nums[i], nums[ind]
+                pos = i - 1
 
                 break
         
-        i = ind+1
+        # no more pemutations possible
+        if pos == -1:
 
-        j = n-1
+            return nums.sort()
+        
+        # breaking point is found
 
-        while i < j:
+        # fixing the left number : swap it with the first greater ele than breaking ele from right 
 
-            nums[i] ,nums[j] = nums[j], nums[i]
+        for i in reversed(range(n)):
 
-            i+=1
+            if nums[i] > nums[pos]:
 
-            j-=1
+                nums[i], nums[pos] = nums[pos], nums[i]
+
+                break
+            
+        # left ele is fixed now making the smallest possible number on the right 
+
+        available_ele = nums[pos+1:].copy()
+
+        available_ele.sort()
+
+        for i in range(pos+1,n):
+
+            nums[i] = available_ele[i-pos-1]
         
         return nums
 
+        
+
+        
