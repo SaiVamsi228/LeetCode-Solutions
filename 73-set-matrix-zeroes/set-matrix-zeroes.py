@@ -4,27 +4,67 @@ class Solution:
         Do not return anything, modify matrix in-place instead.
         """
 
-        m , n = len(matrix), len(matrix[0])
+        m = len(matrix)
 
-        row_arr = [0]*m
-        col_arr = [0]*n
+        n = len(matrix[0])
 
-        for row in range(m):
+        is_first_col_zero = False
+        is_first_row_zero = False
+        
+        # checking if first col has 0
 
-            for col in range(n):
+        for i in range(m):
 
-                if matrix[row][col] == 0:
+            if matrix[i][0] == 0:
 
-                    row_arr[row] = 1
+                is_first_col_zero = True
 
-                    col_arr[col] = 1
-    
+                break
+        
+        # checking if first row has 0
 
-        for row in range(m):
+        for j in range(n):
 
-            for col in range(n):
+            if matrix[0][j] == 0 :
 
-                if row_arr[row]==1 or col_arr[col] == 1 :
+                is_first_row_zero = True
 
-                    matrix[row][col] = 0
-        return matrix 
+                break
+
+        for i in range(1,m):
+
+            for j in range(1,n):
+
+                if matrix[i][j] == 0:
+
+                    matrix[0][j] = 0
+
+                    matrix[i][0] = 0
+            
+        
+        for i in range(1,m):
+
+            for j in range(1,n):
+
+                if matrix[i][0] == 0 or matrix[0][j] == 0:
+
+                    matrix[i][j] = 0
+
+        # if first col is zero
+
+        if is_first_col_zero == True :
+            
+            for i in range(m):
+
+                matrix[i][0] = 0
+        
+        # if first row is zero
+
+        if is_first_row_zero == True :
+            
+            for j in range(n):            
+
+                matrix[0][j] = 0
+
+        return matrix
+                
