@@ -1,37 +1,37 @@
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
         
+        
+        def getMaxProfit(day,buy):
+
+            if day == n:
+
+                return 0
+            
+            if dp[day][buy] != - float('inf'):
+
+                return dp[day][buy]
+
+            if buy == 0:
+
+                buy_profit = -prices[day] + getMaxProfit(day+1, 1)
+
+                buy_on_other = getMaxProfit(day+1,buy)  
+
+                dp[day][buy] = max(buy_profit, buy_on_other)
+            
+            elif buy == 1:
+
+                sell_profit = prices[day] 
+
+                sell_on_other = getMaxProfit(day+1, buy)
+
+                dp[day][buy] = max(sell_profit, sell_on_other)
+            
+            return dp[day][buy]
+        
         n = len(prices)
 
-        buy_price = [0 for i in range(n)]
+        dp = [[-float('inf') for buy in range(2)]for day in range(n)]
 
-        sell_price = [0 for i in range(n)]
-
-        best_buy_price = float('inf')
-
-        best_sell_price = -float('inf')
-
-        for i in range(n):
-
-            best_buy_price = min(best_buy_price, prices[i])
-
-            buy_price[i] = best_buy_price
-        
-        for i in reversed(range(n)):
-
-            best_sell_price = max(best_sell_price, prices[i])
-
-            sell_price[i] = best_sell_price
-        
-        
-        mx_profit = 0
-
-        for day in range(n):
-
-            profit = sell_price[day] - buy_price[day]
-
-            mx_profit = max(mx_profit,profit)
-        
-        return mx_profit
-
-            
+        return getMaxProfit(0,0)
