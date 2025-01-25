@@ -4,13 +4,58 @@ class Solution:
         Do not return anything, modify nums1 in-place instead.
         """
 
-        # BRUTE
+        # Optimal
 
-        for i in range(n):
+        i = j = k = 0
 
-            nums1[m+i] = nums2[i]
+        n1 = len(nums1)
+
+        merged_arr = [0 for i in range(n1)]
+
+        while i < m and j < n:
+
+            if nums1[i] <= nums2[j] :
+
+                merged_arr[k] = nums1[i]
+
+                i += 1
+
+                k += 1
+            
+            else:
+
+                merged_arr[k] = nums2[j]
+
+                j += 1
+
+                k += 1
         
-        return nums1.sort()
+        while i < m :
+
+            merged_arr[k] = nums1[i]
+
+            i += 1
+
+            k += 1
+        
+        while j < n :
+
+            merged_arr[k] = nums2[j]
+
+            j += 1
+
+            k += 1
+
+        for i in range(n1):
+
+            nums1[i] = merged_arr[i]
+        
+        return nums1
+
+
+
+
+                
 
         
         
