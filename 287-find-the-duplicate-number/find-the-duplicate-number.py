@@ -1,16 +1,14 @@
 class Solution:
     def findDuplicate(self, nums: List[int]) -> int:
         
-        # Brute
+        nums.sort()
 
-        hash_set = set()
+        n = len(nums)
 
-        for num in nums:
+        for i in range(1,n):
 
-            if num in hash_set:
+            if nums[i] == nums[i-1]:
 
-                return num
-            
-            hash_set.add(num)
+                return nums[i]
         
         return -1
