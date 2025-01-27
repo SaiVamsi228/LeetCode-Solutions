@@ -14,10 +14,13 @@ class Solution:
             if (n & 1) == 1 :
 
                 res *= x
-            
-            x = x * x
 
-            n = n//2
+                n -= 1
+            else:
+                
+                x = x * x
+
+                n = n//2
 
         if neg_power:
 
