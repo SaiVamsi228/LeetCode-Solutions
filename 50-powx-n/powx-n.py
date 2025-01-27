@@ -1,28 +1,35 @@
 class Solution:
     def myPow(self, x: float, n: int) -> float:
         
+        sign = -1 if (x < 0 ^ n < 0) else 1
+
+        neg_power = True if n < 0 else False
+
+        n = abs(n)
+
         res = 1
-
-        sign = True
-
-        if n < 0:
-
-            sign = False
-
-            n = abs(n)
 
         while n > 0:
 
-            if n & 1 != 0 : # if odd power
+            if (n & 1) == 1 :
 
-                res = res * x
+                res *= x
             
             x = x * x
 
-            n >>= 1
+            n = n//2
 
-        if sign == False:
+        if neg_power:
 
-            res = 1 / res
-        
-        return res
+            return (1/(res * sign))
+            
+        return res * sign
+
+'''
+res = 4*256 = 4
+x = 256
+n = 1
+
+
+'''
+
