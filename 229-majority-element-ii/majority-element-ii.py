@@ -1,30 +1,64 @@
 class Solution:
     def majorityElement(self, nums: List[int]) -> List[int]:
         
-        n = len(nums)
+        majority_1 = majority_2 = -1
 
-        nums.sort()
-
-        res = -1
-
-        cnt = 0
-
-        ans = set()
+        cnt_1 = cnt_2 = 0
 
         for num in nums:
 
-            if cnt == 0 or num != res:
+            if num == majority_1:
 
-                res = num
-
-                cnt = 1
+                cnt_1 += 1
             
-            elif num == res:
+            elif num == majority_2 :
 
-                cnt += 1
+                cnt_2 += 1
             
-            if cnt > n//3:
+            elif cnt_1 == 0 :
 
-                ans.add(res)
+                majority_1 = num
 
-        return list(ans)
+                cnt_1 = 1
+            
+            elif cnt_2 == 0:
+
+                majority_2 = num
+
+                cnt_2 = 1
+            
+            else:
+
+                cnt_1 -= 1
+
+                cnt_2 -= 1
+
+        act_cnt_1 = act_cnt_2 = 0
+
+        for num in nums:
+
+            if num == majority_1 :
+
+                act_cnt_1 += 1
+
+            elif num == majority_2:
+
+                act_cnt_2 += 1
+                
+        n = len(nums)
+        
+        if act_cnt_1 > n//3 and act_cnt_2 > n//3:
+
+            return [majority_1,majority_2]
+        
+        elif act_cnt_1 > n//3 :
+
+            return [majority_1]
+        
+        elif act_cnt_2 > n//3:
+
+            return [majority_2]
+        
+        else:
+
+            return []
