@@ -1,21 +1,30 @@
-from collections import defaultdict
 class Solution:
     def majorityElement(self, nums: List[int]) -> List[int]:
         
-        hm = defaultdict(int)
-        
         n = len(nums)
+
+        nums.sort()
+
+        res = -1
+
+        cnt = 0
+
+        ans = set()
 
         for num in nums:
 
-            hm[num] += 1
+            if cnt == 0 or num != res:
 
-        ans = []
-        
-        for num,freq in hm.items():
+                res = num
 
-            if freq > n/3:
+                cnt = 1
+            
+            elif num == res:
 
-                ans.append(num)
-        
-        return ans
+                cnt += 1
+            
+            if cnt > n//3:
+
+                ans.add(res)
+
+        return list(ans)
