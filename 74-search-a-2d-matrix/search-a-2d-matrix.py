@@ -5,35 +5,30 @@ class Solution:
 
         n = len(matrix[0])
 
-        def search1D(arr,target):
+        low = 0
 
-            low = 0
+        high = m*n - 1
 
-            high = n - 1
+        while low <= high:
 
-            while low <= high :
+            mid = (low + high)//2
 
-                mid = (low+high)//2
+            mid_row, mid_col = divmod(mid,n)
 
-                if arr[mid] == target:
+            mid_ele = matrix[mid_row][mid_col]
 
-                    return True
-                
-                elif arr[mid] > target:
-
-                    high = mid - 1
-                
-                else:
-
-                    low = mid + 1
-            
-            return False
-        
-        for i in range(m):
-
-            if matrix[i][0] <= target <= matrix[i][-1] and search1D(matrix[i],target):
+            if  mid_ele == target:
 
                 return True
+            
+            elif target < mid_ele:
+
+                high = mid - 1
+            
+            elif target > mid_ele:
+
+                low = mid + 1
         
         return False
 
+                
