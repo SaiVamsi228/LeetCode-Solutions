@@ -1,38 +1,48 @@
+from collections import defaultdict
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
         
-        i = j = 0
-        Dict = defaultdict(int)
-        n = len(s)
-        mx = 0
-        uniqueCnt = 0
-        
-        while j < n:
-            
-            Dict[s[j]] += 1
+        mx_len = 0
 
-            if Dict[s[j]] == 1:
-                
-                uniqueCnt += 1
+        hash_map = defaultdict(int)
+
+        dist_cnt = 0
+
+        i = j = 0
+
+        n = len(s)
+
+        while j < n :
+
+            char = s[j]
+
+            hash_map[char] += 1
+
+            if hash_map[char] > 1 :
+
+                dist_cnt += 1
             
-            if uniqueCnt < j-i+1 :
-                
-                while uniqueCnt < j-i+1 : #trying to move i to make window size == uniqueCnt
-                    
-                    Dict[s[i]] -= 1
-                    
-                    if Dict[s[i]] == 0 :
-                        
-                        uniqueCnt -= 1
-                    
+            if dist_cnt == 0 :
+
+                mx_len = max(mx_len,j-i+1)
+            
+            elif dist_cnt > 0:
+
+                while dist_cnt > 0 and i <= j :
+
+                    hash_map[s[i]] -= 1
+
+                    if hash_map[s[i]] == 1 :
+
+                        dist_cnt -= 1
+
                     i += 1
                 
-                j += 1
+                if dist_cnt == 0:
+
+                    mx_len = max(mx_len, j - i + 1)
+                
+            j += 1
+        
+        return mx_len
             
-            elif uniqueCnt == j-i+1 :
-                
-                mx = max(j-i+1, mx)
-                
-                j += 1              
-                
-        return mx 
