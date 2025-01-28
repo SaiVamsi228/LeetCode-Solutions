@@ -1,15 +1,14 @@
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
+        
+        hm = {}
 
-        n = len(nums)
+        for i, num in enumerate(nums):
 
-        for i in range(n):
+            if target - num in hm:
 
-            for j in range(i+1,n):
-
-                if nums[i] + nums[j] == target:
-
-                    return [i,j]
+                return [i,hm[target-num]]
+            
+            hm[num] = i 
         
         return [-1,-1]
-        
