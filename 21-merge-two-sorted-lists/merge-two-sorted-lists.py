@@ -15,45 +15,44 @@ class Solution:
             return head2
         
         if not head2:
-
+            
             return head1
         
-        merged_list = []
-
-        temp1, temp2 = head1, head2
-
-        while temp1:
-
-            merged_list.append(temp1.val)
-
-            temp1 = temp1.next
         
-        while temp2 :
-
-            merged_list.append(temp2.val)
-
-            temp2 = temp2.next
-        
-        merged_list.sort()
-
-        i = 0
-
-        n = len(merged_list)
-
         new_head = ListNode(-1,None)
 
         temp = new_head
 
-        while i < n :
+        while head1 and head2:
 
-            new_node = ListNode(merged_list[i],None)
+            if head1.val < head2.val :
 
-            temp.next = new_node
+                temp.next = head1
 
-            temp = new_node
+                head1 = head1.next
+            
+            else:
 
-            i += 1
+                temp.next = head2
+
+                head2 = head2.next
+
+            temp = temp.next
         
+        while head1:
+
+            temp.next = head1
+
+            head1 = head1.next
+
+            temp = temp.next
+        
+        while head2:
+
+            temp.next = head2
+
+            head2 = head2.next
+
+            temp = temp.next
+
         return new_head.next
-
-
