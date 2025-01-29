@@ -4,54 +4,58 @@
 #         self.val = val
 #         self.next = next
 class Solution:
+
     def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
-        
-        n1 = []
 
-        n2 = []
+        temp1 = l1
 
-        temp = l1
+        temp2 = l2
 
-        while temp :
+        carry = 0
 
-            n1.append(str(temp.val))
+        dummyNode = ListNode(-1)
+
+        temp = dummyNode
+
+        while temp1 or temp2 or carry :
+
+            newNodeVal = 0
+            
+            if temp1:
+                
+                newNodeVal += temp1.val 
+
+                temp1 = temp1.next
+            
+            if temp2:
+                
+                newNodeVal += temp2.val 
+                
+                temp2 = temp2.next
+
+
+            if carry :
+
+                newNodeVal += carry
+
+                carry = 0
+
+            if newNodeVal >=10:
+                
+                carry = newNodeVal // 10
+
+                newNodeVal = newNodeVal % 10
+
+            temp.next = ListNode(newNodeVal)
 
             temp = temp.next
+
+        if carry :
+
+            temp.next = ListNode(carry)
+
         
-        temp = l2
+        newHead = dummyNode.next
 
-        while temp :
-
-            n2.append(str(temp.val))
-
-            temp = temp.next
+        return newHead
         
-        num1 = int(("".join(n1))[::-1])
-
-        num2 = int(("".join(n2))[::-1])
-
-        ans = str(num1 + num2)
-
-        ans = ans[::-1]
-
-        i = 0
-
-        n = len(ans)
-
-        new_head = ListNode(-1,None)
-
-        temp = new_head
-
-        while i < n:
-
-            new_node = ListNode(int(ans[i]), None)
-
-            temp.next = new_node
-
-            temp = temp.next
-
-            i += 1
-        
-        return new_head.next
-
-
