@@ -4,100 +4,54 @@
 #         self.val = val
 #         self.next = next
 class Solution:
-    def reverseLL(self,head):
-        
-        prev = None
-        
-        temp = head
-
-        while temp:
-            
-            upcoming = temp.next
-            
-            temp.next = prev
-            
-            prev = temp
-            
-            temp = upcoming
-
-        
-        return prev
-
     def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+        
+        n1 = []
 
-        temp1 = l1
+        n2 = []
 
-        temp2 = l2
+        temp = l1
 
-        carry = 0
+        while temp :
 
-        dummyNode = ListNode(-1)
+            n1.append(str(temp.val))
 
-        temp = dummyNode
+            temp = temp.next
+        
+        temp = l2
 
-        while temp1 and temp2 :
+        while temp :
 
-            newNodeVal = temp1.val + temp2.val + carry
+            n2.append(str(temp.val))
 
-            carry = 0
+            temp = temp.next
+        
+        num1 = int(("".join(n1))[::-1])
 
-            if newNodeVal >=10:
-                
-                carry = newNodeVal // 10
+        num2 = int(("".join(n2))[::-1])
 
-                newNodeVal = newNodeVal % 10
+        ans = str(num1 + num2)
 
-            temp.next = ListNode(newNodeVal)
+        ans = ans[::-1]
+
+        i = 0
+
+        n = len(ans)
+
+        new_head = ListNode(-1,None)
+
+        temp = new_head
+
+        while i < n:
+
+            new_node = ListNode(int(ans[i]), None)
+
+            temp.next = new_node
 
             temp = temp.next
 
-            temp1 = temp1.next
-
-            temp2 = temp2.next
+            i += 1
         
-        while temp1:
-
-            newNodeVal = temp1.val + carry
-            
-            carry = 0
-
-            if newNodeVal >=10:
-                
-                carry = newNodeVal // 10
-
-                newNodeVal = newNodeVal % 10
-
-            temp.next = ListNode(newNodeVal)
-
-            temp = temp.next
-
-            temp1 = temp1.next
-        
-        while temp2:
-
-            newNodeVal = temp2.val + carry
-
-            carry = 0
-
-            if newNodeVal >=10:
-                
-                carry = newNodeVal // 10
-
-                newNodeVal = newNodeVal % 10
-
-            temp.next = ListNode(newNodeVal)
-
-            temp = temp.next
-
-            temp2 = temp2.next
+        return new_head.next
 
 
-        if carry :
-
-            temp.next = ListNode(carry)
-
-        
-        newHead = dummyNode.next
-
-        return newHead
-        
