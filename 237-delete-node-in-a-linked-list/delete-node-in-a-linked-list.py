@@ -10,19 +10,21 @@ class Solution:
         :type node: ListNode
         :rtype: void Do not return anything, modify node in-place instead.
         """
-        temp = node
-
-        while temp.next and temp.next.next:
-
-            temp.val = temp.next.val
-
-            temp = temp.next
         
-        if temp.next:
+        while node.next:
 
-            temp.val = temp.next.val
+            node.val = node.next.val
+
+            if not node.next.next:
+
+                node.next = None
+
+                break
+
+            node = node.next
         
-            temp.next = None
-        
-         
+        node.next = None
+
+        return
+
         
