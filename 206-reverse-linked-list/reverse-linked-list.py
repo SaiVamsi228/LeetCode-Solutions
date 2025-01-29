@@ -14,22 +14,14 @@ class Solution:
 
         curr = head     
 
-        upcoming = head.next
-
         while curr:
+            
+            upcoming = curr.next
 
             curr.next = prev
 
             prev = curr
 
-            if upcoming == None:
-
-                break
-            
-            else:
-
-                curr = upcoming
-                
-                upcoming = curr.next
+            curr = upcoming
         
-        return curr
+        return prev
