@@ -6,22 +6,19 @@
 class Solution:
     def middleNode(self, head: Optional[ListNode]) -> Optional[ListNode]:
         
-        n = 0
+        if not head or not head.next:
 
-        temp = head
+            return head
 
-        while temp :
+        tortoise = head
 
-            n += 1
+        hare = head
 
-            temp = temp.next
+        while hare != None and hare.next != None:
+
+            tortoise = tortoise.next
+
+            hare = hare.next.next
         
-        temp = head
+        return tortoise 
 
-        middle = (n//2) + 1
-
-        for i in range(1,middle):
-
-            temp = temp.next
-        
-        return temp
