@@ -7,22 +7,20 @@
 class Solution:
     def detectCycle(self, head: Optional[ListNode]) -> Optional[ListNode]:
         
-        hashMap = {}
+        hash_set = set()
 
         temp = head
 
-        ind = 0
-
         while temp:
 
-            if temp in hashMap:
+            if temp in hash_set:
 
                 return temp
             
-            hashMap[temp] = ind
+            else:
 
-            ind += 1
-
+                hash_set.add(temp)
+            
             temp = temp.next
         
         return None
