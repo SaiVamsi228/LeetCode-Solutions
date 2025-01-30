@@ -7,13 +7,13 @@
 class Solution:
     def getIntersectionNode(self, headA: ListNode, headB: ListNode) -> Optional[ListNode]:
         
-        hashSet = set()
+        hash_set = set()
 
         temp = headA
 
         while temp:
 
-            hashSet.add(temp)
+            hash_set.add(temp)
 
             temp = temp.next
         
@@ -21,10 +21,10 @@ class Solution:
 
         while temp:
 
-            if temp in hashSet:
+            if temp in hash_set:
 
                 return temp
-
+            
             temp = temp.next
-
+        
         return None
