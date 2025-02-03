@@ -1,43 +1,70 @@
 class Solution:
     def trap(self, height: List[int]) -> int:
-
-        n = len(height)
         
-        right_max = [0 for i in range(n)]
+        def get_abs_greatest_to_left_ind(height):
 
-        left_max = [0 for i in range(n)]
+            agl = [-1 for i in range(n)]
 
-        maxi = 0
+            mx = -1
 
-        for i in range(n):
+            for i in range(n):
 
-            if height[i] > maxi :
+                agl[i] = mx
 
-                maxi = height[i]
+                if mx == -1 or height[i] > height[mx]:
 
-            left_max[i] = maxi
-        
-        maxi = 0
-
-        for i in reversed(range(n)):
-
-            if height[i] > maxi:
-
-                maxi = height[i]
+                    mx = i
             
-            right_max[i] = maxi
+            return agl
+                
+
+        def get_abs_greatest_to_right_ind(height):
+
+            agr = [n for i in range(n)]
+
+            mx = n
+
+            for i in reversed(range(n)):
+
+                agr[i] = mx
+
+                if mx == n or height[i] > height[mx]:
+
+                    mx = i 
+            
+            return agr
         
-        max_water = [0 for i in range(n)]
-
-        for i in range(n):
-
-            left_tallest = left_max[i]
-
-            right_tallest = right_max[i]
-
-            max_units_possible = min(left_tallest, right_tallest)
-
-            actual_water_filled = max_units_possible - height[i]
-            max_water[i] = actual_water_filled
         
-        return sum(max_water)
+        n = len(height)
+
+        water_trapped = 0
+
+        agl = get_abs_greatest_to_left_ind(height)
+
+        agr = get_abs_greatest_to_right_ind(height)
+
+        print(agl,agr)
+
+        for ind,h in enumerate(height):
+
+            left_tallest_ind = agl[ind]
+
+            right_tallest_ind = agr[ind]
+
+            if left_tallest_ind == -1 or right_tallest_ind == n:
+
+                water_trapped += 0
+            
+            else:
+
+                min_height_building = min(height[left_tallest_ind],height[right_tallest_ind]) 
+
+                if min_height_building < h:
+
+                    water_trapped += 0
+
+                else:
+                    
+                    water_trapped += min_height_building - h 
+
+        return water_trapped
