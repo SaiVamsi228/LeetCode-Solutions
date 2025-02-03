@@ -1,1 +1,1 @@
-<h2>max-consecutive-ones Notes</h2><hr>[ Time taken: 2 m 56 s ]
+<h2>max-consecutive-ones Notes</h2><hr>[ Time taken: 1 s ]
