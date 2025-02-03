@@ -3,20 +3,20 @@ class Solution:
         
         mx = 0
 
-        cC = 0
+        cur_cnt = 0
 
-        for num in nums:
+        n = len(nums)
 
-            if num == 1:
+        for i in range(n):
 
-                cC += 1
-            
-                mx = max(mx, cC)
+            if nums[i] == 1:
+
+                cur_cnt += 1
             
             else:
 
-                cC = 0
-
-
+                cur_cnt = 0
+            
+            mx = max(cur_cnt , mx)
         
         return mx
