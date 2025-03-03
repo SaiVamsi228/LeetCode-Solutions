@@ -4,58 +4,52 @@ class Solution:
         Do not return anything, modify nums1 in-place instead.
         """
 
-        # Optimal
+        if nums2 == [] :
 
-        i = j = k = 0
+            return nums1
 
-        n1 = len(nums1)
+        i = m - 1
 
-        merged_arr = [0 for i in range(n1)]
+        j = n - 1
 
-        while i < m and j < n:
+        k = m + n - 1
 
-            if nums1[i] <= nums2[j] :
+        while i >= 0 and j >= 0 and k >= 0:
 
-                merged_arr[k] = nums1[i]
+            if nums1[i] <= nums2[j]:
 
-                i += 1
+                nums1[k] = nums2[j]
 
-                k += 1
+                j -= 1
+
+                k -= 1
             
             else:
 
-                merged_arr[k] = nums2[j]
+                nums1[k] = nums1[i]
 
-                j += 1
+                i -= 1
 
-                k += 1
+                k -= 1
         
-        while i < m :
+        while j >= 0:
 
-            merged_arr[k] = nums1[i]
+            nums1[k] = nums2[j]
 
-            i += 1
+            j -= 1
 
-            k += 1
+            k -= 1
         
-        while j < n :
+        while i >= 0:
 
-            merged_arr[k] = nums2[j]
+            nums1[k] = nums1[i]
 
-            j += 1
+            i -= 1
 
-            k += 1
-
-        for i in range(n1):
-
-            nums1[i] = merged_arr[i]
+            k -= 1
         
         return nums1
 
 
 
-
-                
-
-        
         
