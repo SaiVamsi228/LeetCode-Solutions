@@ -1,2 +1,1 @@
-<h2>majority-element Notes</h2><hr>O(NlogN)
-O(1)
+<h2>majority-element Notes</h2><hr>[ Time taken: 9 m 56 s ]
