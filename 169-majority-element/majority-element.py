@@ -1,25 +1,25 @@
 class Solution:
     def majorityElement(self, nums: List[int]) -> int:
         
-        cnt = 0
+        maj_ele = None
 
-        cnt_ele = -1
+        maj_cnt = 0
 
         for num in nums:
 
-            if cnt == 0:
+            if maj_cnt == 0:
 
-                cnt_ele = num
+                maj_ele = num
 
-                cnt += 1
+                maj_cnt = 1
             
-            elif  num == cnt_ele:
+            elif maj_ele == num:
 
-                cnt += 1
+                maj_cnt += 1
             
             else:
 
-                cnt -= 1
-        
-        return cnt_ele
+                maj_cnt -= 1
+            
+        return maj_ele
 
