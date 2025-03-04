@@ -1,38 +1,31 @@
 class Solution:
     def myPow(self, x: float, n: int) -> float:
         
-        sign = -1 if (x < 0 ^ n < 0) else 1
 
-        neg_power = True if n < 0 else False
+        def get_fast_pow(x,n):
 
-        n = abs(n)
+            if n == 0:
 
-        res = 1
+                return 1
 
-        while n > 0:
+            if n % 2 == 0:
 
-            if (n & 1) == 1 :
-
-                res *= x
-
-                n -= 1
-            else:
-                
-                x = x * x
-
-                n = n//2
-
-        if neg_power:
-
-            return (1/(res * sign))
+                return get_fast_pow(x*x,n//2)
             
-        return res * sign
+            else:
 
-'''
-res = 4*256 = 4
-x = 256
-n = 1
+                return x * get_fast_pow(x*x,n//2)
+        
+        neg = False
 
+        if n < 0:
 
-'''
+            neg = True
+        
+        ans = get_fast_pow(x,abs(n))
 
+        if not neg :
+            
+            return ans
+        
+        return (1/ans)
