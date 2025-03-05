@@ -1,24 +1,24 @@
 class Solution:
     def uniquePaths(self, m: int, n: int) -> int:
         
-        rows = m
+        def get_path_cnt(row,col):
 
-        cols = n
+            if row == m-1 and col == n-1 :
 
-        dp = [ [0 for i in range(n+1)] for j in range(m+1)]
+                return 1
+            
+            if row >= m or col >= n :
 
-        dp[1][1] = 1
+                return 0
+            
+            if dp[row][col] != -1:
 
-        for i in range(1,m+1):
+                return dp[row][col]
+            
+            dp[row][col] = get_path_cnt(row+1,col) + get_path_cnt(row,col+1)
 
-            for j in range(1,n+1):
+            return dp[row][col]
 
-                if i == 1 and j == 1:
+        dp = [ [-1 for i in range(n)] for j in range(m)]
 
-                    continue
-                
-                dp[i][j] = dp[i-1][j] + dp[i][j-1]        
-
-        return dp[m][n]
-                
-
+        return get_path_cnt(0,0)
