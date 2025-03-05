@@ -5,27 +5,44 @@ class Solution:
 
         n = len(nums)
 
+        nums.sort()
+
         for i in range(n):
 
             for j in range(i+1,n):
+                
+                first,second = nums[i],nums[j]
 
-                seen = set() # using the for loop to get fourth
+                new_target = target - (first + second)
 
-                for k in range(j+1,n):
+                left = j + 1
 
-                    first, second, third = nums[i], nums[j], nums[k]
+                right = n - 1
 
-                    fourth = target - (nums[i] + nums[j] + nums[k])
+                while left < right:
 
-                    if fourth in seen:
+                    if nums[left] + nums[right] == new_target:
 
-                        quad = [first, second, third, fourth]
+                        ans.add((first,second,nums[left],nums[right]))
 
-                        quad.sort()
+                        left += 1
+
+                        right -= 1
+
+                        while left < right and nums[left] == nums[left - 1]:
+                            left += 1
+
+                        while left < right and nums[right] == nums[right + 1]:
+                            right -= 1
                     
-                        ans.add(tuple(quad))
+                    elif nums[left] + nums[right] > new_target:
 
-                    seen.add(third)
+                        right -= 1
+                    
+                    elif nums[left] + nums[right] < new_target:
+
+                        left += 1
+                
         
         return list(ans)
                     
