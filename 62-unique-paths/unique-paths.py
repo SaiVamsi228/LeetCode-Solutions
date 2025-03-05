@@ -1,9 +1,9 @@
 class Solution:
     def uniquePaths(self, m: int, n: int) -> int:
 
-        dp = [ [-1 for i in range(n)] for j in range(m)]
+        cur_row = [-1 for i in range(n)]
 
-        dp[m-1][n-1] = 1
+        cur_row[n-1] = 1
 
         for row in reversed(range(m)):
 
@@ -15,7 +15,7 @@ class Solution:
                 
                 if row + 1 < m :
 
-                    bottom_ways = dp[row+1][col]
+                    bottom_ways = next_row[col]
                 
                 else:
 
@@ -23,13 +23,17 @@ class Solution:
                 
                 if col + 1 < n:
 
-                    right_ways = dp[row][col+1]
+                    right_ways = cur_row[col+1]
                 
                 else:
 
                     right_ways = 0
                 
-                dp[row][col] = bottom_ways + right_ways
+                cur_row[col] = bottom_ways + right_ways
+            
+            next_row = cur_row.copy()
+
+            cur_row = [-1 for i in range(n)]
 
 
-        return dp[0][0]
+        return next_row[0]
