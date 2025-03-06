@@ -6,71 +6,76 @@
 class Solution:
     def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
         
-        dummy_node = ListNode(-1,None)
+        dummy = ListNode(-1)
 
-        temp = dummy_node
+        temp1 = l1
+
+        temp2 = l2
+
+        temp = dummy
 
         carry = 0
 
-        while l1 and l2:
+        while temp1 and temp2:
 
-            sm = l1.val + l2.val + carry
-
+            sm = temp1.val + temp2.val + carry
+            
             carry = sm//10
 
-            sm = sm % 10
+            sm %= 10
 
-            new_node = ListNode(sm,None)
+            new_node = ListNode(sm)
 
             temp.next = new_node
 
             temp = temp.next
 
-            l1 = l1.next
+            temp1 = temp1.next
 
-            l2 = l2.next
+            temp2 = temp2.next
 
-        
-        while l1 :
+        while temp1:
 
-            sm = l1.val + carry
-
+            sm = temp1.val + carry
+            
             carry = sm//10
 
-            sm = sm % 10
+            sm %= 10
 
-            new_node = ListNode(sm,None)
+            new_node = ListNode(sm)
 
             temp.next = new_node
 
-            temp = temp.next 
+            temp = temp.next
 
-            l1 = l1.next
-        
-        while l2:
+            temp1 = temp1.next
 
-            sm = l2.val + carry
+        while temp2:
 
+            sm = temp2.val + carry
+            
             carry = sm//10
 
-            sm = sm % 10
+            sm %= 10
 
-            new_node = ListNode(sm,None)
+            new_node = ListNode(sm)
 
             temp.next = new_node
 
-            temp = temp.next 
+            temp = temp.next
 
-            l2 = l2.next
+            temp2 = temp2.next
         
-        while carry:
 
-            carry_node = ListNode(carry%10,None)
-
-            temp.next = carry_node
-
-            carry //= 10
         
-        return dummy_node.next
 
+        
+        if carry:
+
+            new_carry_node = ListNode(carry)
+
+            temp.next = new_carry_node
+
+        
+        return dummy.next
 
