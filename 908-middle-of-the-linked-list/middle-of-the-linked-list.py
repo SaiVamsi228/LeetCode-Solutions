@@ -6,19 +6,12 @@
 class Solution:
     def middleNode(self, head: Optional[ListNode]) -> Optional[ListNode]:
         
-        if not head or not head.next:
+        slow = fast = head
 
-            return head
+        while fast and fast.next :
 
-        tortoise = head
+            slow = slow.next
 
-        hare = head
-
-        while hare != None and hare.next != None:
-
-            tortoise = tortoise.next
-
-            hare = hare.next.next
+            fast = fast.next.next
         
-        return tortoise 
-
+        return slow
