@@ -10,12 +10,11 @@ class Solution:
         :type node: ListNode
         :rtype: void Do not return anything, modify node in-place instead.
         """
-        
         while node.next:
 
             node.val = node.next.val
 
-            if not node.next.next:
+            if node.next.next == None:
 
                 node.next = None
 
@@ -23,8 +22,13 @@ class Solution:
 
             node = node.next
         
-        node.next = None
 
-        return
+
+
+        curr = node
+
+        prev = None
+
+        
 
         
