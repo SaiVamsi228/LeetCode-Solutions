@@ -7,24 +7,32 @@
 class Solution:
     def getIntersectionNode(self, headA: ListNode, headB: ListNode) -> Optional[ListNode]:
         
-        hash_set = set()
+        d1 = headA
 
-        temp = headA
+        d2 = headB
 
-        while temp:
+        while d1 and d2:
 
-            hash_set.add(temp)
+            if d1 == d2:
 
-            temp = temp.next
-        
-        temp = headB
-
-        while temp:
-
-            if temp in hash_set:
-
-                return temp
+                return d1
             
-            temp = temp.next
+            d1 = d1.next
+
+            d2 = d2.next
+
+            if d1 == None and d2 == None:
+
+                return None # no intersection point
+            
+            elif d1 == None:
+
+                d1 = headB
+            
+            elif d2 == None:
+
+                d2 = headA
         
-        return None
+
+
+
