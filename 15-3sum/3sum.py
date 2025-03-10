@@ -1,7 +1,8 @@
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
         
-        
+        target = 0
+
         n = len(nums)
 
         ans = set()
@@ -10,39 +11,37 @@ class Solution:
 
         for i in range(n):
 
-            left, right = i + 1 , n - 1
+            j = i + 1
 
-            first = nums[i]
+            k = n - 1
 
-            target = -first
+            new_target = target - nums[i]
 
-            while left < right :
+            while j < k:
 
-                if nums[left] + nums[right]  == target:
+                if nums[j] + nums[k] == new_target:
 
-                    triplet = [first,nums[left], nums[right]]
+                    ans.add(tuple(sorted([nums[i],nums[j],nums[k]])))
 
-                    ans.add(tuple(triplet))
+                    j += 1
 
-                    left += 1
+                    k -= 1
 
-                    right -= 1
+                    while j < n and nums[j] == nums[j - 1]:
 
-                    while left < right and nums[left] == nums[left - 1]:
-
-                        left += 1
+                        j += 1
                     
-                    while left < right and nums[right] == nums[right + 1]:
+                    while k > 0 and nums[k] == nums[k+1]:
 
-                        right -= 1
+                        k -= 1 
 
-                elif nums[left] + nums[right] < target:
+                elif nums[j] + nums[k] > new_target:
 
-                    left += 1
+                    k -= 1
                 
-                elif nums[left] + nums[right] > target:
+                elif nums[j] + nums[k] < new_target:
 
-                    right -= 1
+                    j += 1
             
-
+        
         return list(ans)
