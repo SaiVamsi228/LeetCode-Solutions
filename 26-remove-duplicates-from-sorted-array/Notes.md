@@ -1,1 +1,1 @@
-<h2>remove-duplicates-from-sorted-array Notes</h2><hr>[ Time taken: 6 m 8 s ]
+<h2>remove-duplicates-from-sorted-array Notes</h2><hr>[ Time taken: 5 m 27 s ]
