@@ -6,52 +6,75 @@
 class Solution:
     
     def reverseKGroup(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
-        
-        arr = []
+
+        def reverse_ll(curr,k):
+
+            tail = curr
+
+            prev = None
+
+            while curr and k > 0:
+
+                upcoming = curr.next
+
+                curr.next = prev
+
+                k -= 1
+
+                prev = curr
+
+                curr = upcoming
+
+            return 
 
         temp = head
 
-        n = 0
+        prev = None
 
-        while temp:
+        my_head = None
 
-            arr.append(temp.val)
+        while temp :
 
-            n += 1
+            m_k = k - 1
 
-            temp = temp.next
-        
-        ind = 0
+            curr = temp
 
-        while ind + k - 1 < n:
+            while temp and m_k:
 
-            i = ind 
+                temp = temp.next
 
-            j = i + k - 1
-
-            while i <= j :
-
-                arr[i], arr[j] = arr[j], arr[i]
+                m_k -= 1
             
-                i += 1
+            if not temp:
 
-                j -= 1
+                if prev:
+                    
+                    prev.next = curr
+
+                break
             
-            ind += k
+            upcoming = temp.next
+            
+            m_k = k 
 
-        temp = head
+            reverse_ll(curr,m_k)
 
-        i = 0
+            if prev:
 
-        while temp:
+                prev.next = temp
 
-            temp.val = arr[i]
+            if not my_head:
 
-            i += 1
+                my_head = temp
+            
+            prev = curr
 
-            temp = temp.next
+            temp = curr = upcoming
+
         
-        return head
+        return my_head
+            
+
 
          
 
