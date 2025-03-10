@@ -1,21 +1,24 @@
 class Solution:
     def removeDuplicates(self, nums: List[int]) -> int:
         
-        uniq_ptr = 0
+        prev = nums[0]
+
+        dist_ptr = 0
 
         n = len(nums)
 
-        if n == 1:
-
-            return 1
-
         for i in range(1,n):
 
-            if nums[i] != nums[i-1]:
+            if nums[i] == prev:
 
-                uniq_ptr += 1
+                continue
+            
+            else:
 
-                nums[uniq_ptr] = nums[i]
+                dist_ptr += 1
 
+                nums[dist_ptr] = nums[i]
 
-        return uniq_ptr + 1
+                prev = nums[dist_ptr]
+        
+        return dist_ptr + 1
