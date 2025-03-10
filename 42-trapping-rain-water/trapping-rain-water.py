@@ -1,70 +1,53 @@
 class Solution:
     def trap(self, height: List[int]) -> int:
         
-        def get_abs_greatest_to_left_ind(height):
-
-            agl = [-1 for i in range(n)]
-
-            mx = -1
-
-            for i in range(n):
-
-                agl[i] = mx
-
-                if mx == -1 or height[i] > height[mx]:
-
-                    mx = i
-            
-            return agl
-                
-
-        def get_abs_greatest_to_right_ind(height):
-
-            agr = [n for i in range(n)]
-
-            mx = n
-
-            for i in reversed(range(n)):
-
-                agr[i] = mx
-
-                if mx == n or height[i] > height[mx]:
-
-                    mx = i 
-            
-            return agr
-        
-        
-        n = len(height)
-
         water_trapped = 0
 
-        agl = get_abs_greatest_to_left_ind(height)
+        n = len(height)
 
-        agr = get_abs_greatest_to_right_ind(height)
+        left , right = 0, n - 1
 
-        print(agl,agr)
+        max_left, max_right = 0,0
 
-        for ind,h in enumerate(height):
+        while left <= right:
 
-            left_tallest_ind = agl[ind]
+            if height[left] <= height[right]:
+                
+                if max_left <= height[left]:
 
-            right_tallest_ind = agr[ind]
-
-            if left_tallest_ind == -1 or right_tallest_ind == n:
-
-                water_trapped += 0
-            
-            else:
-
-                min_height_building = min(height[left_tallest_ind],height[right_tallest_ind]) 
-
-                if min_height_building < h:
+                    # we cant store any water
 
                     water_trapped += 0
 
+                    max_left = height[left]
+
                 else:
-                    
-                    water_trapped += min_height_building - h 
+
+                    # water store depends on max_left
+
+                    water_trapped += max_left - height[left] 
+                
+                left += 1
+            
+            elif height[left] > height[right]:
+
+                if height[right] >= max_right:
+
+                    # no water is trapped
+
+                    water_trapped += 0
+
+                    max_right = height[right]
+                
+                else:
+
+                    # water trapped depends on max_right
+
+                    water_trapped += max_right - height[right] 
+                
+                right -= 1
 
         return water_trapped
+
+                
+
