@@ -5,29 +5,28 @@ class Solution:
 
         s.sort()
 
-        i = 0
+        content_children = 0
 
-        j = 0
+        n1 = len(g)
 
-        m = len(g)
+        n2 = len(s)
 
-        n = len(s)
-
-        content_children_cnt = 0
-
-        while i < m and j < n :
-
-            if s[j] >= g[i] :
-
-                content_children_cnt += 1
-
-                i += 1
-
-                j += 1
-            
-            elif s[j] < g[i]:
-
-                j += 1
-            
+        i = n1 - 1
         
-        return content_children_cnt
+        j = n2 - 1
+
+        while i >= 0 and j >= 0:
+
+            if s[j] >= g[i]:
+
+                content_children += 1
+
+                j -= 1
+
+                i -= 1
+            
+            else:
+
+                i -= 1
+        
+        return content_children
