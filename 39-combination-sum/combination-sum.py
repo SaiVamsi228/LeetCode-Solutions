@@ -1,32 +1,42 @@
 class Solution:
     def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
-        
-        ans = []
 
-        def getSubset(n,target,subset):
+        ans = []
+        
+        def get_comb_sums(ind,target,subseq):
 
             if target == 0:
 
-                ans.append(subset.copy())
+                ans.append(subseq.copy())
 
-                return 
+                return
 
-            if n == 0:
+            if ind == n:
 
-                return 
+                return
             
-            if candidates[n-1] <= target:
+            if candidates[ind] <= target:
 
-                subset.append(candidates[n-1])
+                # take
 
-                getSubset(n,target - candidates[n-1],subset)
+                subseq.append(candidates[ind])
 
-                subset.pop()
+                get_comb_sums(ind,target - candidates[ind], subseq)
+
+                subseq.pop()
+
+                # not take
+
+                get_comb_sums(ind+1, target, subseq)
             
-            getSubset(n-1,target,subset)
+            else:
+
+                # not take
+
+                get_comb_sums(ind+1, target, subseq)
         
         n = len(candidates)
 
-        getSubset(n,target,[])
+        get_comb_sums(0, target, [] )
 
         return ans
