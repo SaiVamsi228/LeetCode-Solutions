@@ -3,13 +3,44 @@ class Solution:
         
         n = len(nums)
 
-        for ind in range(1,n,2):
+        low, high = 0, n - 1
 
-            if nums[ind] != nums[ind - 1]:
+        while low <= high:
 
-                return nums[ind - 1]
+            mid = (low + high)//2
+
+            print(low,high,mid)
+
+            if mid % 2 == 0:
+
+                if mid + 1 >= n :
+
+                    return nums[mid]
+                
+                curr, nxt = nums[mid], nums[mid + 1]
+
+                if curr == nxt:
+
+                    # our ans lies on right
+
+                    low = mid + 1
+
+                else:
+
+                    high = mid - 1 
             
-        # if the index goes out of bound then the last ele is repeated once
-        return nums[-1]
+            elif mid % 2 == 1:
 
+                curr, prev = nums[mid], nums[mid - 1]
 
+                if curr == prev:
+
+                    low = mid + 1
+                
+                else:
+
+                    high = mid - 1
+        
+
+        return nums[low]
+            
