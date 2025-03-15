@@ -1,47 +1,65 @@
 class Solution:
     def nextGreaterElement(self, nums1: List[int], nums2: List[int]) -> List[int]:
         
-        n2 = len(nums2)
-        
-        res = [-1]*n2
-        
-        stack = []
-        
-        for i in reversed(range(n2)):
+        def get_nge(nums):
             
-            if not stack:
-                
-                res[i] = -1
-            
-            elif stack and stack[-1] > nums2[i]:
-                
-                res[i] = stack[-1]
-                
-            elif stack and stack[-1] <= nums2[i]:
-                
-                while stack and stack[-1] <= nums2[i]:
-                    
-                    stack.pop()
-                
-                if not stack:
-                    
-                    res[i] = -1
-                
-                else:
-                    
-                    res[i] = stack[-1]
-                
-            stack.append(nums2[i])
-        
-        n1 = len(nums1)
-        
-        final_res = [-1]*n1
+            n = len(nums)
 
-        for i in range(n1):
+            nge = [-1 for i in range(n)]
+
+            st = []
+
+            for i in reversed(range(n)):
+
+                if not st:
+
+                    st.append(i)
+                
+                elif st and nums[st[-1]] > nums[i]:
+
+                    nge[i]  = st[-1]
+
+                    st.append(i)
+                
+                elif st and nums[st[-1]] <= nums[i]:
+
+                    while st and nums[st[-1]] <= nums[i]:
+                        
+                        st.pop()
+                    
+                    if not st:
+
+                        nge[i] = -1
+                    
+                    else:
+
+                        nge[i] = st[-1]
+                    
+                    st.append(i)
+            
+            return nge
+        
+        nge = get_nge(nums2)
+
+        n = len(nums1)
+
+        ans = [ -1 for i in range(n)]
+
+        for i in range(n):
 
             ind = nums2.index(nums1[i])
+            
+            nge_ind = nge[ind]
 
-            final_res[i] = res[ind]
-        
-        return final_res
-        
+            if nge_ind == -1 :
+
+                ans[i] = -1
+            
+            else:
+                
+                ans[i] = nums2[nge_ind]
+
+        return ans
+
+
+                
