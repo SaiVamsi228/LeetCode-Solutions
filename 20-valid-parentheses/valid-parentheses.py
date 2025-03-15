@@ -1,48 +1,40 @@
 class Solution:
-
-    def isPair(self,opening,closing):
-        
-        isPairDict = {"[":"]","(":")","{":"}"}
-        
-        if isPairDict[opening] == closing:
-            
-            return True
-            
-        return False
-        
-        
-    
     def isValid(self, s: str) -> bool:
         
-        stack = []
+        st = []
 
         for char in s:
+
+            if char in "([{":
+
+                st.append(char)
             
-            if char in "[({":
+            else:
                 
-                stack.append(char)
-            
-            elif char in ")]}":
-                
-                if not self.isEmpty(stack) and self.isPair(self.peek(stack),char):
-                    
-                    stack.pop()
-                
-                else:
-                    
+                if not st:
+
                     return False
                     
-        
-        if not self.isEmpty(stack):
-            
+                prev = st.pop()
+
+                if char == ")" and prev =="(":
+
+                    continue
+                
+                elif char == "]" and prev == "[":
+
+                    continue
+                
+                elif char == "}" and prev == "{":
+
+                    continue
+                
+                else:
+
+                    return False
+
+        if st :
+
             return False
-            
+
         return True
-
-    def isEmpty(self,stack):
-
-        return len(stack) == 0
-
-    def peek(self,stack):
-
-        return stack[-1]
