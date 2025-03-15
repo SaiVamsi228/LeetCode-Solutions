@@ -1,35 +1,31 @@
-from collections import defaultdict
 from heapq import heapify, heappush, heappop
+from collections import Counter
 class Solution:
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
-        hM = defaultdict(int)
+        hp = []
 
-        for num in nums:
-
-            hM[num] += 1
-        
-        minHeap = []
-
-        heapify(minHeap)
+        freq = Counter(nums)
 
         n = 0
-        
-        for num,freq in hM.items():
 
-            heappush(minHeap,(freq,num))
+        for num, frq in freq.items():
+
+            heappush(hp,(frq,num))
 
             n += 1
-            
-        while n > k:
 
-            heappop(minHeap)
+            if n > k:
 
-            n -= 1
+                heappop(hp)
+
+                n -= 1
         
         ans = []
 
-        while minHeap:
+        while hp :
 
-            ans.append(heappop(minHeap)[1])
-
+            ans.append(heappop(hp)[1])
+        
         return ans
+
+
