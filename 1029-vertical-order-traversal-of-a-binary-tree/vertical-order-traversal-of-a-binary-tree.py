@@ -1,87 +1,81 @@
-from collections import deque
-from heapq import heapify, heappush, heappop
 # Definition for a binary tree node.
 # class TreeNode:
 #     def __init__(self, val=0, left=None, right=None):
 #         self.val = val
 #         self.left = left
 #         self.right = right
+from collections import deque
+
 class Solution:
     def verticalTraversal(self, root: Optional[TreeNode]) -> List[List[int]]:
         
-        if not root:
 
-            return []
+        hp = []
+
+        heapify(hp)
 
         q = deque()
-        index = 0
-        curLevel = 0
 
-        hPair = (index, curLevel, root.val)
+        cur_node, cur_level, hori_dist = root, 0, 0
 
-        minHeap = []
-
-        heapify(minHeap)
-
-        heappush(minHeap, hPair)
-
-        qPair = (index, curLevel, root.val, root)
-
-        q.append(qPair)
+        q.append((cur_node,cur_level + 1, hori_dist - 1))
 
         while q:
 
-            n = len(q)
+            cur_node, cur_level, hori_dist = q.popleft()
 
-            for i in range(n):
+            heappush(hp, (hori_dist, cur_level , cur_node.val))
 
-                ind, curLevel, curNodeVal, curNode = q.popleft()
+            if cur_node.left:
 
-                if curNode.left :
+                q.append((cur_node.left,cur_level + 1, hori_dist - 1))
+            
+            if cur_node.right:
 
-                    qPair = (ind - 1, curLevel + 1,  curNode.left.val , curNode.left)
+                q.append((cur_node.right, cur_level + 1, hori_dist + 1))
+            
+        vert_ord_trav = []
 
-                    hPair = (ind - 1, curLevel + 1,  curNode.left.val )
+        prev_hori_level = None
 
-                    heappush(minHeap, hPair )
+        my_vert_ord_level = []
 
-                    q.append(qPair)
+        while hp:
 
-                if curNode.right :
+            hori_dist, level, node_val = heappop(hp)
 
-                    qPair = (ind + 1, curLevel + 1,  curNode.right.val , curNode.right)
+            if prev_hori_level == None:
 
-                    hPair = (ind + 1, curLevel + 1,  curNode.right.val )
+                my_vert_ord_level.append(node_val)
 
-                    heappush(minHeap, hPair)
+                prev_hori_level = hori_dist
 
-                    q.append(qPair)
+            elif hori_dist == prev_hori_level:
 
-        vOrder = []
+                my_vert_ord_level.append(node_val)
+            
+            else:
 
-        prevInd = 0.1
+                vert_ord_trav.append(my_vert_ord_level)
 
-        vLevel = []
+                prev_hori_level = hori_dist
 
-        while minHeap:
+                my_vert_ord_level = []
 
-            ind, curLevel, curNodeVal= heappop(minHeap)
-
-            if ind != prevInd and prevInd != 0.1:
-
-                vOrder.append(vLevel)
-
-                vLevel = []
-
-            vLevel.append(curNodeVal)
-
-            prevInd = ind
+                my_vert_ord_level.append(node_val)
         
-        if vLevel: # For the last Level
 
-            vOrder.append(vLevel)
+        if my_vert_ord_level :
+
+            vert_ord_trav.append(my_vert_ord_level)
+        
+            my_vert_ord_level = []
+        
+        return vert_ord_trav
                 
-        return vOrder
 
 
 
+                
+
+        
