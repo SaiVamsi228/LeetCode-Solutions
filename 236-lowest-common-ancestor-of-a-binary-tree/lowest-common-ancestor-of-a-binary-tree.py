@@ -31,15 +31,12 @@ class Solution:
             if root.right:
                 
                 rlca = lca(root.right, p, q)
-
-            if llca == None :
-
-                return rlca
             
-            if rlca == None:
+            if llca and rlca:
 
-                return llca
+                return root
             
-            return root
+            return llca or rlca
+
         
         return lca(root,p,q)
