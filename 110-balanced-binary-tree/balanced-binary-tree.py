@@ -17,6 +17,10 @@ class Solution:
 
                 return 1
             
+            if is_balanced == False:
+
+                return False
+            
             lh = rh = 0
 
             if root.left:
