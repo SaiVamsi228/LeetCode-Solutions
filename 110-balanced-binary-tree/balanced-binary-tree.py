@@ -6,20 +6,12 @@
 #         self.right = right
 class Solution:
     def isBalanced(self, root: Optional[TreeNode]) -> bool:
-        
-        is_balanced = True
 
         def get_height_and_is_balanced(root):
-
-            nonlocal is_balanced
 
             if root.left == None and root.right == None:
 
                 return 1
-            
-            if is_balanced == False:
-
-                return False
             
             lh = rh = 0
 
@@ -27,13 +19,21 @@ class Solution:
 
                 lh = get_height_and_is_balanced(root.left)
             
+            if lh == -1:
+
+                return -1
+            
             if root.right:
                 
                 rh = get_height_and_is_balanced(root.right)
 
+            if rh == -1 :
+
+                return -1
+
             if abs(lh - rh ) > 1:
 
-                is_balanced = False
+                return -1
 
             return 1 + max(rh,lh)        
         
@@ -41,6 +41,6 @@ class Solution:
 
             return True
 
-        get_height_and_is_balanced(root)
+        ans = get_height_and_is_balanced(root)
 
-        return is_balanced
+        return ans != -1
