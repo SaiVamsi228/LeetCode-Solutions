@@ -7,30 +7,17 @@
 class Solution:
     def searchBST(self, root: Optional[TreeNode], val: int) -> Optional[TreeNode]:
         
-        def getSearchBST(root,key):
 
-            if not root:
+        node = root
 
-                return None
+        while node and node.val != val:
+
+            if node.val < val:
+
+                node = node.right
             
-            if root.val == key:
+            else:
 
-                return root
-
-            searchLeft = getSearchBST(root.left,key)
-
-            searchRight = getSearchBST(root.right,key)
-
-            if searchLeft:
-
-                return searchLeft
-            
-            if searchRight:
-
-                return searchRight
-
-            return searchLeft or searchRight
+                node = node.left
         
-        
-        return getSearchBST(root,val)
-
+        return node
