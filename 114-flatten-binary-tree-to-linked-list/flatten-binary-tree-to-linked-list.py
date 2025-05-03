@@ -9,37 +9,45 @@ class Solution:
         """
         Do not return anything, modify root in-place instead.
         """
-        
-        pre = []
 
-        def getPreorder(root):
+        def getFlattenedTree(root):
 
             if not root:
 
-                return
+                return None
+
+            if root.left == None and root.right == None:
+
+                return root
             
-            pre.append(root)
+            cur = root
 
-            getPreorder(root.left)
+            flattened_right_subtree = getFlattenedTree(root.right)
 
-            getPreorder(root.right)
+            flattened_left_subtree = getFlattenedTree(root.left)
+
+            if flattened_left_subtree:
+
+                cur.right = flattened_left_subtree
+                
+                temp = cur.right
+
+                while temp.right:
+
+                    temp = temp.right
+                
+                temp.right = flattened_right_subtree
+            
+            else:
+
+                cur.right = flattened_right_subtree
+
+            cur.left = None
+
+            return cur
         
-        getPreorder(root)
 
-        prev = None
+        return getFlattenedTree(root)
+            
 
-        for node in pre:
-
-            node.left = None
-
-            if prev :
-
-                prev.right = node
-
-            prev = node
         
-        if not pre:
-
-            return None
-
-        return pre[0]
