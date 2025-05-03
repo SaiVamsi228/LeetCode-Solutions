@@ -22,9 +22,10 @@ class Solution:
             
             cur = root
 
+            flattened_left_subtree = getFlattenedTree(root.left)
+            
             flattened_right_subtree = getFlattenedTree(root.right)
 
-            flattened_left_subtree = getFlattenedTree(root.left)
 
             if flattened_left_subtree:
 
