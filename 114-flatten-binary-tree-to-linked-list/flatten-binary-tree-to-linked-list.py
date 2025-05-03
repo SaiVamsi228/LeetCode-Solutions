@@ -9,46 +9,28 @@ class Solution:
         """
         Do not return anything, modify root in-place instead.
         """
+        
+        cur = root
 
-        def getFlattenedTree(root):
+        while cur:
 
-            if not root:
+            if cur.left:
 
-                return None
-
-            if root.left == None and root.right == None:
-
-                return root
-            
-            cur = root
-
-            flattened_left_subtree = getFlattenedTree(root.left)
-            
-            flattened_right_subtree = getFlattenedTree(root.right)
-
-
-            if flattened_left_subtree:
-
-                cur.right = flattened_left_subtree
-                
-                temp = cur.right
+                temp = cur.left
 
                 while temp.right:
 
                     temp = temp.right
                 
-                temp.right = flattened_right_subtree
-            
-            else:
+                temp.right = cur.right
 
-                cur.right = flattened_right_subtree
+                cur.right = cur.left
 
-            cur.left = None
+                cur.left = None
 
-            return cur
-        
+            cur = cur.right
 
-        return getFlattenedTree(root)
-            
+        return root
 
-        
+
+                
