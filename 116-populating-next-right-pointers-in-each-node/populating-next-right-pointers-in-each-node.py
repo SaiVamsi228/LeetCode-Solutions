@@ -11,39 +11,35 @@ class Node:
 class Solution:
     def connect(self, root: 'Optional[Node]') -> 'Optional[Node]':
         
-        q = deque()
+        def connect_all(p,q):
+
+            if p.left == None and p.right == None or (q.left == None and q.right == None):
+
+                return 
+            
+            connect_all(p.left,p.right)
+
+            connect_all(q.left,q.right)
+
+            connect_all(p.right,q.left)
+
+            p.left.next = p.right
+
+            q.left.next = q.right
+
+            p.right.next = q.left
+
+            return 
+
 
         if not root:
 
             return root
 
-        q.append(root)
+        if root.left and root.right:
 
-        while q :
+            connect_all(root.left,root.right)
             
-            prev = None
+            root.left.next = root.right 
 
-            n = len(q)
-
-            for i in range(n):
-
-                cur = q.popleft()
-
-                if cur.left:
-
-                    q.append(cur.left)
-                
-                if cur.right:
-
-                    q.append(cur.right)
-
-                if prev:
-
-                    prev.next = cur
-
-                prev = cur
-        
-        
         return root
-
-
