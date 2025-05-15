@@ -1,57 +1,29 @@
 class Solution:
     def isBipartite(self, graph: List[List[int]]) -> bool:
-        
-        n = len(graph)
+        color = {}  # node -> 0 or 1
 
-        visited_color = [0 for i in range(n)]
+        def bfs(start: int) -> bool:
+            queue = deque()
+            queue.append(start)
+            color[start] = 0  # Start with color 0
 
-        def getIsBipartite(node):
+            while queue:
+                node = queue.popleft()
+                curr_color = color[node]
 
-            q = deque()
-
-            parent = -1
-
-            q.append((node,parent))
-
-            while q :
-
-                node,par = q.popleft()
-
-                color = visited_color[node]
-
-                for neighbour in graph[node]:
-
-                    if neighbour == par:
-
-                        continue
-                    
-                    if visited_color[neighbour]:
-
-                        n_color = visited_color[neighbour]
-
-                        if color == n_color:
-
-                            return False
-                    
+                for neighbor in graph[node]:
+                    if neighbor in color:
+                        if color[neighbor] == curr_color:
+                            return False  # Same color on both sides
                     else:
+                        color[neighbor] = curr_color ^ 1  # Assign opposite color
+                        queue.append(neighbor)
 
-                        n_color = 1 if color == 2 else 2
-
-                        visited_color[neighbour] = n_color
-
-                        q.append((neighbour,node))
-            
             return True
 
-
-        
-
-        for node in range(n):
-
-            if not visited_color[node]:
-
-                if not getIsBipartite(node):
-
+        for node in range(len(graph)):
+            if node not in color:
+                if not bfs(node):
                     return False
-        
+
         return True
