@@ -33,9 +33,6 @@ class Solution:
                 if dfs(node,-1) == False:
 
                     return False
-        
-        print(color)
-
         return True
         
 
