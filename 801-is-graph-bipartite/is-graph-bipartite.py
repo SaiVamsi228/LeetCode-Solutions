@@ -1,29 +1,46 @@
 class Solution:
     def isBipartite(self, graph: List[List[int]]) -> bool:
-        color = {}  # node -> 0 or 1
+        color = {}
 
-        def bfs(start: int) -> bool:
-            queue = deque()
-            queue.append(start)
-            color[start] = 0  # Start with color 0
+        def dfs(node,prev_color):
 
-            while queue:
-                node = queue.popleft()
-                curr_color = color[node]
+            if node in color:
 
-                for neighbor in graph[node]:
-                    if neighbor in color:
-                        if color[neighbor] == curr_color:
-                            return False  # Same color on both sides
-                    else:
-                        color[neighbor] = curr_color ^ 1  # Assign opposite color
-                        queue.append(neighbor)
+                if color[node] == prev_color:
 
-            return True
-
-        for node in range(len(graph)):
-            if node not in color:
-                if not bfs(node):
                     return False
+                
+                else:
+
+                    return True
+            
+            color[node] = 1 if prev_color == 2 else 2
+
+            for neighbour in graph[node]:
+
+                if dfs(neighbour,color[node]) == False:
+
+                    return False
+            
+            return True
+        
+        n = len(graph)
+
+        for node in range(n):
+
+            if node not in color:
+
+                if dfs(node,-1) == False:
+
+                    return False
+        
+        print(color)
 
         return True
+        
+
+            
+
+            
+
+
