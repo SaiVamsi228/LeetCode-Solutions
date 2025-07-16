@@ -3,27 +3,26 @@ class Solution:
         
         n = len(nums)
 
-        postInd, negInd = 0, 1
+        temp = [float('inf') for i in range(n)]
 
-        ans = [0 for i in range(n)]
+        i = 0
 
-        for i in range(n):
+        j = 1
 
-            if nums[i] > 0:
+        for ind in range(n):
 
-                ans[postInd] = nums[i]
+            if nums[ind] > 0:
 
-                postInd += 2
+                temp[i] = nums[ind]
+            
+                i += 2
             
             else:
 
-                ans[negInd] = nums[i]
+                temp[j] = nums[ind]
 
-                negInd += 2
-            
-        return ans
+                j += 2
         
-
-                    
-
+        return temp
+            
 
