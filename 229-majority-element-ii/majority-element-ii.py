@@ -1,68 +1,58 @@
 class Solution:
     def majorityElement(self, nums: List[int]) -> List[int]:
-        
-        f1,f2 = 0, 0
+        n1,n2,c1,c2 = None, None , 0, 0
 
-        e1, e2 = None, None
+        for num in nums:
 
-        n = len(nums)
+            if num == n1:
 
-        for i in range(n):
-
-            if f1 == 0 and nums[i] != e2:
-
-                f1 = 1
-
-                e1 = nums[i]
+                c1 += 1
             
-            elif f2 == 0 and nums[i] != e1:
+            elif num == n2:
 
-                f2 = 1
-
-                e2 = nums[i]
-
-            elif nums[i] == e1 :
-
-                f1 += 1
+                c2 += 1
             
-            elif nums[i] == e2:
+            elif c1 == 0:
 
-                f2 += 1
+                n1 = num
+
+                c1 = 1
+            
+            elif c2 == 0:
+
+                n2 = num
+
+                c2 = 1
             
             else:
 
-                f1 -= 1
+                c1 -= 1
 
-                f2 -= 1
+                c2 -= 1
         
-        cnt1, cnt2 = 0, 0
 
-        for i in range(n):
+        act_cnt_1 = act_cnt_2 = 0
 
-            if nums[i] == e1 :
+        for num in nums:
 
-                cnt1 += 1
-            
-            if nums[i] == e2:
+            if num == n1 :
 
-                cnt2 += 1
-        
-        if cnt1 > n//3 and cnt2 > n//3:
+                act_cnt_1 += 1
 
-            return [e1,e2]
-        
-        elif cnt1 > n//3:
+            elif num == n2:
 
-            return [e1]
-        
-        elif cnt2 > n//3:
-            
-            return [e2]
-        
-        return []
+                act_cnt_2 += 1
 
+        ans = []
 
+        n = len(nums)
 
+        if act_cnt_1 > n//3:
 
-            
-            
+            ans.append(n1)
+
+        if act_cnt_2 > n//3:
+
+            ans.append(n2)
+
+        return ans
