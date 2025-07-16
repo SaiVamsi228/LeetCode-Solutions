@@ -1,16 +1,18 @@
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
         
-        best_buy_price = float('inf')
+        mini = prices[0]
 
-        max_profit = 0
+        maxi = prices[0]
 
         n = len(prices)
 
-        for cur_day in range(n):
+        mx = 0
 
-            best_buy_price = min(prices[cur_day], best_buy_price)
+        for i in range(n):
 
-            max_profit = max(max_profit, prices[cur_day] - best_buy_price)
+            mini = min(mini,prices[i])
+
+            mx = max(mx, prices[i] - mini)
         
-        return max_profit
+        return mx
