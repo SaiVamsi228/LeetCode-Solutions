@@ -1,45 +1,44 @@
 class Solution:
     def merge(self, intervals: List[List[int]]) -> List[List[int]]:
+        
+        intervals.sort()
+
+        merged = []
+
+        prev_s, prev_e, cur_s, cur_e = None, None, None, None
 
         n = len(intervals)
 
-        if n == 1:
+        for i in range(n):
+            
+            interval = intervals[i]
 
-            return intervals
-        
-        sorted_intervals = sorted(intervals)
+            cur_s, cur_e = interval[0] , interval[1]
 
-        st = []
+            if prev_s == None and prev_e == None:
 
-        st.append(sorted_intervals[0])
+                prev_s, prev_e = cur_s, cur_e
+            
+                continue
+            
+            if cur_s <= prev_e:
 
-        for i in range(1,n):
+                if cur_e > prev_e:
 
-            a,b  = st.pop()
+                    prev_e = cur_e
+                
+                else:
 
-            c,d = sorted_intervals[i]
-
-            if d <= b :
-
-                merged_interval = [a,b]
-
-                st.append(merged_interval)
-
-
-            elif c <= b :
-
-                merged_interval = [a,d]
-
-                st.append(merged_interval)
+                    prev_e = prev_e
             
             else:
 
-                st.append([a,b])
+                merged.append([prev_s,prev_e])
 
-                st.append([c,d])
+                prev_s , prev_e = cur_s, cur_e
         
-        return st
+        if prev_s != None and prev_e != None:
 
-
-
+            merged.append([prev_s, prev_e])
         
+        return merged
