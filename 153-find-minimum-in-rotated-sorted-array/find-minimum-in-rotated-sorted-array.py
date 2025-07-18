@@ -3,10 +3,27 @@ class Solution:
         
         n = len(nums)
 
-        mini = 2**31 + 1
+        left = 0
         
-        for num in nums:
+        right = n - 1
 
-            mini = min(num,mini)
+        mn = float('inf')
 
-        return mini
+        while left <= right:
+
+            mid = (left + right)//2
+
+            if nums[left] <= nums[mid]:
+                # left is sorted
+
+                mn = min(mn,nums[left])
+
+                left = mid + 1
+            
+            else:
+                # right is sorted
+                mn = min(mn,nums[mid])
+
+                right = mid - 1
+        
+        return mn
