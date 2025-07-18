@@ -3,43 +3,43 @@ class Solution:
         
         n = len(nums)
 
-        low = 0
+        left = 0
 
-        high = n-1
+        right = n - 1
 
-        while low <= high:
+        while left <= right:
 
-            mid = (low+high)//2
+            mid = (left + right)//2
 
             if nums[mid] == target:
 
                 return True
             
-            if nums[low] == nums[mid] == nums[high]:
+            if nums[left] == nums[mid] == nums[right]:
 
-                low  += 1
-                high -= 1
+                left  += 1
+                right -= 1
 
                 continue
 
-            if nums[low] <= nums[mid] :
+            if nums[left] <= nums[mid] :
 
-                if nums[low] <= target < nums[mid]:
+                if nums[left] <= target <= nums[mid] :
 
-                    high = mid - 1
-
-                else:
-
-                    low = mid + 1
-            
-            else:
-
-                if nums[mid] <= target <= nums[high]:
-
-                    low = mid + 1
+                    right = mid - 1
                 
                 else:
 
-                    high = mid - 1
+                    left = mid + 1
+            
+            else:
 
+                if nums[mid] <= target <= nums[right]:
+
+                    left = mid + 1
+                
+                else:
+
+                    right = mid - 1
+        
         return False
