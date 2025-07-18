@@ -23,6 +23,8 @@ class Solution:
 
                 right = cur_ind - 1
         
+        # left will point to the smallest index which is closer to our 
+        # kth missing number or position where the missing is lying
         return left + k 
 
 
