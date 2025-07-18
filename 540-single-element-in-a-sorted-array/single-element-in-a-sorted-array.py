@@ -3,44 +3,47 @@ class Solution:
         
         n = len(nums)
 
-        low, high = 0, n - 1
+        left , right = 0 , n - 1
 
-        while low <= high:
+        while left <= right:
 
-            mid = (low + high)//2
-
-            print(low,high,mid)
+            mid = (left + right)//2
 
             if mid % 2 == 0:
 
-                if mid + 1 >= n :
+                # Even Ind
+                # if it is pairing with right ele if exists then something is wrong in right
+                # else something is wrong is left
+
+                if mid + 1 > n - 1 :
 
                     return nums[mid]
                 
-                curr, nxt = nums[mid], nums[mid + 1]
+                elif nums[mid] == nums[mid + 1]:
 
-                if curr == nxt:
-
-                    # our ans lies on right
-
-                    low = mid + 1
-
-                else:
-
-                    high = mid - 1 
-            
-            elif mid % 2 == 1:
-
-                curr, prev = nums[mid], nums[mid - 1]
-
-                if curr == prev:
-
-                    low = mid + 1
+                    left = mid + 1
                 
                 else:
 
-                    high = mid - 1
-        
-
-        return nums[low]
+                    right = mid - 1
             
+            else:
+
+                # Odd Ind
+                # if it is pairing with left ele if exists then something is wrong in right
+                # else something is wrong is left
+
+                if mid - 1 < 0 :
+
+                    return nums[mid]
+                
+                if nums[mid] == nums[mid- 1]:
+
+                    left = mid + 1
+                
+                else:
+
+                    right = mid - 1
+            
+        
+        return nums[left]
