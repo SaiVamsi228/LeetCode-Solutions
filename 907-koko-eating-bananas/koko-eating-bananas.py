@@ -1,63 +1,41 @@
 import math
 class Solution:
-    def findMax(self,piles):
-
-        maxi = float('-inf')
-
-        for pile in piles:
-
-            maxi = max(pile,maxi)
-        
-        return maxi
-    
-    def findHours(self,piles,n,hourly):
-
-        totHours = 0
-        for i in range(n):
-            
-            totHours += math.ceil(piles[i]/hourly)
-        
-        return totHours
     def minEatingSpeed(self, piles: List[int], h: int) -> int:
         
-        n = len(piles)
+        def findHours(piles,speed):
+
+            total = 0
+
+            for pile in piles:
+
+                hours_needed = math.ceil(pile/speed)
+
+                total += hours_needed
+            
+            return total
         
-        maxi = self.findMax(piles)
+            return time_required
+        
+        left = 1
 
+        right = max(piles) 
+        
+        ans = max(piles)
 
-        low = 1
+        while left <= right:
 
-        high = maxi + 1
+            speed = (left + right)//2
 
-        minBananas = maxi
+            time_taken = findHours(piles,speed)
 
-        while low <= high :
-            # Let's take a random bananacount
-            curBananas = (low + high )//2
+            if time_taken <= h:
 
-            # Calculating time req to eat curBananas
-            reqTime = self.findHours(piles,n,curBananas)
+                ans = speed
 
-            # If req time is less than or equal to h then we 
-            # can consider
-            if reqTime <= h:
+                right = speed - 1
+            
+            if time_taken > h :
 
-                # Taking as minimum bananas as possible so that she can
-                # eat leisurely
-                
-                minBananas = curBananas
-
-                # Search for more min curBananas
-                # So move left
-                high =  curBananas - 1
-
-
-            # If we are taking more time we need to increase curBananas
-            # so move right
-
-            else:
-
-                low = curBananas + 1
-       
-
-        return minBananas
+                left = speed + 1
+        
+        return ans
