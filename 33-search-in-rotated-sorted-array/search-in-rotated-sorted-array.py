@@ -1,36 +1,65 @@
 class Solution:
-    def search(self, nums: List[int], target: int) -> int:
+    def search(self, arr: List[int], target: int) -> int:
         
-        n = len(nums)
+        n = len(arr)
 
-        low, high = 0, n-1
+        left = 0
 
-        while low <= high:
+        right = n - 1
 
-            mid = (low + high)//2
+        ans = -1
 
-            if nums[mid] == target:
+        while left <= right:
 
-                return mid
+            mid = (left + right)//2
 
-            if nums[low] <= nums[mid]:
+            if arr[mid] == target :
 
-                if nums[low] <= target <= nums[mid]:
+                ans = mid 
 
-                    high = mid - 1
+                break
+
+            if arr[left] < arr[mid] < arr[right]:
+
+                # we are in the sorted one
+                if arr[mid] > target :
+
+                    right = mid - 1
                 
                 else:
 
-                    low = mid + 1
+                    left = mid + 1
+            
+            elif arr[left] <= arr[mid] >= arr[right]:
 
-            else:
+                # sorted is on left
 
-                if nums[mid] <= target <= nums[high]:
+                if arr[left] <= target <= arr[mid]:
 
-                    low = mid + 1
+                    right = mid - 1
                 
                 else:
 
-                    high = mid - 1
-        
-        return -1
+                    left = mid + 1
+
+
+            
+            elif arr[left] >= arr[mid] <= arr[right] :
+
+                # sorted is on right
+
+                if arr[mid] <= target <= arr[right]:
+
+                    left = mid + 1
+                
+                else:
+
+                    right = mid - 1
+
+        return ans
+
+
+
+
+
+            
