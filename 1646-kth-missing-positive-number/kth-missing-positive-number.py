@@ -1,35 +1,31 @@
 class Solution:
     def findKthPositive(self, arr: List[int], k: int) -> int:
         
+        start = 1
+
+        missing_cnt = 0
+
         n = len(arr)
 
-        low = 0
+        i = 0
 
-        high = n-1
+        while i < n and missing_cnt != k:
 
-        # Reaching the index as close as possible to our missing number
-        while low <= high :
+            if start == arr[i]:
 
-            curInd = (low + high)//2
+                i += 1
+            
+            else:
 
-            actInd = arr[curInd] - 1
+                missing_cnt += 1
+            
+            if missing_cnt == k:
 
-            mNuptocurInd = actInd - curInd 
-
-            if  k <= mNuptocurInd:
-
-                high = curInd - 1                
-
-            else: 
-
-                low = curInd + 1
+                return start
+            
+            start += 1
+        
+        return start + k - missing_cnt - 1
         
 
-        # If it lies to left of cur Ind
-        if k <= mNuptocurInd :
-            
-            return arr[curInd] - (mNuptocurInd - k ) - 1
 
-
-        # If it lies to right of cur Ind
-        return arr[curInd] - (mNuptocurInd - k )
