@@ -18,19 +18,8 @@ class Solution:
                 ans = mid 
 
                 break
-
-            if arr[left] < arr[mid] < arr[right]:
-
-                # we are in the sorted one
-                if arr[mid] > target :
-
-                    right = mid - 1
-                
-                else:
-
-                    left = mid + 1
             
-            elif arr[left] <= arr[mid] >= arr[right]:
+            if arr[left] <= arr[mid] :
 
                 # sorted is on left
 
@@ -44,7 +33,7 @@ class Solution:
 
 
             
-            elif arr[left] >= arr[mid] <= arr[right] :
+            elif arr[mid] <= arr[right] :
 
                 # sorted is on right
 
