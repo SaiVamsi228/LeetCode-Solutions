@@ -1,57 +1,59 @@
+import math
 class Solution:
+    def shipWithinDays(self, weights: List[int], days: int) -> int:
+        
+        def getDays(capacity):
 
-    def getDays(self,capacity,weights,n):
-
-        days = 1
-
-        curCapacity = 0
-
-        i = 0
-
-        while i < n:
-
-            if curCapacity + weights[i] <= capacity :
-
-                curCapacity += weights[i]
-
-                i += 1
+            total_days_req = 0
             
-            else:
+            n = len(weights)
 
-                if curCapacity == 0:
+            cur_cap = 0
 
-                    return False
+            for i in range(n):
 
-                days += 1 
+                cur_cap += weights[i]
 
-                curCapacity = 0
+                if cur_cap > capacity :
 
-        return days
-                
-    def shipWithinDays(self, weights: list[int], days: int) -> int:
+                    total_days_req += 1
+
+                    cur_cap = weights[i]
+
+                if i == n - 1:
+
+                    if cur_cap :
+                        
+                        total_days_req += 1
+        
+            return total_days_req
         
         n = len(weights)
 
-        leastCapacity = sum(weights)
+        left = max(weights)
 
-        low = max(weights)
+        right = sum(weights)
 
-        high = leastCapacity
+        mn = right
 
-        while low <= high :
+        while left <= right:
 
-            mC = (low + high )// 2
+            cap = (left + right)//2
 
-            reqDays = self.getDays(mC,weights,n) 
+            days_req = getDays(cap)
 
-            if reqDays and reqDays <= days :
+            print(cap,days_req)
 
-                leastCapacity = mC
+            if days_req <= days:
 
-                high = mC - 1
+                mn = cap
+
+                # we want minimum weight capacity of the ship
+
+                right = cap - 1
             
-            else:
+            elif days_req > days:
 
-                low = mC + 1
+                left = cap + 1
         
-        return leastCapacity
+        return mn
