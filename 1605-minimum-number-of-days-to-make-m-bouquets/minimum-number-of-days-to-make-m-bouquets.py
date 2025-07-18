@@ -55,9 +55,7 @@ class Solution:
 
             if self.isPossible(day,bloomDay,m,k,n):
 
-                if day < miniDays:
-
-                    miniDays = day
+                miniDays = day
 
                 high = day - 1
             
@@ -68,5 +66,4 @@ class Solution:
         return miniDays if miniDays != 2**31 else -1
 
             
-
 
