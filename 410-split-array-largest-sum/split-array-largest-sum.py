@@ -1,46 +1,53 @@
 class Solution:
     def splitArray(self, nums: List[int], k: int) -> int:
+        
+        def getNumberOfSubarrays(sm):
 
-        low = max(nums)
+            cur_sm = 0
 
-        high = sum(nums)
+            sb = 1 # because we assume the first subarr is already started
 
-        while low <= high :
+            n = len(nums)
 
-            largSum = (low + high)//2
+            for num in nums:
 
-            if self.countSubarrays(nums,largSum) <= k:
+                if cur_sm + num <= sm:
 
-                high = largSum - 1
-            
-            else:
+                    cur_sm += num
 
-                low = largSum + 1
+                else:
 
-        return low  # if the required partitions < maximum partitions possible 
-        # see in case [2,3,1,1,1,1,1] k=5
-        # returning when polarity is getting changed
-        # RETURN LOW IF MIN IS ASKED 
-        # RETURN HIGH IF MAX IS ASKED 
+                    sb += 1
 
-    def countSubarrays(self, nums, maxSum):
+                    cur_sm = num
 
-        subarrays = 1
+            return sb
+        
+        left = max(nums) # since non-empty
 
-        subarraySum = 0
+        right = sum(nums)
 
-        n = len(nums)
+        ans = right
 
-        for i in range(n):
+        while left <= right:
 
-            if subarraySum + nums[i] <= maxSum:
+            larg_sm = (left + right)//2
 
-                subarraySum += nums[i]
+            sb_poss = getNumberOfSubarrays(larg_sm)
 
-            else:
+            if sb_poss <= k: 
 
-                subarrays += 1
+                right = larg_sm - 1
 
-                subarraySum = nums[i]
+            elif sb_poss > k :
 
-        return subarrays
+                left = larg_sm + 1
+        
+        return left
+
+
+
+
+
+
+
