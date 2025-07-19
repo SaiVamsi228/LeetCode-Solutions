@@ -3,31 +3,31 @@ class Solution:
         
         res = []
 
-        stack = []
+        cnt = 0
 
         for char in s:
 
             if char == "(":
 
-                if len(stack) == 0:
+                if cnt == 0:
 
-                    stack.append(char)
+                    cnt += 1
                 
                 else:
 
-                    stack.append(char)
+                    cnt += 1
 
                     res.append(char)
             
             elif char == ")":
 
-                if len(stack) == 1:
+                if cnt == 1:
 
-                    stack.pop()
+                    cnt -= 1
                 
                 else:
 
-                    stack.pop()
+                    cnt -= 1
 
                     res.append(char)
         
