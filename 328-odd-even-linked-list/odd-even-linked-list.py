@@ -10,27 +10,36 @@ class Solution:
 
             return head
 
-        odd = head
+        h1 = head
 
-        even = head.next
+        h2 = head.next
 
-        newHead = even
+        curr1 = h1
 
-        while even and even.next:
+        curr2 = h2
 
-            odd.next = odd.next.next
-
-            even.next = even.next.next
-
-            even = even.next
-
-            odd = odd.next
-
-        
-        odd.next = newHead
-
-        return head
-
-        
-
+        while curr1 and curr2:
             
+            curr1.next = curr1.next.next
+
+            if curr2.next:
+                
+                curr2.next = curr2.next.next
+
+            prev = curr1
+
+            curr1 = curr1.next
+
+            curr2 = curr2.next
+        
+        if curr1:
+            
+            curr1.next = h2
+        
+        else:
+
+            prev.next = h2
+
+        return h1
+        
+
