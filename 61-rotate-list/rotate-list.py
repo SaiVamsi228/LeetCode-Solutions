@@ -10,48 +10,37 @@ class Solution:
 
             return head
 
-        length = 0
-
         temp = head
 
-        while temp:
+        n = 0
 
-            length += 1
+        while temp.next:
+
+            n += 1
 
             temp = temp.next
         
-        k = k % length 
+        n += 1
         
+
+        k = k % n 
+
         if k == 0 :
 
             return head
-
-        slow = head
-
-        fast = head
-
-        for i in range(k):
-
-            fast = fast.next
         
-        before = None
+        temp.next = head
 
-        while fast :
-            
-            before = slow
+        steps = n - k
 
-            slow = slow.next 
+        while steps > 0 :
 
-            fast = fast.next
+            temp = temp.next
+
+            steps -= 1
         
-        before.next = None
+        head = temp.next
 
-        new_head = slow
+        temp.next = None
 
-        while slow.next:
-
-            slow = slow.next
-        
-        slow.next = head
-
-        return new_head
+        return head
