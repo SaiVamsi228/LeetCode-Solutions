@@ -1,34 +1,33 @@
 class Solution:
     def subsetsWithDup(self, nums: List[int]) -> List[List[int]]:
+        
+        ans = []
 
-        ans = set()
+        def getAllSubsets(ind,sb):
 
-        def getSubset(n,subset):
+            ans.append(sb.copy())
 
-            if n == 0:
+            if ind == n :
 
-                ans.add(tuple(subset.copy()))
-
-                return
+                return 
             
-            notTake = getSubset(n-1,subset)
-            
-            subset.append(nums[n-1])
+            for i in range(ind,n):
 
-            take = getSubset(n-1,subset)
+                if i > ind and nums[i] == nums[i-1]:
 
-            subset.pop()
+                    continue
+                
+                sb.append(nums[i])
+
+                getAllSubsets(i+1,sb)
+
+                sb.pop()
         
 
         nums.sort()
 
         n = len(nums)
 
-        getSubset(n,[])
+        getAllSubsets(0,[])
 
-        return list(ans)
-
-
-            
-                
-        
+        return ans
