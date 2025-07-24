@@ -4,77 +4,73 @@
 #         self.val = val
 #         self.next = next
 class Solution:
-    
     def reverseKGroup(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
+        
+        def reverseLL(node,k):
 
-        def reverse_ll(curr,k):
+            before = None
 
-            tail = curr
+            new_head = None
 
-            prev = None
+            new_tail = node
 
-            while curr and k > 0:
+            temp = node
 
-                upcoming = curr.next
+            while temp and k > 0:
 
-                curr.next = prev
+                upcoming = temp.next
+
+                temp.next = before
+
+                before = temp
+
+                temp = upcoming
 
                 k -= 1
+            
+            new_head = before
 
-                prev = curr
-
-                curr = upcoming
-
-            return 
+            return new_head, new_tail
+        
+        
+        dummy = ListNode(-1)
 
         temp = head
 
-        prev = None
+        before = dummy
 
-        my_head = None
-
-        while temp :
-
-            m_k = k - 1
+        while temp:
 
             curr = temp
 
-            while temp and m_k:
+            m_k = k - 1
 
-                temp = temp.next
+            while temp and m_k > 0:
 
-                m_k -= 1
+                temp = temp.next 
+
+                m_k = m_k - 1
             
             if not temp:
 
-                if prev:
-                    
-                    prev.next = curr
+                if before :
+
+                    before.next = curr
 
                 break
             
-            upcoming = temp.next
+            upcoming = temp.next # store the upcoming segment
+
+            temp.next = None # break the segment
+
+            new_head, new_tail = reverseLL(curr,k)
+
+            if before:
+
+                before.next = new_head
             
-            m_k = k 
+            before = new_tail
 
-            reverse_ll(curr,m_k)
-
-            if prev:
-
-                prev.next = temp
-
-            if not my_head:
-
-                my_head = temp
-            
-            prev = curr
-
-            temp = curr = upcoming
-
+            temp = upcoming
         
-        return my_head
-            
-
-
-         
-
+        return dummy.next
