@@ -1,42 +1,36 @@
 class Solution:
     def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
+        
+        def getAllSb(n,target,sb):
 
+            if n == 0:
+
+                if target == 0:
+
+                    ans.append(sb.copy())
+
+                return
+            
+            # take it
+
+            if candidates[n-1] <= target:
+                
+                sb.append(candidates[n-1])
+
+                getAllSb(n,target - candidates[n-1],sb)
+            
+                sb.pop()
+            
+            # dont take it
+
+            getAllSb(n-1,target,sb)
+        
         ans = []
-        
-        def get_comb_sums(ind,target,subseq):
 
-            if target == 0:
-
-                ans.append(subseq.copy())
-
-                return
-
-            if ind == n:
-
-                return
-            
-            if candidates[ind] <= target:
-
-                # take
-
-                subseq.append(candidates[ind])
-
-                get_comb_sums(ind,target - candidates[ind], subseq)
-
-                subseq.pop()
-
-                # not take
-
-                get_comb_sums(ind+1, target, subseq)
-            
-            else:
-
-                # not take
-
-                get_comb_sums(ind+1, target, subseq)
-        
         n = len(candidates)
 
-        get_comb_sums(0, target, [] )
+        sb = []
+
+        getAllSb(n,target,sb)
 
         return ans
