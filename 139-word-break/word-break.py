@@ -2,7 +2,7 @@ class Solution:
     def wordBreak(self, s: str, wordDict: List[str]) -> bool:
         
 
-        def isPossible(current,memo):
+        def isPossible(current):
 
             if current in memo:
 
@@ -18,7 +18,7 @@ class Solution:
 
                     new_current = current[len(word):]
 
-                    if isPossible(new_current,memo):
+                    if isPossible(new_current):
 
                         memo[current] = True
 
@@ -32,4 +32,4 @@ class Solution:
         
         n = len(s)
 
-        return isPossible(s,memo)
+        return isPossible(s)
