@@ -1,72 +1,57 @@
 class Solution:
     def asteroidCollision(self, asteroids: List[int]) -> List[int]:
-
-        stack = []
-
-        for asteroid in asteroids:
-
-            # asteroid moving right
-
-            if asteroid > 0 : 
-
-                stack.append(asteroid)
-
-            # asteroid moving left
-            
-            # no asteroids on left
-
-            elif not stack:
-
-                stack.append(asteroid)
-            
-            # some exist on the left
-            
-            elif stack :
-
-                # the immediate left one is also moving left
-
-                if stack[-1] < 0:
-
-                    stack.append(asteroid)
-                
-                # the immediate left one is moving right
-
-                # opp dir collision should occur
-                else:
-                    # the left one is bigger => my asteroid explodes
-
-                    if abs(stack[-1]) > abs(asteroid):
-
-                        continue
-                    
-                    # if left one is smaller
-                    
-                    elif abs(stack[-1]) <= abs(asteroid):
-
-                        # while left is moving right and is smaller than my current
-
-                        # => keep exploding left ones
-
-                        while stack and stack[-1] > 0 and abs(stack[-1]) < abs(asteroid):
-
-                            stack.pop()
-                        
-                        # if left one is moving right and same size => both must explode
-                        if stack and stack[-1] > 0 and abs(stack[-1]) == abs(asteroid):
-
-                            stack.pop()
-
-                        # if left is moving right and left is bigger => my current one explodes
-                        elif stack and stack[-1] > 0 and abs(stack[-1]) > abs(asteroid):
-
-                            continue
-                        
-                        # if left is moving left 
-                        else:
-                            
-                            stack.append(asteroid)
-                
-        return stack 
-
-
         
+        st = []
+
+        n = len(asteroids)
+
+        for i in range(n):
+
+            curr = asteroids[i]
+
+            if not st:
+
+                st.append(curr)
+            
+            elif st and ((st[-1] > 0 and curr > 0 ) or (st[-1] < 0 and curr < 0) or (st[-1] < 0 and curr > 0)):
+                # same dir no collision
+
+                st.append(curr)
+
+            elif curr < 0 and st and st[-1] > 0 :
+                
+                isCurrDes = False
+
+                while st and st[-1] > 0 and abs(st[-1]) <= abs(curr):
+                    
+                    if abs(st[-1]) == abs(curr):
+
+                        isCurrDes = True
+
+                        # can destroy only one of same size
+
+                        st.pop()
+
+                        break
+
+                    st.pop()
+
+                if st:
+
+                    if st[-1] > 0 and abs(st[-1]) > abs(curr):
+
+                        isCurrDes = True
+                
+                if not isCurrDes:
+
+                    st.append(curr)
+        
+        return st
+            
+
+
+            
+            
+                
+            
+        return st
