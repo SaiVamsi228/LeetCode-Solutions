@@ -1,8 +1,7 @@
-from collections import defaultdict
 class Solution:
     def numberOfSubstrings(self, s: str) -> int:
         
-        hM = defaultdict(int)
+        hm = {}
 
         i = j = 0
 
@@ -10,40 +9,54 @@ class Solution:
 
         cnt = 0
 
-        AtleOneOccur = 0
+        uniq_char = 0
 
         while j < n :
 
-            hM[s[j]] += 1
+            char = s[j]
 
-            if hM[s[j]] == 1:
+            if char in hm:
 
-                AtleOneOccur += 1
+                hm[char] += 1
             
-            if AtleOneOccur < 3:
+            else:
+
+                hm[char] = 1
+
+                uniq_char += 1
+            
+            if uniq_char < 3 :
 
                 j += 1
             
-            elif AtleOneOccur == 3:
+            elif uniq_char == 3:
 
-                cnt += n - j #all upcoming strings are also valid substrings
+                cnt += n - j
 
-                while AtleOneOccur == 3 and i < n :
+                while i <= j and uniq_char == 3 :
 
-                    hM[s[i]] -= 1
+                    hm[s[i]] -= 1
 
-                    if hM[s[i]] == 0 :
+                    if hm[s[i]] == 0:
 
-                        AtleOneOccur -= 1
+                        del hm[s[i]]
+
+                        uniq_char -= 1
                     
-                    if AtleOneOccur == 3:
+                    if uniq_char == 3:
 
                         cnt += n - j
-                    
+
                     i += 1
                 
                 j += 1
-
+        
         return cnt
+                
 
+
+            
+
+
+            
 
