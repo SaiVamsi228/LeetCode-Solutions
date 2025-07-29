@@ -1,49 +1,44 @@
 from collections import defaultdict
 class Solution:
     def characterReplacement(self, s: str, k: int) -> int:
-
-        hashMap = dict()
-
-        i = 0 
-
-        j = 0
-
-        n = len(s)
-
-        maxFreq = mx = 0
-
         
+        diff_char_cnt = 0
+        mx = 0
+        i = j = 0
+        n = len(s)
+        hm = {}
+        max_freq = 0
 
         while j < n :
 
-            if s[j] not in hashMap:
-                
-                hashMap[s[j]] = 1
+            if s[j] in hm:
 
+                hm[s[j]] += 1
+            
             else:
 
-                hashMap[s[j]] += 1
-
-            maxFreq = max(maxFreq, hashMap[s[j]])
-
-            if j - i + 1 - maxFreq <= k :
-
-                mx = max(mx, j - i + 1)
-
-                j += 1
+                hm[s[j]] = 1
             
-            elif j - i + 1 - maxFreq > k :
+            max_freq = max(max_freq,hm[s[j]])
 
-                while j - i + 1 - maxFreq > k :
+            length_of_str = j - i + 1
 
-                    hashMap[s[i]] -= 1
+            diff_char = length_of_str - max_freq
 
-                    for char, cnt in hashMap.items():
+            if diff_char > k :
 
-                        maxFreq = max(maxFreq, cnt)
+                while i <= j and j - i + 1 - max_freq > k:
 
+                    hm[s[i]] -= 1
+
+                    for char,cnt in hm.items():
+
+                        max_freq = max(max_freq,cnt)
+                    
                     i += 1
-
-                j += 1
-
-        return mx 
+            
+            mx = max(mx, j - i + 1 )
+            
+            j += 1            
+        
+        return mx
