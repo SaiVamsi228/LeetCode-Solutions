@@ -1,7 +1,7 @@
 class Solution:
     def maxSlidingWindow(self, nums: list[int], k: int) -> list[int]:
         
-        def getNGELInd(nums,n):
+        def getNGLInd(nums,n):
 
             st = []
 
@@ -38,7 +38,7 @@ class Solution:
             return ngl
                     
 
-        def getNGRInd(nums,n):
+        def getNGERInd(nums,n):
 
             st = []
 
@@ -76,8 +76,8 @@ class Solution:
 
         n = len(nums)
 
-        ngr = getNGRInd(nums,n)
-        ngl = getNGELInd(nums,n)
+        ngr = getNGERInd(nums,n)
+        ngl = getNGLInd(nums,n)
 
         ans = []
 
@@ -98,6 +98,7 @@ class Solution:
             else:
 
                 rB = n - 1
+
             
             newNglInd = ngl[curInd] if ngl[curInd] >= lB else lB - 1
 
@@ -106,7 +107,9 @@ class Solution:
             length = newNgrInd - newNglInd - 1  
 
             freqCurInd = length - k + 1
-        
+
+            print(nums[curInd], length, freqCurInd)
+            
             for _ in range(freqCurInd):
 
                 ans.append(nums[curInd])
@@ -115,7 +118,6 @@ class Solution:
 
             
             
-
 
 
 
