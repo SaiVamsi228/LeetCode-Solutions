@@ -1,53 +1,91 @@
-from collections import Counter
+from collections import defaultdict
 class Solution:
     def minWindow(self, s: str, t: str) -> str:
         
-        mn = 10**5+2
-
-        mini = ""
+        i = j = 0
 
         n = len(s)
 
-        hM = Counter(t)
+        req_hm = {}
 
-        notSatisfied = len(hM)
+        for char in t:
 
-        i = j = 0
+            if char in req_hm:
 
-        while j < n:
+                req_hm[char] += 1
             
-            if s[j] in hM:
+            else:
 
-                hM[s[j]] -= 1
+                req_hm[char] = 1
 
-                if hM[s[j]] == 0:
+        req_satis_cnt = len(req_hm)
 
-                    notSatisfied -= 1
-            
-            if notSatisfied != 0:
+        hm = defaultdict(int)
+
+        satis_cnt = 0
+
+        mn = float('inf')
+
+        mn_sub_str = ""
+
+        while j < n :
+
+            char = s[j]
+
+            if char not in req_hm:
 
                 j += 1
-                
-            elif notSatisfied == 0:
 
-                while notSatisfied == 0:
-                    
-                    if not mini or  j - i + 1 < mn: 
+                continue
 
-                        mini = s[i:j+1]
+            hm[char] += 1
 
-                        mn = j - i + 1
-                    
-                    if s[i] in hM :
+            if hm[char] == req_hm[char]:
 
-                        hM[s[i]] += 1
+                satis_cnt += 1
+            
+            if satis_cnt < req_satis_cnt :
 
-                        if hM[s[i]] == 1 :
-
-                            notSatisfied += 1
-                    i += 1
-                
                 j += 1
 
-        return mini
+                continue
+            
+            elif satis_cnt == req_satis_cnt:
+                
+                # shrinking size as much as we can for mn substring
+                while i <= j :
+
+                    left_char = s[i]
+
+                    if left_char not in req_hm:
+
+                        i += 1
+
+                        continue
+
+                    if hm[left_char] - 1 < req_hm[left_char]:
+
+                        break
+                    
+                    elif hm[left_char] - 1 >= req_hm[left_char]:
+
+                        hm[left_char] -= 1
+
+                        i += 1
+                
+                sub_str_len = j - i + 1
+
+                if sub_str_len < mn:
+
+                    mn = sub_str_len
+
+                    mn_sub_str = s[i:j+1]
+
+                j += 1
+
+        return mn_sub_str
+
+
+
+
 
