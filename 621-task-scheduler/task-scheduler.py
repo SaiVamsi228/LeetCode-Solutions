@@ -1,62 +1,18 @@
-from collections import deque, Counter
-from heapq import heapify, heappush, heappop
 class Solution:
     def leastInterval(self, tasks: List[str], n: int) -> int:
-        
-        freq_hm = Counter(tasks)
+        freq = [0] * 26
+        for task in tasks:
+            freq[ord(task) - ord('A')] += 1  # Count frequency of each task
 
-        hp = []
+        freq.sort()  # Sort to find the task with highest frequency
+        max_freq = freq[25]  # Most frequent task
 
-        heapify(hp)
+        chunk = max_freq - 1  # Number of full gaps between most frequent tasks
+        idle = chunk * n  # Initial idle slots
 
-        for ele,freq in freq_hm.items():
+        # Fill idle slots with remaining tasks (other than the most frequent one)
+        for i in range(24, -1, -1):  # From second most to least
+            idle -= min(chunk, freq[i])  # Can’t place more than one per chunk
 
-            heappush(hp,-1*freq)
-        
-        q = deque()
-
-        time = 0
-
-        while hp or q:
-
-            if hp:
-                
-                freq = heappop(hp)
-
-                freq = -1 * freq
-
-                freq -= 1
-
-                if freq > 0:
-                
-                    q.append((freq,time+n+1))
-
-            time += 1
-
-            while q and q[0][1] == time:
-
-                freq, nxt = q.popleft()
-
-                heappush(hp,-freq)
-        
-
-        while q :
-
-            freq, nxt = q[0]
-
-            if time >= nxt:
-                
-                freq -= 1
-
-            if freq > 0:
-                
-                q.append((freq,time+n+1))
-
-            time += 1
-
-        return time
-
-        
-
-
-
+        # If idle is still > 0, we need to wait, else tasks fill all slots
+        return len(tasks) + max(0, idle)
