@@ -1,42 +1,26 @@
 from collections import Counter
+from heapq import heapify, heappop, heappush
+
 class Solution:
     def isNStraightHand(self, hand: List[int], groupSize: int) -> bool:
-        
-        hm = Counter(hand)
-
-        hand.sort()
-
-        i = 0
-
-        n = len(hand)
-
-        if n % groupSize != 0:
-
+        if len(hand) % groupSize != 0:
             return False
+        
+        count = Counter(hand)
+        minHeap = list(count.keys())
+        heapify(minHeap)
 
-        num_of_grps = n // groupSize
+        while minHeap:
+            first = minHeap[0]  # Smallest available card
 
-        for _ in range(num_of_grps):
-
-            while i < n and hm[hand[i]] == 0:
-
-                i += 1
-            
-            start = hand[i]
-
-            for num in range(start,start + groupSize):
-
-                if hm[num] > 0:
-
-                    hm[num] -= 1
-
-                    continue
-                
-                else:
-
+            for i in range(groupSize):
+                card = first + i
+                if count[card] == 0:
                     return False
-    
+                count[card] -= 1
+                if count[card] == 0:
+                    if card != minHeap[0]:
+                        return False
+                    heappop(minHeap)
+
         return True
-            
-
-
