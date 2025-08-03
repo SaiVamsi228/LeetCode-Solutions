@@ -1,33 +1,28 @@
 class Solution:
     def jump(self, nums: List[int]) -> int:
-
+        
+        jumps = 0
 
         n = len(nums)
 
-        def getMinSteps(ind):
+        l = r = 0
 
-            if ind >= n - 1:
+        jumps = 0
 
-                return 0
+        while r < n-1:
+
+            farthest = 0
+
+            for ind in range(l,r+1):
+
+                farthest = max(ind + nums[ind], farthest)
             
-            if dp[ind] != -1:
+            jumps += 1
 
-                return dp[ind]
-            
-            mini_steps = float('inf')
+            l = r + 1
 
-            for k in range(1,nums[ind]+1):
-
-                steps_req = 1 + getMinSteps(ind+k)
-
-                mini_steps = min(mini_steps, steps_req)
-            
-            dp[ind] = mini_steps
-
-            return dp[ind]
+            r = farthest
         
-        dp = [-1 for i in range(n)]
+        return jumps
 
-        return getMinSteps(0)
-
-
+            
