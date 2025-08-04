@@ -6,41 +6,27 @@
 #         self.right = right
 class Solution:
     def isBalanced(self, root: Optional[TreeNode]) -> bool:
-
-        def get_height_and_is_balanced(root):
-
-            if root.left == None and root.right == None:
-
-                return 1
-            
-            lh = rh = 0
-
-            if root.left:
-
-                lh = get_height_and_is_balanced(root.left)
-            
-            if lh == -1:
-
-                return -1
-            
-            if root.right:
-                
-                rh = get_height_and_is_balanced(root.right)
-
-            if rh == -1 :
-
-                return -1
-
-            if abs(lh - rh ) > 1:
-
-                return -1
-
-            return 1 + max(rh,lh)        
         
-        if root == None:
+        def getIsBalanced(node):
 
-            return True
+            if not node:
 
-        ans = get_height_and_is_balanced(root)
+                return 0
+            
+            lh = getIsBalanced(node.left)
 
-        return ans != -1
+            rh = getIsBalanced(node.right)
+
+            if abs(lh-rh) > 1 :
+
+                return float('inf')
+            
+            return 1 + max(lh,rh)
+        
+        ans = getIsBalanced(root)
+
+        if ans == float('inf'):
+
+            return False
+        
+        return True
