@@ -6,23 +6,27 @@
 #         self.right = right
 class Solution:
     def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
+
+        def getRoot(pre_start,pre_end,in_start, in_end):
+
+            if pre_start > pre_end or in_start > in_end :
+
+                return None
+            
+            cur_root = TreeNode(preorder[pre_start])
+            
+            pivot_ind = mp[preorder[pre_start]]
+
+            cnt = pivot_ind - in_start
+
+            cur_root.left = getRoot(pre_start+1,pre_start + cnt, in_start, pivot_ind - 1 )
+
+            cur_root.right = getRoot(pre_start+cnt+1,pre_end, pivot_ind + 1, in_end)
+
+            return cur_root
         
-        if not preorder:
+        n = len(preorder)
 
-            return None
+        mp = {inorder[i]: i for i in range(n)}
 
-        if len(preorder) == 1:
-
-            return TreeNode(preorder[0])
-
-        root = TreeNode(preorder[0])
-
-        root_ind = inorder.index(preorder[0])
-
-        no_ele_on_left = root_ind
-
-        root.left = self.buildTree(preorder[1:root_ind+1],inorder[:root_ind])
-
-        root.right = self.buildTree(preorder[root_ind+1:], inorder[root_ind+1:])
-
-        return root
+        return getRoot(0,n-1,0,n-1)
