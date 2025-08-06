@@ -15,7 +15,7 @@ class Solution:
 
             nonlocal k,ans
 
-            if not node:
+            if not node or k <= 0:
 
                 return
             
