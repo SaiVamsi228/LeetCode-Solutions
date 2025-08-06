@@ -7,33 +7,42 @@
 class Solution:
     def bstFromPreorder(self, preorder: List[int]) -> Optional[TreeNode]:
         
-        def f(pre):
+        def buildTreeAndGetRoot(pre_start,pre_end): # this will return the root given start and end indices
 
-            if len(pre) == 0:
+            if pre_start > pre_end:
 
                 return None
             
-            if len(pre) == 1:
+            cur_root = TreeNode(preorder[pre_start])
 
-                return TreeNode(pre[0])
+            num_left = 0
 
-            root = TreeNode(pre[0])
+            low = pre_start + 1
 
-            for i in range(1,len(pre)):
+            high = pre_end
 
-                if pre[i] > pre[0]:
+            while low <= high:
 
-                    break
-            else:
+                mid = (low + high)//2
+                
+                if preorder[mid] < cur_root.val:
 
-                i = len(pre) # when we find no elements which are greater
+                    low = mid + 1
+                
+                else:
 
-            root.left = f(pre[1:i])
+                    high = mid - 1
+            
+            num_left = high - pre_start
 
-            root.right = f(pre[i:])
+            cur_root.left = buildTreeAndGetRoot(pre_start+1,pre_start + num_left)
 
-            return root
+            cur_root.right = buildTreeAndGetRoot(pre_start+num_left+1,pre_end)
+
+            return cur_root
         
-        # print(preorder)
 
-        return f(preorder)
+        root = buildTreeAndGetRoot(0,len(preorder)-1)
+
+        return root
+
