@@ -4,106 +4,74 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
-
-class BSTIterator:
-    
-    def __init__(self,root):
-
-        self.asc_stack = []
-
-        self.desc_stack = []
-
-        temp1 = root
-
-        while temp1:
-
-            self.asc_stack.append(temp1)
-
-            temp1 = temp1.left
-        
-        temp2 = root
-
-        while temp2:
-
-            self.desc_stack.append(temp2)
-
-            temp2 = temp2.right
-    
-    def hasNext(self):
-
-        return len(self.asc_stack) != 0
-    
-    def hasBefore(self):
-
-        return len(self.desc_stack) != 0
-    
-    def next(self):
-
-        if self.hasNext():
-
-            nxt = self.asc_stack.pop()
-
-            if nxt.right:
-
-                temp = nxt.right
-
-                while temp:
-
-                    self.asc_stack.append(temp)
-
-                    temp = temp.left
-                
-            return nxt
-        
-    def before(self):
-
-        if self.hasBefore():
-
-            bef = self.desc_stack.pop()
-
-            if bef.left:
-
-                temp = bef.left
-
-                while temp:
-
-                    self.desc_stack.append(temp)
-
-                    temp = temp.right
-
-            return bef
-
 class Solution:
+    def __init__(self):
+
+        self.stack1 = []
+        self.stack2 = []
+    
+    def pushAllLeft(self,node) -> None:
+        while node:
+            self.stack1.append(node)
+            node = node.left
+
+    def pushAllRight(self,node) -> None:
+        while node:
+            self.stack2.append(node)
+            node = node.right
+    
+    def hasnext(self):
+        if self.stack1:
+            return True
+        return False
+
+    def next(self) -> TreeNode:
+        if self.stack1:
+            cur = self.stack1.pop()
+            if cur.right :
+                temp = cur.right
+                self.pushAllLeft(temp)
+            return cur.val
+    
+    def hasbefore(self):
+        if self.stack2:
+            return True
+        return False
+
+    def before(self) -> TreeNode:
+        if self.stack2:
+            cur = self.stack2.pop()
+            if cur.left :
+                temp = cur.left
+                self.pushAllRight(temp)
+            return cur.val
 
     def findTarget(self, root: Optional[TreeNode], k: int) -> bool:
         
-        bst_it = BSTIterator(root)
+        if not root:
 
-        left = bst_it.next()
+            return False
+        
+        self.pushAllLeft(root)
+        self.pushAllRight(root)
 
-        right = bst_it.before()
+        left_most , right_most = self.next(), self.before()
 
-        while left and right:
+        while True and left_most != right_most:
 
-            if left == right:
-
-                return False
-
-            if left.val + right.val == k:
-
+            if left_most + right_most >k:
+                if self.hasbefore():
+                    right_most = self.before()
+                else:
+                    return False
+            
+            elif left_most + right_most < k :
+                if self.hasnext():
+                    left_most = self.next()
+                else:
+                    return False
+                    
+            else:
                 return True
-            
-            elif left.val + right.val < k :
-
-                left = bst_it.next()
-            
-            elif left.val + right.val > k:
-
-                right = bst_it.before()
         
         return False
-            
-
-
-
-
