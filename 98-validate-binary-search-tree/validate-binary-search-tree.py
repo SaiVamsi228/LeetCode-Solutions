@@ -7,20 +7,20 @@
 class Solution:
     def isValidBST(self, root: Optional[TreeNode]) -> bool:
         
+        def isValid(node,left_lim,right_lim):
 
-        def getIsValid(root,left_lim, right_lim):
-
-            if not root:
+            if not node:
 
                 return True
             
-            checkIsLeftValid = getIsValid(root.left,left_lim, root.val)
+            if not (left_lim < node.val < right_lim):
 
-            checkIsRightValid = getIsValid(root.right,root.val, right_lim)
+                return False
+            
+            check_left = isValid(node.left,left_lim, node.val)
 
-            isCurrentValid = left_lim < root.val < right_lim 
+            check_right = isValid(node.right,node.val, right_lim)
 
-            return checkIsLeftValid and checkIsRightValid and isCurrentValid
+            return check_left and check_right
         
-        return getIsValid(root,-float('inf'), float('inf'))
-
+        return isValid(root,float('-inf'), float('inf'))
