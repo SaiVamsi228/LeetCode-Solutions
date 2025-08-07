@@ -1,88 +1,47 @@
-from collections import deque
+from collections import deque, defaultdict
+
 class Solution:
-    def findLadders(self, beginWord: str, endWord: str, wordList: List[str]) -> List[List[str]]:
+    def __init__(self):
+        self.mp = {}
 
-        if endWord not in wordList:
-            
-            return []
+    def dfs(self, endWord, beginWord, vec, path):
+        if endWord == beginWord:
+            vec.append(path[::-1])
+            return
+        for i in range(len(endWord)):
+            temp = list(endWord)
+            for c in 'abcdefghijklmnopqrstuvwxyz':
+                temp[i] = c
+                next_word = ''.join(temp)
+                if next_word in self.mp and self.mp[next_word] + 1 == self.mp[endWord]:
+                    path.append(next_word)
+                    self.dfs(next_word, beginWord, vec, path)
+                    path.pop()
 
-        
-        hm = {}
-
+    def findLadders(self, beginWord: str, endWord: str, wordList: list[str]) -> list[list[str]]:
         q = deque()
-
-        dist = 0
-
-        q.append((beginWord,dist))
-
-        wordSet = set(wordList)
+        word_set = set(wordList)
+        if endWord not in word_set:
+            return []
+        word_set.discard(beginWord)
+        q.append(beginWord)
+        level = 0
 
         while q:
+            level += 1
+            for _ in range(len(q)):
+                word = q.popleft()
+                self.mp[word] = level
+                for i in range(len(word)):
+                    temp = list(word)
+                    for c in 'abcdefghijklmnopqrstuvwxyz':
+                        temp[i] = c
+                        next_word = ''.join(temp)
+                        if next_word in word_set:
+                            q.append(next_word)
+                            word_set.remove(next_word)
 
-            word, dist = q.popleft()
-
-            if word == endWord:
-
-                hm[endWord] = dist
-
-                break
-
-            if word in hm:
-                
-                continue  # already visited
-            
-            hm[word] = dist
-
-            for i in range(len(word)):
-
-                for j in range(26):
-
-                    new_char = chr(ord('a') + j)
-
-                    if new_char == word[i]:
-
-                        continue
-
-                    new_word = word[:i] + new_char + word[i+1:]
-
-                    if new_word in wordSet:
-
-                        wordSet.discard(new_word)
-
-                        q.append((new_word,dist + 1))
-
-        ans = []
-
-        def genSequences(word,beginWord,path):
-
-            if word == beginWord:
-
-                ans.append(path.copy()[::-1])
-
-                return 
-            
-            for i in range(len(word)):
-
-                for j in range(26):
-
-                    new_char = chr(ord('a') + j)
-
-                    if new_char == word[i]:
-
-                        continue
-
-                    new_word = word[:i] + new_char + word[i+1:]
-
-                    if new_word in hm and hm[new_word] == hm[word] - 1:
-
-                        path.append(new_word)
-
-                        genSequences(new_word,beginWord,path)
-
-                        path.pop()
-        
-        if endWord in hm:
-            
-            genSequences(endWord,beginWord,[endWord])
-
-        return ans
+        result = []
+        if endWord in self.mp:
+            self.dfs(endWord, beginWord, result, [endWord])
+        return result
