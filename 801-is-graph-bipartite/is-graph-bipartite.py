@@ -1,10 +1,11 @@
 class Solution:
     def isBipartite(self, graph: List[List[int]]) -> bool:
-        color = {}
+        
+        color = {} # node => color
 
         def dfs(node,prev_color):
 
-            if node in color:
+            if node in color: # if the node is already colored check it
 
                 if color[node] == prev_color:
 
@@ -14,30 +15,24 @@ class Solution:
 
                     return True
             
-            color[node] = 1 if prev_color == 2 else 2
-
+            color[node] = prev_color ^ 1
+            
             for neighbour in graph[node]:
 
-                if dfs(neighbour,color[node]) == False:
+                if dfs(neighbour,prev_color^1) == False:
 
                     return False
             
             return True
-        
-        n = len(graph)
 
+        n = len(graph)
+        
         for node in range(n):
 
-            if node not in color:
+            if node not in color and dfs(node,-1) == False:
 
-                if dfs(node,-1) == False:
-
-                    return False
-        return True
+                return False
         
-
-            
-
-            
-
+        return True
+                
 
