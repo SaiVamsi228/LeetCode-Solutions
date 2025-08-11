@@ -1,47 +1,64 @@
-from collections import deque
-
+from heapq import heapify, heappush, heappop
 class Solution:
-    def isValid(self, grid, row, col, n):
-        if 0 <= row < n and 0 <= col < n and grid[row][col] == 0:
-            return True
-        return False
-
     def shortestPathBinaryMatrix(self, grid: List[List[int]]) -> int:
-        n = len(grid)
+        
+        m = len(grid)
 
-        # Edge case: if the start or end is blocked, return -1
-        if grid[0][0] != 0 or grid[n-1][n-1] != 0:
+        n = len(grid[0])
+
+        if grid[0][0] != 0 or grid[m-1][n-1] != 0:
+
             return -1
 
-        # Create deque
-        dq = deque()
+        dist = [[float('inf') for i in range(n)] for j in range(m)]
 
-        # Distance array initialized with infinity
-        dist = [[float('inf') for _ in range(n)] for _ in range(n)]
+        hp = []
+
+        heapify(hp)
+
         dist[0][0] = 1
 
-        # Push the source with distance 1
-        dq.append((0, 0, 1))  # (row, col, distance)
+        def isValid(r,c):
 
-        # Directions for 8 possible moves (up, down, left, right, diagonals)
-        dr = [0, 0, 1, -1, 1, -1, 1, -1]
-        dc = [1, -1, 0, 0, 1, 1, -1, -1]
+            return 0 <= r < m and 0 <= c < n
 
-        # BFS using deque
-        while dq:
-            row, col, d = dq.popleft()
+        heappush(hp,(0,0,0)) # wt, r, c
 
-            # If we reach the destination, return the distance
-            if row == n-1 and col == n-1:
-                return d
+        while hp:
 
-            # Explore all 8 directions
-            for k in range(8):
-                nrow, ncol = row + dr[k], col + dc[k]
+            wt, row, col = heappop(hp)
 
-                if self.isValid(grid, nrow, ncol, n) and d + 1 < dist[nrow][ncol]:
-                    dist[nrow][ncol] = d + 1
-                    dq.append((nrow, ncol, d + 1))
+            for i in range(-1,1+1):
 
-        # If destination not reached, return -1
-        return -1
+                for j in range(-1,1+1):
+
+                    if i == 0 and j == 0 :
+                        
+                        continue
+                    
+                    new_row, new_col = row + i, col + j
+
+                    if isValid(new_row,new_col):
+
+                        if grid[new_row][new_col] == 1:
+
+                            continue
+
+                        if dist[row][col] + 1 < dist[new_row][new_col]:
+
+                            dist[new_row][new_col] = dist[row][col] + 1
+
+                            heappush(hp,(dist[new_row][new_col], new_row, new_col))
+        
+
+        if dist[m-1][n-1] == float('inf'):
+
+            return -1
+
+        for row in dist:
+
+            print(row)
+        
+        return dist[m-1][n-1]
+
+
