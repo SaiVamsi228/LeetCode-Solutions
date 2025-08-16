@@ -1,26 +1,28 @@
 class Solution:
     def rob(self, nums: List[int]) -> int:
         
-        def getMaxMoney(ind):
-
-            if ind >= n :
-
-                return 0
-            
-            if ind in dp:
-
-                return dp[ind]
-
-            rob_money = nums[ind] + getMaxMoney(ind+2)
-
-            rob_others = getMaxMoney(ind+1)
-
-            dp[ind] = max(rob_money,rob_others)
-
-            return dp[ind]
-        
         n = len(nums)
 
-        dp = {}
+        dp = [0 for i in range(n)]
+
+        for ind in reversed(range(n)):
+
+            if ind + 2 < n :
+
+                rob_money = nums[ind] + dp[ind+2]
+            
+            else:
+
+                rob_money = nums[ind] + 0
+
+            if ind + 1 < n :
+
+                rob_others = dp[ind+1]
+            
+            else:
+
+                rob_others = 0
+
+            dp[ind] = max(rob_money,rob_others)
         
-        return getMaxMoney(0)
+        return dp[0]
