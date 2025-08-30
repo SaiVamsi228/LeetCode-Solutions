@@ -1,33 +1,50 @@
 class Solution:
-    def maxProfit(self,k, prices: list[int]) -> int:
+    def maxProfit(self, k: int, prices: List[int]) -> int:
         
+        def getMaxProfit(ind,buy,k):
+
+            if k == 0:
+
+                return 0
+
+            if ind == n:
+
+                return 0
+            
+            if (ind,buy,k) in dp:
+
+                return dp[(ind,buy,k)]
+            
+            if buy == 0:
+
+                # can buy
+
+                buy_now = -prices[ind] + getMaxProfit(ind+1,1,k)
+
+                # dont buy
+
+                dont_buy = getMaxProfit(ind+1,buy,k)
+                
+                dp[(ind,buy,k)] = max(buy_now,dont_buy)
+            
+            else:
+
+                # can sell
+
+                sell_now = prices[ind] + getMaxProfit(ind+1,0,k-1)
+
+                dont_sell = getMaxProfit(ind+1,buy,k)
+
+                dp[(ind,buy,k)] = max(sell_now, dont_sell)
+            
+            return dp[(ind,buy,k)]
+            
         n = len(prices)
 
-        ahead = [[0 for buy in range(2)] for trans in range(k+1+1)]
-
-        cur = [[0 for buy in range(2)] for trans in range(k+1+1)]
-
-        for ind in reversed(range(n)):
-
-            for trans in reversed(range(k+1)):
-
-                for buy in range(2):
-
-                    if buy == 0: # buy or skip
-                    
-                        profit = max(-prices[ind] + ahead[trans+1][1] , 0 + ahead[trans][0])
-                    
-                    elif buy == 1: # sell or skip
-
-                        profit = max( prices[ind] + ahead[trans][0] , 0 + ahead[trans][1])
-
-                    
-                    cur[trans][buy] = profit
-            
-            ahead = cur.copy()
+        dp = {}
+        
+        return getMaxProfit(0,0,k)
 
 
-        return ahead[0][0]
 
-                
 
