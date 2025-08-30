@@ -9,32 +9,30 @@ class Solution:
 
         n = len(s2)
 
-        dp = [ [-1 for i in range(n+1)] for j in range(m+1)]
+        dp = [0 for i in range(n+1)] 
 
-        for i in range(m+1):
-
-            dp[i][0] = 1
-        
-        for j in range(n+1):
-
-            dp[0][j] = 0
-        
-        dp[0][0] = 1
+        dp[0] = 1
 
         for i in range(1,m+1):
+
+            new_dp = [0 for k in range(n+1)]
+
+            new_dp[0] = 1
 
             for j in range(1,n+1):
 
                 if s1[i-1] == s2[j-1]:
 
-                    take_cnt =  dp[i-1][j-1]
+                    take_cnt =  dp[j-1]
 
-                    not_take_cnt = dp[i-1][j]
+                    not_take_cnt = dp[j]
 
-                    dp[i][j] = take_cnt + not_take_cnt
+                    new_dp[j] = take_cnt + not_take_cnt
                 
                 else:
 
-                    dp[i][j] = dp[i-1][j]
+                    new_dp[j] = dp[j]
 
-        return dp[m][n]
+            dp = new_dp.copy()
+
+        return dp[n]
