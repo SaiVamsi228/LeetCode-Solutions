@@ -1,8 +1,12 @@
-SELECT E.name 
-from Employee E
-RIGHT JOIN
-(SELECT managerId,COUNT(managerId) AS report_freq
-FROM Employee
-GROUP BY managerId) AS R 
-ON E.id = R.managerId
-WHERE R.report_freq >= 5 AND R.managerId IS NOT NULL AND E.id IS NOT NULL;
+# Write your MySQL query statement below
+SELECT E1.name
+FROM Employee E1
+JOIN
+Employee E2
+ON E1.id = E2.managerId
+GROUP BY E2.managerId
+HAVING COUNT(*) >= 5;
+
+-- SELECT managerId, COUNT(managerId) AS report_freq
+-- FROM Employee
+-- GROUP BY managerId;
