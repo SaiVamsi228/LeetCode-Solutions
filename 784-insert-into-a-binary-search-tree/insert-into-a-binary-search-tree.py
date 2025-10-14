@@ -11,30 +11,32 @@ class Solution:
 
             return TreeNode(val)
         
-        cur = root
+        prev = None
 
-        last_pos = root
+        cur = root
 
         while cur:
 
-            last_pos = cur
+            prev = cur
 
-            if val < cur.val:
+            if cur.val > val:
 
                 cur = cur.left
             
-            elif val > cur.val:
+            else:
 
                 cur = cur.right
-        
-        if val > last_pos.val :
+            
+        if val > prev.val:
 
-            last_pos.right = TreeNode(val)
+            prev.right = TreeNode(val)
         
         else:
 
-            last_pos.left = TreeNode(val)
-            
-        return root
+            prev.left = TreeNode(val)
 
+        return root
+            
+
+            
 
