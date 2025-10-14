@@ -5,36 +5,29 @@
 #         self.left = left
 #         self.right = right
 class Solution:
+    def __init__(self):
+        self.mx_sum = float('-inf')
+
     def maxPathSum(self, root: Optional[TreeNode]) -> int:
         
-        mx = float('-inf')
+        def getMaxSum(root):
 
-        def getMaxSumOfTheBranch(node):
+            if not root:
 
-            nonlocal mx
-
-            if node == None:
-                
                 return 0
             
-            ls = getMaxSumOfTheBranch(node.left)
+            leftMaxSum = getMaxSum(root.left) 
 
-            rs = getMaxSumOfTheBranch(node.right)
+            rightMaxSum = getMaxSum(root.right)
 
-            ls = ls if ls > 0 else 0
+            leftMaxSum = leftMaxSum if leftMaxSum > 0 else 0
 
-            rs = rs if rs > 0 else 0
+            rightMaxSum = rightMaxSum if rightMaxSum > 0 else 0
 
-            mx_sum_passing_through_node = ls + rs + node.val
+            self.mx_sum = max(self.mx_sum,leftMaxSum+rightMaxSum+root.val)
 
-            mx = max(mx,mx_sum_passing_through_node)
-
-            return max(ls,rs) + node.val
+            return max(leftMaxSum,rightMaxSum) + root.val
         
-        getMaxSumOfTheBranch(root)
+        getMaxSum(root)
 
-        return mx
-
-        
-        
-
+        return self.mx_sum
