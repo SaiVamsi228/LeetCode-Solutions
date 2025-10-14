@@ -7,27 +7,27 @@
 class Solution:
     def isSymmetric(self, root: Optional[TreeNode]) -> bool:
         
+        def getIsSymm(p,q):
 
-        def getIsSymmetric(root1,root2):
-
-            
-            if not root1 and not root2:
+            if not p and not q:
 
                 return True
             
-            if not root1 or not root2:
+            if (p and not q ) or (not p and q):
 
                 return False
             
-            if root1.val != root2.val:
+            if p.val != q.val:
 
                 return False
             
-            check_left = getIsSymmetric(root1.left,root2.right)
+            left_symm = getIsSymm(p.left,q.right)
+            right_symm = getIsSymm(p.right,q.left)
 
-            check_right = getIsSymmetric(root1.right,root2.left)
-
-            return check_left and check_right
+            return left_symm and right_symm
         
-        return getIsSymmetric(root.left,root.right)
+        if not root:
+
+            return True
             
+        return getIsSymm(root.left,root.right)
