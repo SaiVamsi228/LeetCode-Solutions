@@ -5,9 +5,11 @@
 #         self.left = left
 #         self.right = right
 class Solution:
+    def __init__(self):
+
+        self.is_b = True
+
     def isBalanced(self, root: Optional[TreeNode]) -> bool:
-        
-        is_b = [True]
 
         def getIsBalanced(root):
             
@@ -21,7 +23,7 @@ class Solution:
 
             if abs(left_depth - right_depth) > 1:
 
-                is_b[0] = False
+                self.is_b = False
             
             mx_depth = 1 + max(left_depth, right_depth)
 
@@ -29,5 +31,5 @@ class Solution:
         
         dep = getIsBalanced(root)
 
-        return is_b[0]
+        return self.is_b
             
