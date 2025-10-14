@@ -7,26 +7,27 @@
 class Solution:
     def isBalanced(self, root: Optional[TreeNode]) -> bool:
         
-        def getIsBalanced(node):
+        is_b = [True]
 
-            if not node:
+        def getIsBalanced(root):
+            
+
+            if not root:
 
                 return 0
             
-            lh = getIsBalanced(node.left)
+            left_depth = getIsBalanced(root.left)
+            right_depth = getIsBalanced(root.right)
 
-            rh = getIsBalanced(node.right)
+            if abs(left_depth - right_depth) > 1:
 
-            if abs(lh-rh) > 1 :
-
-                return float('inf')
+                is_b[0] = False
             
-            return 1 + max(lh,rh)
-        
-        ans = getIsBalanced(root)
+            mx_depth = 1 + max(left_depth, right_depth)
 
-        if ans == float('inf'):
-
-            return False
+            return mx_depth
         
-        return True
+        dep = getIsBalanced(root)
+
+        return is_b[0]
+            
