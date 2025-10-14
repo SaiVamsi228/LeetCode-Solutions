@@ -7,27 +7,37 @@
 class Solution:
     def rightSideView(self, root: Optional[TreeNode]) -> List[int]:
         
-        def get_right_view(node,level,res):
+        if not root:
 
-            if node == None:
+            return []
 
-                return 
+        ans = []
 
-            if len(res) == level:
+        q = deque()
 
-                res.append(node.val)
+        q.append(root)
 
-            get_right_view(node.right,level+1,res)
+        while q:
+
+            n = len(q)
+
+            last_found = None
+
+            for i in range(n):
+
+                node = q.popleft()
+
+                last_found = node
+
+                if node.left:
+
+                    q.append(node.left)
+                
+                if node.right:
+
+                    q.append(node.right)
             
-            get_right_view(node.left,level+1,res)
+            ans.append(last_found.val)
         
-        res = []
-
-        level = 0
-
-        get_right_view(root,level,res)
-
-        return res
-        
-
-         
+        return ans
+                
