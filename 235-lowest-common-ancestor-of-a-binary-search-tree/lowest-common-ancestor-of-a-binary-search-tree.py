@@ -7,34 +7,31 @@
 
 class Solution:
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
-
-        def get_lca(node,p,q):
+        
+        def getLCA(node,p,q):
 
             if not node:
 
                 return None
             
-            if node == p or node == q:
+            if node == p :
+
+                return p
+            
+            if node == q:
+
+                return q
+            
+            if p.val < node.val < q.val or p.val > node.val > q.val:
 
                 return node
             
-            if (p.val < node.val and q.val > node.val) or (q.val < node.val and p.val > node.val):
+            if p.val < node.val and q.val < node.val:
 
-                return node
+                return getLCA(node.left,p,q)
             
-            get_left_lca = get_right_lca = None
-            
-            if p.val < node.val:
-                
-                get_left_lca = get_lca(node.left,p,q)
-            
-            elif p.val > node.val:
+            elif p.val > node.val and q.val > node.val:
 
-                get_right_lca = get_lca(node.right,p,q)
-            
-            return get_left_lca or get_right_lca
+                return getLCA(node.right,p,q)
         
-        return get_lca(root,p,q)
-
-
-        
+        return getLCA(root,p,q)
