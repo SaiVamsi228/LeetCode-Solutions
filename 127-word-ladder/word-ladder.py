@@ -1,40 +1,59 @@
-from collections import deque
 class Solution:
     def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
-
-        wordSet = set(wordList)
         
         q = deque()
 
-        q.append((beginWord,1))
+        q.append(beginWord)
+
+        step = 1
+
+        wordList = set(wordList)
+
+        hs = set()
+
+        hs.add(beginWord)
 
         while q:
+                        
+            t = len(q)
 
-            curWord, dist = q.popleft()
+            step += 1
 
-            if curWord == endWord :
+            for _ in range(t):
+                
+                word = q.popleft()
 
-                return dist
+                for i,char in enumerate(word):
 
-            for i in range(len(curWord)):
+                    for new_letter in "abcdefghijklmnopqrstuvwxyz":
 
-                for ch in "abcdefghijklmnopqrstuvwxyz":
+                        if char == new_letter:
 
-                    if ch == curWord[i] :
+                            continue
+                        
+                        new_word = word[:i] + new_letter + word[i+1:]
 
-                        continue
+                        if new_word in hs:
 
-                    newWord = curWord[:i] + ch + curWord[i+1:]
+                            continue
+                        
+                        if new_word in wordList:
 
-                    if newWord in wordSet:
+                            hs.add(new_word)
 
-                        wordSet.discard(newWord)
+                            q.append(new_word)
+                            
+                            if new_word == endWord:
 
-                        q.append((newWord,dist+1))
+                                return step
         
         return 0
-                
+        
 
+
+                        
+                        
+            
 
 
 
