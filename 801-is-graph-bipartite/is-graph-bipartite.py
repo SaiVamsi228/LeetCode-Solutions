@@ -1,38 +1,29 @@
 class Solution:
     def isBipartite(self, graph: List[List[int]]) -> bool:
         
-        color = {} # node => color
-
-        def dfs(node,prev_color):
-
-            if node in color: # if the node is already colored check it
-
-                if color[node] == prev_color:
-
+        def getIsBp(node,prev):
+            if color[node] != -1:
+                if color[node] == prev:
                     return False
-                
                 else:
-
                     return True
             
-            color[node] = prev_color ^ 1
+            color[node] = prev ^ 1
             
             for neighbour in graph[node]:
-
-                if dfs(neighbour,prev_color^1) == False:
-
+                if getIsBp(neighbour,prev^1) == False:
                     return False
             
             return True
 
         n = len(graph)
-        
+        color = [-1 for i in range(n)]
+
         for node in range(n):
+            if color[node] == -1:
+                if getIsBp(node,0) == False:
+                    return False
 
-            if node not in color and dfs(node,-1) == False:
-
-                return False
-        
         return True
-                
+
 
