@@ -1,47 +1,117 @@
-from collections import deque, defaultdict
-
 class Solution:
-    def __init__(self):
-        self.mp = {}
-
-    def dfs(self, endWord, beginWord, vec, path):
-        if endWord == beginWord:
-            vec.append(path[::-1])
-            return
-        for i in range(len(endWord)):
-            temp = list(endWord)
-            for c in 'abcdefghijklmnopqrstuvwxyz':
-                temp[i] = c
-                next_word = ''.join(temp)
-                if next_word in self.mp and self.mp[next_word] + 1 == self.mp[endWord]:
-                    path.append(next_word)
-                    self.dfs(next_word, beginWord, vec, path)
-                    path.pop()
-
-    def findLadders(self, beginWord: str, endWord: str, wordList: list[str]) -> list[list[str]]:
+    def findLadders(self, beginWord: str, endWord: str, wordList: List[str]) -> List[List[str]]:
+        
         q = deque()
-        word_set = set(wordList)
-        if endWord not in word_set:
-            return []
-        word_set.discard(beginWord)
+
         q.append(beginWord)
-        level = 0
+
+        step = 1
+
+        wordList = set(wordList)
+
+        hs = set()
+
+        hs.add(beginWord)
+
+        hm = {}
+
+        min_step = 0
 
         while q:
-            level += 1
-            for _ in range(len(q)):
-                word = q.popleft()
-                self.mp[word] = level
-                for i in range(len(word)):
-                    temp = list(word)
-                    for c in 'abcdefghijklmnopqrstuvwxyz':
-                        temp[i] = c
-                        next_word = ''.join(temp)
-                        if next_word in word_set:
-                            q.append(next_word)
-                            word_set.remove(next_word)
+                        
+            t = len(q)
 
-        result = []
-        if endWord in self.mp:
-            self.dfs(endWord, beginWord, result, [endWord])
-        return result
+            step += 1
+
+            for _ in range(t):
+                
+                word = q.popleft()
+
+                hm[word] = step
+
+                for i,char in enumerate(word):
+
+                    for new_letter in "abcdefghijklmnopqrstuvwxyz":
+
+                        if char == new_letter:
+
+                            continue
+                        
+                        new_word = word[:i] + new_letter + word[i+1:]
+
+                        if new_word in hs:
+
+                            continue
+                        
+                        if new_word in wordList:
+
+                            hs.add(new_word)
+
+                            q.append(new_word)
+                            
+                            if new_word == endWord:
+
+                                min_step = step
+
+                                break
+
+        ans = []
+
+        print(min_step)
+
+        if min_step == 0:
+
+            return ans
+
+        def genSequences(src,dest,path):
+
+            nonlocal min_step
+
+            if src == dest:
+
+                if len(path) == min_step:
+                    
+                    flow = path.copy()[::-1]
+
+                    ans.append(flow)
+
+                return
+            
+            word = src
+
+            for i,char in enumerate(word):
+
+                for new_letter in "abcdefghijklmnopqrstuvwxyz":
+
+                    if char == new_letter:
+
+                        continue
+                    
+                    new_word = word[:i] + new_letter + word[i+1:]
+
+                    if new_word in path:
+
+                        continue
+                    
+                    elif new_word in hm and hm[new_word] == hm[word] - 1:
+
+                        path.append(new_word)
+
+                        genSequences(new_word,dest,path)
+
+                        path.pop()
+
+        genSequences(endWord,beginWord,[endWord])
+
+        return ans
+        
+
+
+                        
+                        
+            
+
+
+
+
+
