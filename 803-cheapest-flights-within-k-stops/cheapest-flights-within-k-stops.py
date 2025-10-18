@@ -1,63 +1,55 @@
-from heapq import heapify, heappush, heappop
 class Solution:
     def findCheapestPrice(self, n: int, flights: List[List[int]], src: int, dst: int, k: int) -> int:
-        
-        def get_graph(flights):
+
+        def getGraph(edges,n):
 
             adj = [[] for i in range(n)]
 
-            for s,d,cst in flights:
+            for u,v,w in edges:
 
-                adj[s].append((d,cst))
+                adj[u].append((v,w))
             
             return adj
+        
+        cost_chart = [[float('inf') for i in range(k+1)] for j in range(n)]
 
-        adj = get_graph(flights)
+        for s in range(k+1):
+
+            cost_chart[src][s] = 0
+        
+            
+        adj = getGraph(flights,n)
 
         hp = []
 
         heapify(hp)
 
-        # src, dest = > given
+        cost, stops, city = 0,-1,src
 
-        cost_array = [[float('inf') for i in range(k+1)] for j in range(n)] # dist to be travelled to reach within k stops
-        
-        for stps in range(k+1):
+        if city == dst:
             
-            cost_array[src][stps] = 0
+            return cur_cost
 
-        pair = (src,0,-1) # (src city,cst incurred, stops taken)
-        
-        heappush(hp,pair)
+        heappush(hp,(cost,stops,city))
 
         while hp:
 
-            city, expenses, stops = heappop(hp)
+            cur_cost,stops,city = heappop(hp)
 
-            for neighbour_city, cost in adj[city]:
+            for neighbour, wt in adj[city]:
 
-                new_stops = stops + 1
+                new_cost, new_stops = cur_cost + wt, stops + 1
 
-                new_cost = expenses + cost
+                if new_stops <= k and new_cost < cost_chart[neighbour][new_stops]:
 
-                if new_stops <= k :
+                    cost_chart[neighbour][new_stops] = new_cost
 
-                    if new_cost < cost_array[neighbour_city][new_stops]:
+                    heappush(hp,(new_cost,new_stops,neighbour))
 
-                        cost_array[neighbour_city][new_stops] = new_cost
+        min_cost = min(cost_chart[dst])
 
-                        heappush(hp,(neighbour_city,new_cost,new_stops))
-
-        mini_cost_within_k_stops = min(cost_array[dst])
-
-        if mini_cost_within_k_stops == float('inf'):
+        if min_cost == float('inf'):
 
             return -1
         
-        return mini_cost_within_k_stops
-
-
-
-
-
-
+        return min_cost
