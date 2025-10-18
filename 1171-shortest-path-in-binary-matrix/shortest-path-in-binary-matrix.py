@@ -2,63 +2,57 @@ from heapq import heapify, heappush, heappop
 class Solution:
     def shortestPathBinaryMatrix(self, grid: List[List[int]]) -> int:
         
-        m = len(grid)
+        dr = [0,0,1,-1,1,-1,1,-1]
+        dc = [1,-1,0,0,1,-1,-1,1]
 
-        n = len(grid[0])
+        def isValid(r,c,m,n):
 
-        if grid[0][0] != 0 or grid[m-1][n-1] != 0:
+            return (0 <= r < m and 0 <= c < n)
+        
+        hp = []
+        heapify(hp)
+
+        n = len(grid)
+
+        dist = [[float('inf') for i in range(n)] for j in range(n)]
+
+        if grid[0][0] == 1:
 
             return -1
-
-        dist = [[float('inf') for i in range(n)] for j in range(m)]
-
-        hp = []
-
-        heapify(hp)
 
         dist[0][0] = 1
 
-        def isValid(r,c):
+        w = 1
+        r,c = 0,0
 
-            return 0 <= r < m and 0 <= c < n
-
-        heappush(hp,(0,0,0)) # wt, r, c
+        heappush(hp,(w,r,c))
 
         while hp:
 
-            wt, row, col = heappop(hp)
+            cur_dist, r, c = heappop(hp)
 
-            for i in range(-1,1+1):
+            for i in range(8):
 
-                for j in range(-1,1+1):
+                nr, nc = r + dr[i], c + dc[i]
 
-                    if i == 0 and j == 0 :
-                        
-                        continue
-                    
-                    new_row, new_col = row + i, col + j
+                if isValid(nr,nc,n,n):
 
-                    if isValid(new_row,new_col):
+                    if grid[nr][nc] == 0:
 
-                        if grid[new_row][new_col] == 1:
+                        new_dist = cur_dist + 1
 
-                            continue
+                        if new_dist < dist[nr][nc]:
 
-                        if dist[row][col] + 1 < dist[new_row][new_col]:
+                            dist[nr][nc] = new_dist
 
-                            dist[new_row][new_col] = dist[row][col] + 1
-
-                            heappush(hp,(dist[new_row][new_col], new_row, new_col))
+                            heappush(hp,(new_dist,nr,nc))
         
-
-        if dist[m-1][n-1] == float('inf'):
+        if dist[n-1][n-1] == float('inf'):
 
             return -1
-
-        for row in dist:
-
-            print(row)
         
-        return dist[m-1][n-1]
+        return dist[n-1][n-1]
+
+                    
 
 
