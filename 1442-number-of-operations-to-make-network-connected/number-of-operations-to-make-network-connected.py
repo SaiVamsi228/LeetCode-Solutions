@@ -1,82 +1,77 @@
-class uf:
+class unionFind:
 
-    def __init__(self,n) -> None:
-        
+    def __init__(self,n):
+
         self.parent = [i for i in range(n)]
 
-        self.rank  = [1 for i in range(n)]
+        self.rank = [1 for i in range(n)]
     
-    def findPar( self, v):
+    def findUParent(self,node):
 
-        if self.parent[v] == v:
+        if self.parent[node] == node:
 
-            return v
+            return node
         
-        self.parent[v] = self.findPar(self.parent[v])
+        self.parent[node] = self.findUParent(self.parent[node])
 
-        return self.parent[v]
+        return self.parent[node]
     
-    def union(self, u, v):
+    def unionByRank(self,u,v):
 
-        up_u = self.findPar(u)
+        up_u = self.findUParent(u)
+        up_v = self.findUParent(v)
+        rank_up_u = self.rank[up_u]
+        rank_up_v = self.rank[up_v]
 
-        up_v = self.findPar(v)
+        if rank_up_u > rank_up_v:
 
-        rank_upu = self.rank[up_u]
-
-        rank_upv = self.rank[up_v]
-
-        if rank_upu == rank_upv:
+            self.parent[up_v] = up_u
+        
+        elif rank_up_v > rank_up_u:
 
             self.parent[up_u] = up_v
         
-        elif rank_upu > rank_upv:
+        else:
 
-            self.parent[up_v] = up_u
+            self.parent[up_u] = up_v
 
-        elif rank_upu < rank_upv:
-
-            self.parent[up_u] = up_
+            self.rank[up_v] += 1    
 
 class Solution:
+    def makeConnected(self, n: int, connections: List[List[int]]) -> int:
 
-    def makeConnected(self, n: int, connections: list[list[int]]) -> int:
-        
-        network = uf(n)
+        uf = unionFind(n)
 
-        hp = connections.copy()
-
-        heapify(hp)
-
-        extraCablesAvailable = 0
+        mn = 0
 
         connected = 0
 
-        visited = [0 for i in range(n)]
+        for u,v in connections:
 
-        while hp:
+            up_u = uf.findUParent(u)
+            up_v = uf.findUParent(v)
 
-            src, dest = heappop(hp)
-
-            if network.findPar(src) == network.findPar(dest):               
-                extraCablesAvailable += 1
+            if up_u == up_v:
 
                 continue
-
-            network.union(src, dest)
-
-            visited[src] = 1
-
-            visited[dest] = 1
-
+            
             connected += 1
+
+            uf.unionByRank(u,v)
         
-        unconnectedComputer = n - (connected + 1)
+        total = n 
 
-        minCablesReq = unconnectedComputer 
+        unconnected = (total - 1) - connected
 
-        if minCablesReq > extraCablesAvailable:
+        extra_cables = len(connections) -  (total - 1)
 
-            return -1
+        if extra_cables >= 0 :
 
-        return minCablesReq 
+            return unconnected
+        
+        return -1
+
+
+
+
+        
