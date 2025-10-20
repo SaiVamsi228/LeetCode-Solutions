@@ -48,17 +48,14 @@ class LockingTree:
         
         # 2. checking if ancestors are locked
 
-        temp = num
+        temp = self.parent[num]
         
-        while temp != 0:
+        while temp != -1:
             if self.locked[temp] != -1:
                 return False
             temp = self.parent[temp]
 
-        if self.locked[temp] != -1:
-
-            return False
-            
+        
         # 3. checking if atleast one descendant is locked if so unlock all
 
         atleast_one_locked = False
@@ -80,7 +77,7 @@ class LockingTree:
                     self.locked[child] = -1
                 
                 q.append(child)
-
+                
         if atleast_one_locked :
 
             self.locked[num] = user
