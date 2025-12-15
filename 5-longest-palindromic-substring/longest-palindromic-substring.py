@@ -2,50 +2,76 @@ class Solution:
     def longestPalindrome(self, s: str) -> str:
         
         n = len(s)
-
-        longest_palin_str = ""
-
-        for k in range(n):
-            # expanding algo
-            # odd length expand attempt
-
-            i,j = k,k
-
-            odd_len_str = ""
-
-            while i >=0 and j < len(s) and s[i] == s[j]:
-
-                odd_len_str = s[i:j+1]
-
-                i -= 1
-
-                j += 1
+        
+        if n == 0:
             
-                if len(odd_len_str) > len(longest_palin_str):
-
-                    longest_palin_str = odd_len_str
-
-            # even length expand attempt
-
-            i,j = k,k+1
-
-            even_len_str = ""
-
-            while i >=0 and j < len(s) and s[i] == s[j]:
-
-                even_len_str = s[i:j+1]
-
-                if len(even_len_str) > len(longest_palin_str):
-
-                    longest_palin_str = even_len_str
-
-                i -= 1
-
-                j += 1
+            return ""
+        
+        if n == 1:
             
+            return s
         
-        return longest_palin_str
+        mx = 1
         
-
+        left_ind = right_ind = -1
         
+        for i in range(n):
+            
+            cur_len = 1
+            
+            # odd length
+            j = i - 1
+            
+            k = i + 1
+            
+            while j >= 0 and k < n :
+                
+                if s[j] == s[k]:
+                    
+                    if k - j + 1 > mx:
+                
+                        mx = k - j + 1
+                        
+                        left_ind = j
+                        
+                        right_ind = k
+                    
+                    j -= 1
+                    
+                    k += 1
+                
+                else:
+                    
+                    break
+            
+            # even length
+            j = i
+            
+            k = i + 1
+            
+            while j >= 0 and k < n :
+                
+                if s[j] == s[k]:
+                    
+                    if k - j + 1 > mx:
+                
+                        mx = k - j + 1 
+                        
+                        left_ind = j
+                        
+                        right_ind = k
+                    
+                    j -= 1
+                    
+                    k += 1
+                
+                else:
+                    
+                    break
         
+        if left_ind == -1 and right_ind == -1:
+            
+            return s[0]
+            
+        return s[left_ind: right_ind + 1]
+                 
