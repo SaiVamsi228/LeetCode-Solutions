@@ -1,3 +1,4 @@
+from collections import deque
 """
 # Definition for a Node.
 class Node:
@@ -7,26 +8,53 @@ class Node:
 """
 
 from typing import Optional
-
 class Solution:
     def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
+        
         if not node:
-            return None
+            
+            return node
+            
+        old_mp = {}
 
-        clone_hm = {}  # original node -> cloned node
-        q = deque([node])
-        clone_hm[node] = Node(node.val)
+        q = deque()
+
+        q.append(node)
+        
+        main_node = node
 
         while q:
-            cur_node = q.popleft()
 
-            for neighbor in cur_node.neighbors:
-                if neighbor not in clone_hm:
-                    # Clone the neighbor
-                    clone_hm[neighbor] = Node(neighbor.val)
-                    q.append(neighbor)
+            node = q.popleft()
+            
+            old_mp[node.val] = []
+            
+            for neighbour in node.neighbors:
+                
+                old_mp[node.val].append(neighbour.val)
+            
+                if neighbour.val not in old_mp:
+                    
+                    q.append(neighbour)
+        
+        new_mp = {} # val: address
+        
+        for node,neighbours in old_mp.items():
+            
+            if node not in new_mp:
+                
+                new_mp[node] = Node(node,[])
+                
+            for neighbour in neighbours:
+                
+                if neighbour not in new_mp:
+                    
+                    new_mp[neighbour] = Node(neighbour,[])
+                    
+                if new_mp[neighbour] not in new_mp[node].neighbors:
+                    new_mp[node].neighbors.append(new_mp[neighbour])
+                
+                if new_mp[node] not in new_mp[neighbour].neighbors:
+                    new_mp[neighbour].neighbors.append(new_mp[node])                
 
-                # Append the cloned neighbor to the cloned current node
-                clone_hm[cur_node].neighbors.append(clone_hm[neighbor])
-
-        return clone_hm[node]
+        return new_mp[main_node.val]
