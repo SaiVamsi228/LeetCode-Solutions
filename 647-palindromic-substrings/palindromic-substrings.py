@@ -1,20 +1,21 @@
 class Solution:
     def countSubstrings(self, s: str) -> int:
-        
-        def isPalindrome(string):
-            
-            return string == string[::-1]
-        
         n = len(s)
-        
-        cnt = 0
-        
+        c = 0
+
         for i in range(n):
-            
-            for j in range(i,n):
-                
-                if isPalindrome(s[i:j+1]):
-                    
-                    cnt += 1
-        
-        return cnt
+            # odd length palindromes
+            j = k = i
+            while j >= 0 and k < n and s[j] == s[k]:
+                c += 1
+                j -= 1
+                k += 1
+
+            # even length palindromes
+            j, k = i, i + 1
+            while j >= 0 and k < n and s[j] == s[k]:
+                c += 1
+                j -= 1
+                k += 1
+
+        return c
