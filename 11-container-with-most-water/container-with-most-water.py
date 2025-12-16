@@ -3,15 +3,15 @@ class Solution:
         
         n = len(height)
 
-        l, r = 0, n-1
+        l,r = 0, n-1
 
-        maxArea = 0
+        max_area = area = 0
 
-        while l <= r :
+        while l <= r:
 
-            area = min(height[l],height[r]) * (r-l)
+            area = min(height[l],height[r])*(r-l)
 
-            maxArea = max(area,maxArea)
+            max_area = max(area,max_area)
 
             if height[l] < height[r]:
 
@@ -20,6 +20,5 @@ class Solution:
             else:
 
                 r -= 1
-
-        return maxArea 
-
+        
+        return max_area
