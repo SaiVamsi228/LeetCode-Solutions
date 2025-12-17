@@ -10,31 +10,30 @@ class Solution:
                 st.append(char)
             
             else:
-                
+
                 if not st:
 
                     return False
-                    
-                prev = st.pop()
 
-                if char == ")" and prev =="(":
+                if char == ")" and st[-1] == "(":
 
-                    continue
+                    st.pop()
                 
-                elif char == "]" and prev == "[":
+                elif char == "]" and st[-1] == "[":
 
-                    continue
+                    st.pop()
                 
-                elif char == "}" and prev == "{":
+                elif char == "}" and st[-1] == "{":
 
-                    continue
+                    st.pop()
                 
                 else:
 
                     return False
-
-        if st :
+        
+        if st:
 
             return False
-
+        
         return True
+                
